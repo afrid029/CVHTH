@@ -11,22 +11,9 @@
 </head>
 
 <body style="width: 100vw; display:contents;">
-    <nav class="navbar">
-        <div class="logo">
-            <a href="#">MySite</a>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-    </nav>
+
+<?php include('../Components/NavBar.php') ?>
+   
 
     <div class="main-body">
         <div class="main-sidebar">
@@ -37,7 +24,7 @@
                 </div>
                 <div class="bar-row">
                     <div class="row-type">
-                        Current Balance
+                        Charity Balance
                     </div>
                     <div class="row-value">
                         <div>RS</div>
@@ -57,27 +44,32 @@
                 <hr class="line">
                 <div class="bar-row">
                     <div class="row-type">
-                        Total Recieved Fund
+                        Total Recieved Donation
                     </div>
                     <div class="row-value">
                         <div>RS</div>
-                        <div id="total">...</div>
+                        <div>
+                            <div style="text-align: end; margin-bottom: 10px" id="total">...</div>
+                            <div style="opacity: 0.6; font-weight: 600;" id="count">From ... donations</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
 
         </div>
-        <div class="main-content">
+        <div class="main-content main-content-mobile">
+            <div class="main-conent-mobile-bg"></div>
 
-            <div class="content-title">
+            <div class="content-title mobile-ani">
                 <h3>All Donations</h3>
             </div>
 
 
 
-            <div class="content-table">
+            <div class="content-table mobile-ani">
                 <div class="table">
+
 
                     <div class="table-header">
                         <div>Donor Name</div>
@@ -87,10 +79,10 @@
 
                     </div>
 
-
+                    <div id="onrowload"></div>
                     <div id="table-rows"></div>
                     <div id="table-pagi"></div>
-                   
+
 
 
 
@@ -102,24 +94,68 @@
         </div>
     </div>
 
+    <!--     
+    <footer>
+        <div class="footer"></div>
 
+    </footer> -->
     <script>
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
+        
 
-        mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+        function resizeWindow() {
+            console.log('resizing');
 
-        const navHeight = document.querySelector('.navbar');
-        const mainBody = document.querySelector('.main-body');
-        // console.log(navHeight.offsetHeight);
+            const navHeight = document.querySelector('.navbar');
+            const mainBody = document.querySelector('.main-body');
+            const mainSideBar = document.querySelector('.main-sidebar');
+            const mainConetntMobile = document.querySelector('.main-content-mobile');
+            const mainConetntMobileBg = document.querySelector('.main-conent-mobile-bg');
+            // const contentTitle = document.querySelector('.content-title');
+            // console.log(navHeight.offsetHeight);
+            const navbarHeight = navHeight.offsetHeight;
+            const sideBarHeight = mainSideBar.offsetHeight;
+            // const mainConetntMobileHeight = mainConetntMobile.offsetHeight; 
 
-        const navbarHeight = navHeight.offsetHeight; // Get the navbar height
+            const viewportWidth = window.innerWidth;
 
-        // Set the height of the main-body using calc with the navbar height
-        // mainBody.style.height = `calc(100% - ${navbarHeight}px)`;
-        mainBody.style.top = `${navbarHeight}px`;
+            if(viewportWidth < 900){
+                // const contentTitle = document.querySelector('content-title');
+                // const contentTable = document.querySelector('content-table');
+
+                // const contentTitleHeight = contentTitle.offsetHeight;
+                // const contentTableHeight = contentTable.off
+
+                mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
+                mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
+
+            }
+
+            // mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
+            // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
+
+
+            // Get the navbar height
+            // const sideBarHeight = mainSideBar.offsetHeight; // Get the navbar height
+            // mainConetntMobileBg.style.height = `${mainConetntMobileHeight}px`;
+            // console.log(mainConetntMobileHeight);
+
+            // setTimeout(()=> {
+
+            // },800);
+
+            // Set the height of the main-body using calc with the navbar height
+            // mainBody.style.height = `calc(100% - ${navbarHeight}px)`;
+            mainBody.style.top = `${navbarHeight}px`;
+            // contentTitle.style.top = `${navbarHeight}px`;
+            // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
+            // console.log(mainConetntMobile.style.height,navbarHeight, sideBarHeight);
+        }
+
+        resizeWindow();
+
+        window.addEventListener("resize", resizeWindow);
+        // console.log(navbarHeight, sideBarHeight);
+
 
         function DisplayNumber(targetNumber, ID) {
             const numberElement = document.getElementById(ID);
@@ -141,7 +177,7 @@
 
         DisplayNumber(70000, 'current');
         DisplayNumber(20000, 'spent');
-        DisplayNumber(90000, 'total');
+        // DisplayNumber(90000, 'total');
 
         const addBtn = document.querySelector('.add-btn');
         addBtn.addEventListener('click', function() {
@@ -155,33 +191,34 @@
         })
 
 
-
-
-
-
-
-
-
         function loadPage(page) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/Controllers/GetDonations.php?page=' + page, true);
             document.getElementById('loading-spinner').style.display = 'block';
+            const onload = document.getElementById('onrowload');
+            onload.classList.add('onrowload');
 
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     document.getElementById('loading-spinner').style.display = 'none';
+                    // document.getElementById('onrowload').style.display = 'none';
+                    onload.classList.remove('onrowload');
                     var response = JSON.parse(xhr.responseText);
 
                     const dataContainer = document.getElementById('table-rows')
 
                     dataContainer.innerHTML = response.html;
+                    resizeWindow();
 
                     dataContainer.classList.remove('fade-in'); // Remove the class to reset animation
                     void dataContainer.offsetWidth; // Trigger reflow
                     dataContainer.classList.add('fade-in'); // Apply fade-in animation
-
-                    
                     document.getElementById('table-pagi').innerHTML = response.pagination;
+
+                    if (page === 1) {
+                        document.getElementById('count').textContent = "From " + response.total + " donations";
+                        DisplayNumber(response.total_received, 'total')
+                    }
                 }
             };
 

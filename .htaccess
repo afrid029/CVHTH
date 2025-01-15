@@ -12,7 +12,8 @@ RewriteCond %{REQUEST_URI} \.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|tt
 RewriteRule ^ - [F,L]
 
 # RewriteRule ^$ index.php [L]
-RewriteRule ^$ Pages/AllDonations.php [L]
+# RewriteRule ^$ Pages/AllDonations.php [L]
+ RewriteRule ^$ Pages/AllUsers.php [L]
 
 
 # RewriteRule ^addlive$ Controllers/liveUpload.php [L]

@@ -17,16 +17,27 @@ $result = mysqli_query($db, $sql);
 $row = mysqli_fetch_assoc($result);
 $total_records = $row['total'];
 
+$total_received = '';
+if ($page === 1) {
+    $sql = "SELECT sum(amount) AS total_received FROM donation";
+    $result = mysqli_query($db, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $total_received = $row['total_received'];
+}
+
 $result = mysqli_query($db, "Select * from donation LIMIT $offset, $results_per_page");
 
 
 $html = '';
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $html .= "<div class='table-row'>
-                                <div>".$row['name']."</div>
-                                <div style='text-align: end'>".$row['amount']."</div>
-                                <div style='text-align: end'>".$row['date']."</div>
+        $html .= "
+                    <div class='table-row'>
+                   
+                    
+                                <div>" . $row['name'] . "</div>
+                                <div style='text-align: end'>" . $row['amount'] . "</div>
+                                <div style='text-align: end'>" . $row['date'] . "</div>
                                 <div class='buttons'>
                                         <div class='btn edit'>
                                             Edit
@@ -54,20 +65,18 @@ if ($page > 1) {
 }
 
 for ($i = 1; $i <= $total_pages; $i++) {
-    if($i == $page) {
+    if ($i == $page) {
         $pagination .= "<strong class='selected'>$i</strong> ";
-        
     } else if ($i == 1) {
         $pagination .= "<span href='javascript:void(0);' onclick='loadPage($i)'>$i</span> ";
-    } else if($i == $total_pages) {
+    } else if ($i == $total_pages) {
         $pagination .= "<span href='javascript:void(0);' onclick='loadPage($i)'>$i</span> ";
-    }else if(abs($i - $page) < 3){
+    } else if (abs($i - $page) < 3) {
         $pagination .= "<span href='javascript:void(0);' onclick='loadPage($i)'>$i</span> ";
-    }else {
-        if(substr($pagination, -3) !== '...'){
-             $pagination .= ".";
+    } else {
+        if (substr($pagination, -3) !== '...') {
+            $pagination .= ".";
         }
-        
     }
 
     // if ($i == $page) {
@@ -86,8 +95,9 @@ $pagination .= "</div>";
 // Return the results and pagination links as JSON
 echo json_encode([
     'html' => $html,
-    'pagination' => $pagination
+    'pagination' => $pagination,
+    'total' => $total_records,
+    'total_received' => $total_received
 ]);
 
 mysqli_close($db);
-?>
