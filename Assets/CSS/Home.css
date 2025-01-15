@@ -42,12 +42,11 @@
   border-radius: 16px; */
 
   /* From https://css.glass */
-background: rgba(5, 23, 61, 0.28);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(5.1px);
--webkit-backdrop-filter: blur(5.1px);
-
+  background: rgba(5, 23, 61, 0.28);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.1px);
+  -webkit-backdrop-filter: blur(5.1px);
 
   /* box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1); */
   /* backdrop-filter: blur(2.1px); */
@@ -226,17 +225,17 @@ backdrop-filter: blur(5.1px);
   z-index: 5;
   align-items: center;
 
-/* 
+  /* 
   background: rgb(2 2 2 / 53%);
   border-radius: 16px;
  */
 
   /* From https://css.glass */
-background: rgba(5, 23, 61, 0.28);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(5.1px);
--webkit-backdrop-filter: blur(5.1px);
+  background: rgba(5, 23, 61, 0.28);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.1px);
+  -webkit-backdrop-filter: blur(5.1px);
 
   /* box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1); */
   /* backdrop-filter: blur(2.1px); */
@@ -257,17 +256,17 @@ backdrop-filter: blur(5.1px);
   width: 100%;
   text-align: center;
   font-weight: 700;
-  color: #2f41e4;
+  color: #c1c1c1;
+  /* text-shadow: 0 0 3px #ffff; */
   font-size: 3vw;
   border-radius: 16px 16px 0 0;
   padding-top: 1vh;
   padding-bottom: 1vh;
   margin-bottom: 2vh;
 
-  /* From https://css.glass */
-  background: rgb(103 102 102 / 7%);
+  background: rgb(0 0 0 / 27%);
   /* border-radius: 16px; */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgb(49 49 75 / 46%);
   backdrop-filter: blur(5.1px);
   -webkit-backdrop-filter: blur(5.1px);
 }
@@ -281,6 +280,7 @@ backdrop-filter: blur(5.1px);
   padding: 4%;
   line-height: 1.5rem;
   text-align: justify;
+  /* font-size: 1rem; */
 }
 
 .scroll-element {
@@ -317,11 +317,11 @@ backdrop-filter: blur(5.1px);
 }
 
 .loginbg {
-    background: rgb(255 255 255 / 84%);
-    border-radius: 16px;
-    width: inherit;
-    height: inherit;
-    position: absolute;
+  background: rgb(255 255 255 / 84%);
+  border-radius: 16px;
+  width: inherit;
+  height: inherit;
+  position: absolute;
 }
 
 .login-title {
@@ -362,7 +362,6 @@ backdrop-filter: blur(5.1px);
   margin: 0 auto;
 }
 
-
 .FormRow {
   width: 100%;
 }
@@ -390,7 +389,7 @@ backdrop-filter: blur(5.1px);
   padding: 10px;
   border-radius: 5px;
   border: transparent;
-  font-family: "Arial", serif;
+  font-family: "Archivo Black", serif;
   color: aliceblue;
   letter-spacing: 2px;
   cursor: pointer;
@@ -406,105 +405,527 @@ backdrop-filter: blur(5.1px);
   z-index: 5;
   position: relative;
   margin-top: 3vh;
+  font-size: 1.2rem;
+  width: fit-content;
+    margin-right: auto;
+    margin-left: auto;
 }
-
 
 .forgot-btn:hover {
-    color: red;
+  color: red;
 }
 
-.loginMobile{
-    color: wheat;
-    position: relative;
-    z-index: 5;
-    top: 0;
-    width: 100%;
-    display: none;
-    justify-content: center;
-    margin-bottom: 2vh;
-    align-items: center;
-    font-family: "Ubuntu", serif;
-    font-weight: 600;
-    cursor: pointer;
+.loginMobile {
+  color: wheat;
+  position: relative;
+  z-index: 5;
+  top: 0;
+  width: 100%;
+  display: none;
+  justify-content: center;
+  margin-bottom: 2vh;
+  align-items: center;
+  font-family: "Ubuntu", serif;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.loginMobile img{
-    width: 40px;
+.loginMobile img {
+  width: 40px;
 }
 
 /* @media (max-width) */
 
+@media (min-width: 1600px) {
+  .thought-text {
+    font-size: 1.8rem;
+  }
 
-@media(max-width: 900px){
-    .home-body{
-        display: flex;
-        flex-direction: column-reverse;
-        justify-content: center;
-        /* flex-wrap: wrap; */
-        width: 100vw;
-        /* position: absolute; */
-    }
+  .thought-author {
+    font-size: 1.2rem;
+  }
 
-    .home-info{
-        width: 100vw;
-        /* position: relative; */
-    }
+  .title-footer {
+    font-size: clamp(20px, 3vw, 55px);
+  }
 
-    .home-bgImage {
-        /* position: fixed; */
-        border-radius: 0px;
-    }
+  .about-title {
+    font-size: 1.5vw;
+  }
 
-    .home-login {
-        width: 100vw;
-        position: relative;
-        height: 100%;
-        display: none;
-    }
+  .about-content {
+    font-size: 1.3rem;
+    line-height: 2.4rem;
+  }
 
-    .thought{
-        margin: 2% 5% 2% 5%;
-    }
+  .login-title h3 {
+    font-weight: 600;
+    font-size: 3.5rem;
+  }
+  .login-title h4 {
+    font-size: 2.5rem;
+  }
 
-    .loginMobile {
-        display: flex;
-    }
+  .FormRow input {
+    padding: 10px;
+    height: 6vh;
+  }
 
-    .mobile-login-fade {
-        animation: closeLogin 0.5s ease forwards;
-        transform: translateY(-100%);
-    }
+  .btn-login {
+    height: 6vh;
+    font-size: 1.2rem;
+  }
 
-    .mobile-login {
-        animation: openLogin 0.5s ease forwards;
-        transform: translateY(-100%);
-    }
+  .FormRow input{
+    font-size: 1.2rem;
+  }
+}
 
-    @keyframes openLogin {
-        0% {
-            opacity: 0;
-            transform: translateY(-100%);
-           /* margin-top: -200%; */
-            /* height: 0; */
-        }
-        100% {
-            opacity: 1;
-            transform: translateY(0%);
-            /*margin-top: 0%; */
-            /* height: auto; */
-        }
-    }
 
-    @keyframes closeLogin {
-        0% {
-            opacity: 1;
-            /* margin-top: 0%; */
-            transform: translateY(0%);
-        }
-        100% {
-            opacity: 0;
-            transform: translateY(-100%);
-            /* margin-top: -200%; */
-        }
+@media (max-width: 1600px) {
+  .thought-text {
+    font-size: 1.5rem;
+  }
+
+  .thought-author {
+    font-size: 0.9rem;
+  }
+
+  .title-footer {
+    font-size: clamp(20px, 2.5vw, 55px);
+  }
+
+  .about-title {
+    font-size: 1.8vw;
+  }
+
+  .about-content {
+    font-size: 1.2rem;
+    line-height: 2.2rem;
+  }
+
+  .login-title h3 {
+    font-weight: 600;
+    font-size: 2.6rem;
+  }
+  .login-title h4 {
+    font-size: 1.5rem;
+  }
+
+  .FormRow input {
+    padding: 6px;
+    height: 6vh;
+    font-size: 0.9rem;
+
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .thought-text {
+    font-size: 1.3rem;
+  }
+
+  .thought-author {
+    font-size: 0.7rem;
+  }
+
+  .title-footer {
+    font-size: clamp(20px, 2.1vw, 55px);
+  }
+
+  .about-title {
+    font-size: 1.5vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    margin-bottom: 0;
+  }
+
+  .about-content {
+    font-size: 1rem;
+    line-height: 2rem;
+  }
+
+  .login-title h3 {
+    font-weight: 500;
+    font-size: 2.4rem;
+  }
+  .login-title h4 {
+    font-size: 1.2rem;
+  }
+
+  .FormRow input {
+    padding: 6px;
+    height: 6vh;
+    font-size: 0.9rem;
+
+  }
+
+  .forgot-btn {
+    font-size: 1rem;
+  }
+}
+
+
+@media (max-width: 1024px) {
+  .thought-text {
+    font-size: 1.1rem;
+  }
+
+  .thought-author {
+    font-size: 0.7rem;
+  }
+
+  .title-footer {
+    font-size: clamp(16px, 2vw, 40px);
+  }
+
+  .about-title {
+    font-size: 1.8vw;
+  }
+
+  .about-content {
+    font-size: 0.9rem;
+    line-height: 1.8rem;
+  }
+
+  .login-title h3 {
+    font-weight: 500;
+    font-size: 2.1rem;
+  }
+  .login-title h4 {
+    font-size: 1.2rem;
+  }
+
+  .FormRow input {
+    padding: 6px;
+    height: 6vh;
+    font-size: 0.7rem;
+
+  }
+
+  .forgot-btn {
+    font-size: 0.8rem;
+  }
+}
+   
+
+@media (max-width: 900px) {
+  .home-body {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+    width: 100vw;
+    /* position: absolute; */
+  }
+
+  .home-info {
+    width: 100vw;
+    /* position: relative; */
+  }
+
+  .home-bgImage {
+    /* position: fixed; */
+    border-radius: 0px;
+  }
+
+  .home-login {
+    width: 100vw;
+    position: relative;
+    height: 100%;
+    display: none; /**Chjange to none*/
+  }
+
+  .thought {
+    margin: 2% 5% 2% 5%;
+  }
+
+  .loginMobile {
+    display: flex;
+  }
+
+  .mobile-login-fade {
+    animation: closeLogin 0.5s ease forwards;
+    transform: translateY(-100%);
+  }
+
+  .mobile-login {
+    animation: openLogin 0.5s ease forwards;
+    transform: translateY(-100%);
+  }
+
+  @keyframes openLogin {
+    0% {
+      opacity: 0;
+      transform: translateY(-100%);
+      /* margin-top: -200%; */
+      /* height: 0; */
     }
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+      /*margin-top: 0%; */
+      /* height: auto; */
+    }
+  }
+
+  @keyframes closeLogin {
+    0% {
+      opacity: 1;
+      /* margin-top: 0%; */
+      transform: translateY(0%);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-100%);
+      /* margin-top: -200%; */
+    }
+  }
+
+
+  /*Font resizing*/
+
+  .thought-text {
+    font-size: 1.2rem;
+  }
+
+  .thought-author {
+    font-size: 0.6rem;
+  }
+
+  .title-footer {
+    font-size: clamp(16px, 3vw, 40px);
+  }
+
+  .about {
+    padding-bottom: 2vh;
+    margin-bottom: 4vh;
+  }
+
+  .about-title {
+    font-size: 2.3vw;
+    margin-bottom: 0px;
+  }
+
+  .about-content {
+    font-size: 1rem;
+    line-height: 1.8rem;
+    width: 94%;
+    padding: 2% 3%;
+  }
+
+  .login-title h3 {
+    font-weight: 500;
+    font-size: 2.1rem;
+  }
+  .login-title h4 {
+    font-size: 1.2rem;
+  }
+
+  .FormRow input {
+    padding: 6px;
+    height: 6vh;
+    font-size: 1rem;
+
+  }
+
+  .btn-login {
+    height: 6vh;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1.5vh;
+  }
+
+  .forgot-btn {
+    font-size: 0.8rem;
+    height: 6vh;
+  }
+}
+
+@media (max-width: 768px) {
+  
+  .thought-text {
+    font-size: 1.4rem;
+  }
+
+  .thought-author {
+    font-size: 0.8rem;
+  }
+
+  .title-footer {
+    font-size: clamp(16px, 3.5vw, 40px);
+  }
+
+  .about {
+    padding-bottom: 2vh;
+    margin-bottom: 4vh;
+  }
+
+  .about-title {
+    font-size: 2.5vw;
+    margin-bottom: 0px;
+  }
+
+  .about-content {
+    font-size: 1rem;
+    line-height: 1.8rem;
+    width: 94%;
+    padding: 2% 3%;
+  }
+
+  .login-title h3 {
+    font-weight: 500;
+    font-size: 2.1rem;
+  }
+  .login-title h4 {
+    font-size: 1.2rem;
+  }
+
+  .FormRow input {
+    padding: 6px;
+    height: 6vh;
+    font-size: 1rem;
+
+  }
+
+  .btn-login {
+    height: 6vh;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1.5vh;
+  }
+
+  .forgot-btn {
+    font-size: 0.8rem;
+    height: 6vh;
+  }
+}
+
+
+@media (max-width: 600px) {
+  
+  .thought-text {
+    font-size: 1.1rem;
+  }
+
+  .thought-author {
+    font-size: 0.6rem;
+  }
+
+  .title-footer {
+    font-size: clamp(16px, 3vw, 40px);
+  }
+
+  .about {
+    padding-bottom: 2vh;
+    margin-bottom: 4vh;
+  }
+
+  .about-title {
+    font-size: 3.5vw;
+    margin-bottom: 0px;
+  }
+
+  .about-content {
+    font-size: 0.7rem;
+    line-height: 1.5rem;
+    width: 94%;
+    padding: 2% 3%;
+  }
+
+  .login-title h3 {
+    font-weight: 500;
+    font-size: 1.8rem;
+  }
+  .login-title h4 {
+    font-size: 1rem;
+  }
+
+  .FormRow input {
+    padding: 6px;
+    height: 5vh;
+    font-size: 1rem;
+
+  }
+
+  .btn-login {
+    height: 5vh;
+    font-size: 1.2rem;
+    font-weight: 500;
+    
+  }
+
+  .loginMobile {
+    font-size: 0.8rem;
+  }
+
+  .loginMobile img {
+    width: 32px;
+  }
+
+  /* .forgot-btn {
+    font-size: 0.8rem;
+    height: 6vh;
+  } */
+}
+
+
+@media (max-width: 400px) {
+  
+  .thought-text {
+    font-size: 1rem;
+  }
+
+  .thought-author {
+    font-size: 0.5rem;
+  }
+
+  .title-footer {
+    font-size: clamp(8px, 3vw, 15px);
+  }
+
+  .about {
+    padding-bottom: 2vh;
+    margin-bottom: 4vh;
+  }
+
+  .about-title {
+    font-size: 4vw;
+    margin-bottom: 0px;
+  }
+
+  .about-content {
+    font-size: 0.8rem;
+    line-height: 1.4rem;
+    width: 94%;
+    padding: 2% 3%;
+  }
+
+  .login-title h3 {
+    font-weight: 500;
+    font-size: 1.6rem;
+  }
+  .login-title h4 {
+    font-size: 1rem;
+  }
+
+  .FormRow input {
+    padding: 6px;
+    height: 5vh;
+    font-size: 1rem;
+
+  }
+
+  .btn-login {
+    height: 5vh;
+    font-size: 1rem;
+    font-weight: 500;
+    
+  }
+
+  /* .forgot-btn {
+    font-size: 0.8rem;
+    height: 6vh;
+  } */
 }

@@ -57,6 +57,8 @@
                 <div class="about-content">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula turpis ut risus cursus, ac tincidunt nulla ultricies. Mauris sollicitudin, felis ut tincidunt interdum, sapien felis consectetur purus, a feugiat ipsum nulla id arcu. Nullam varius, felis non posuere tincidunt, eros ligula dictum erat, in congue lectus eros a ante.
 
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula turpis ut risus cursus, ac tincidunt nulla ultricies. Mauris sollicitudin, felis ut tincidunt interdum, sapien felis consectetur purus, a feugiat ipsum nulla id arcu. Nullam varius, felis non posuere tincidunt, eros ligula dictum erat, in congue lectus eros a ante.
+
                 </div>
             </div>
             <div class="about scroll-element">
@@ -156,20 +158,22 @@
                 
                 loginSide.classList.add('mobile-login')
                 loginSide.classList.remove('mobile-login-fade')
-
-                setTimeout(() => {
-                    loginSide.style.display=value;
+                loginSide.style.display=value;
                     document.getElementById('loginToggle').style.display='none';
-                }, 500);
+
+                // setTimeout(() => {
+                    
+                // }, 100);
             }else {
                 
                 loginSide.classList.remove('mobile-login')
                 loginSide.classList.add('mobile-login-fade')
-
+                
                 setTimeout(() => {
                     loginSide.style.display=value;
-                    document.getElementById('loginToggle').style.display='flex'
-                }, 500);
+                document.getElementById('loginToggle').style.display='flex'
+
+                }, 100);
             }
         }
 

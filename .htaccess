@@ -1,0 +1,35 @@
+RewriteEngine On
+
+# 1. Allow internal requests from localhost or your domain (CSS, JS, images, etc.)
+RewriteCond %{HTTP_REFERER} ^http://localhost/ [NC]
+RewriteCond %{REQUEST_URI} ^/(Assets|components|Models|Controllers|public)/  [NC]
+RewriteCond %{REQUEST_URI} \.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|php)$
+RewriteRule ^ - [L]
+
+# 2. Block direct access to files in /Assets/ or /components/ from any external request (direct access to the file)
+RewriteCond %{REQUEST_URI} ^/(Assets|components|Models|Controllers|public)/  [NC]
+RewriteCond %{REQUEST_URI} \.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|php)$
+RewriteRule ^ - [F,L]
+
+# RewriteRule ^$ index.php [L]
+RewriteRule ^$ Pages/AllDonations.php [L]
+
+
+# RewriteRule ^addlive$ Controllers/liveUpload.php [L]
+# RewriteRule ^login$ Controllers/LoginSubmition.php [L]
+# RewriteRule ^addvideo$ Controllers/videoUpload.php [L]
+# RewriteRule ^addlogo$ Controllers/LogoUpload.php [L]
+# RewriteRule ^deletevideo$ Controllers/DeleteVideo.php [L]
+# RewriteRule ^logout$ Controllers/Logout.php [L]
+# RewriteRule ^sendfeedback$ Controllers/FeedBackSubmition.php [L]
+# RewriteRule ^Community-All$ CommunityPlayList.php [L]
+# RewriteRule ^Politics-All$ PoliticalPlayList.php [L]
+# RewriteRule ^Religious-All$ ReligiousPlayList.php [L]
+# RewriteRule ^Stage-All$ StagePlayList.php [L]
+
+# RewriteRule ^.*$ error.php [L]
+
+# RewriteRule ^(?!home|about).*$ MassTvPhp/error.php [L]
+
+ErrorDocument 404 /error.php
+
