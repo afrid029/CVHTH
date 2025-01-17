@@ -114,9 +114,22 @@
             // console.log(navHeight.offsetHeight);
             const navbarHeight = navHeight.offsetHeight;
             const sideBarHeight = mainSideBar.offsetHeight;
-            // const mainConetntMobileHeight = mainConetntMobile.offsetHeight; 
+            const mainConetntMobileHeight = mainConetntMobile.offsetHeight; 
 
             const viewportWidth = window.innerWidth;
+
+            if(viewportWidth > 900 ){
+                const contentTitle = document.querySelector('.content-title');
+                console.log(window.getComputedStyle(mainConetntMobile).getPropertyValue('padding-top'));
+                
+                const contentTitleHeight = contentTitle.offsetHeight;
+                const contentTable = document.querySelector('.content-table');
+
+                contentTable.style.height = `calc(100vh - ${navbarHeight}px - ${contentTitleHeight}px - ${window.getComputedStyle(mainConetntMobile).getPropertyValue('padding-top')})`
+
+
+
+            }
 
             if(viewportWidth < 900){
                 // const contentTitle = document.querySelector('content-title');
@@ -125,8 +138,9 @@
                 // const contentTitleHeight = contentTitle.offsetHeight;
                 // const contentTableHeight = contentTable.off
 
-                mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-                mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
+                // mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
+                mainConetntMobileBg.style.height = `calc(${mainConetntMobileHeight}px + 20px)`;
+                // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
 
             }
 

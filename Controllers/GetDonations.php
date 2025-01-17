@@ -3,6 +3,7 @@
 
 $db = mysqli_connect('localhost', 'root', '', 'CVHTH');
 
+
 $results_per_page = 10;
 
 // Get the current page from the URL, default to 1 if not set
@@ -12,20 +13,23 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $results_per_page;
 
 // Get the total number of records
-$sql = "SELECT COUNT(*) AS total FROM donation";
+$sql = "SELECT COUNT(*) AS total FROM donationreceived";
 $result = mysqli_query($db, $sql);
 $row = mysqli_fetch_assoc($result);
 $total_records = $row['total'];
 
 $total_received = '';
 if ($page === 1) {
-    $sql = "SELECT sum(amount) AS total_received FROM donation";
+    $sql = "SELECT sum(amount) AS total_received FROM donationreceived";
     $result = mysqli_query($db, $sql);
     $row = mysqli_fetch_assoc($result);
     $total_received = $row['total_received'];
 }
 
-$result = mysqli_query($db, "Select * from donation LIMIT $offset, $results_per_page");
+$query = "Select dr.ID, dr.amount, dr.date, u.firstname, u.lastname from donationreceived dr, users u
+         WHERE dr.donor_ID = u.ID LIMIT $offset, $results_per_page";
+
+$result = mysqli_query($db, $query);
 
 
 $html = '';
@@ -35,7 +39,7 @@ if ($result->num_rows > 0) {
                     <div class='table-row'>
                    
                     
-                                <div>" . $row['name'] . "</div>
+                                <div>" . $row['firstname'] . " ".$row['lastname']."</div>
                                 <div style='text-align: end'>" . $row['amount'] . "</div>
                                 <div style='text-align: end'>" . $row['date'] . "</div>
                                 <div class='buttons'>

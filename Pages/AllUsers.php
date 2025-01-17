@@ -67,8 +67,9 @@
 
         </div>
         <div class="main-content main-content-mobile">
-            <div>
-                <div class="main-conent-mobile-bg"></div>
+        <div class="main-conent-mobile-bg"></div>
+            <div style="width: 100%;">
+                <!-- <div class="main-conent-mobile-bg"></div> -->
 
                 <div class="content-title mobile-ani">
                     <h3>Admins</h3>
@@ -80,12 +81,11 @@
                     <div class="table">
 
 
-                        <div class="table-header admin-header">
+                        <div class="table-header table-header-admin">
                             <div>Name</div>
                             <div >Email</div>
-                            <div style='text-align: end'>Contact No.</div>
-                            <div style='text-align: end'>DOB</div>
-                            <div style='text-align: center'>Functions</div>
+                            <div >Contact No.</div>
+                            <div style='text-align: center' >Functions</div>
 
                         </div>
 
@@ -99,11 +99,11 @@
                 <div id="loading-spinner-admin" class="loading-spinner"></div>
             </div>
 
-            <div>
-                <div class="main-conent-mobile-bg"></div>
+            <div style="width: 100%;">
+                <!-- <div class="main-conent-mobile-bg"></div> -->
 
                 <div class="content-title mobile-ani">
-                    <h3>All Donations</h3>
+                    <h3>Project Managers</h3>
                 </div>
 
 
@@ -112,17 +112,18 @@
                     <div class="table">
 
 
-                        <div class="table-header">
-                            <div>Donor Name</div>
-                            <div style='text-align: end'>Amount (RS)</div>
-                            <div style='text-align: end'>Donated Date</div>
+                        <div class="table-header table-header-pm">
+                            <div>Name</div>
+                            <div>Email</div>
+                            <div >Contact No.</div>
+                            <div>Project</div>
                             <div style='text-align: center'>Functions</div>
 
                         </div>
 
-                        <div id="onrowload"></div>
-                        <div id="table-rows"></div>
-                        <div id="table-pagi"></div>
+                        <div id="onrowload-pm"></div>
+                        <div id="table-rows-pm"></div>
+                        <div id="table-pagi-pm"></div>
 
 
 
@@ -130,14 +131,14 @@
                     </div>
                 </div>
 
-                <div id="loading-spinner" class="loading-spinner"></div>
+                <div id="loading-spinner-pm" class="loading-spinner"></div>
             </div>
 
-            <div>
-                <div class="main-conent-mobile-bg"></div>
+            <div style="width: 100%;">
+                <!-- <div class="main-conent-mobile-bg"></div> -->
 
                 <div class="content-title mobile-ani">
-                    <h3>All Donations</h3>
+                    <h3>Donors</h3>
                 </div>
 
 
@@ -146,17 +147,19 @@
                     <div class="table">
 
 
-                        <div class="table-header">
-                            <div>Donor Name</div>
-                            <div style='text-align: end'>Amount (RS)</div>
-                            <div style='text-align: end'>Donated Date</div>
+                        <div class="table-header table-header-donor">
+                            <div>&nbsp;</div>
+                            <div>Name</div>
+                            <div >Contact</div>
+                            <div >Donated (RS)</div>
+                            <div >DOB</div>
                             <div style='text-align: center'>Functions</div>
 
                         </div>
 
-                        <div id="onrowload"></div>
-                        <div id="table-rows"></div>
-                        <div id="table-pagi"></div>
+                        <div id="onrowload-donor"></div>
+                        <div id="table-rows-donor"></div>
+                        <div id="table-pagi-donor"></div>
 
 
 
@@ -164,7 +167,7 @@
                     </div>
                 </div>
 
-                <div id="loading-spinner" class="loading-spinner"></div>
+                <div id="loading-spinner-donor" class="loading-spinner"></div>
             </div>
 
         </div>
@@ -182,17 +185,21 @@
             const navHeight = document.querySelector('.navbar');
             const mainBody = document.querySelector('.main-body');
             const mainSideBar = document.querySelector('.main-sidebar');
-            const mainConetntMobile = document.querySelector('.main-content-mobile');
+            const mainConetntMobile = document.querySelector('.main-content');
             const mainConetntMobileBg = document.querySelector('.main-conent-mobile-bg');
             const navbarHeight = navHeight.offsetHeight;
             const sideBarHeight = mainSideBar.offsetHeight;
 
+           
+
             const viewportWidth = window.innerWidth;
 
             if (viewportWidth < 900) {
+                const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
+                console.log(mainConetntMobileHeight);
                 
-                mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-                mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
+                mainConetntMobileBg.style.height = `calc(${mainConetntMobileHeight}px + 20px)`;
+                // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
 
             }
 
@@ -202,7 +209,7 @@
             // console.log(mainConetntMobile.style.height,navbarHeight, sideBarHeight);
         }
 
-        resizeWindow();
+        // resizeWindow();
 
     
         function DisplayNumber(targetNumber, ID) {
@@ -230,11 +237,13 @@
 
 
         function adminsload(page) {
+            // console.log(page);
+            
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/Controllers/GetDonations.php?page=' + page, true);
+            xhr.open('GET', '/Controllers/GetUsers.php?page=' + page + '&user=' + encodeURIComponent('admin'), true);
             document.getElementById('loading-spinner-admin').style.display = 'block';
             const onload = document.getElementById('onrowload-admin');
-            onload.classList.add('onrowload-admin');
+            onload.classList.add('onrowload');
 
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
@@ -263,9 +272,88 @@
             xhr.send();
         }
 
+        function pmsload(page){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/Controllers/GetUsers.php?page=' + page + '&user=' + encodeURIComponent('project manager'), true);
+            document.getElementById('loading-spinner-pm').style.display = 'block';
+            const onload = document.getElementById('onrowload-pm');
+            onload.classList.add('onrowload');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('loading-spinner-pm').style.display = 'none';
+                    // document.getElementById('onrowload').style.display = 'none';
+                    onload.classList.remove('onrowload');
+                    var response = JSON.parse(xhr.responseText);
+
+                    const dataContainer = document.getElementById('table-rows-pm');
+                    // console.log(response.html);
+                    
+
+                    dataContainer.innerHTML = response.html;
+                    // resizeWindow();
+
+                    dataContainer.classList.remove('fade-in'); // Remove the class to reset animation
+                    void dataContainer.offsetWidth; // Trigger reflow
+                    dataContainer.classList.add('fade-in'); // Apply fade-in animation
+                    document.getElementById('table-pagi-pm').innerHTML = response.pagination;
+
+                    if (page === 1) {
+                        // document.getElementById('admin').textContent = "From " + response.total + " donations";
+                        DisplayNumber(response.total_received, 'prjmgr')
+                    }
+                }
+            };
+
+            xhr.send();
+
+        }
+
+        function donorload(page){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/Controllers/GetUsers.php?page=' + page + '&user=' + encodeURIComponent('donor'), true);
+            document.getElementById('loading-spinner-donor').style.display = 'block';
+            const onload = document.getElementById('onrowload-donor');
+            onload.classList.add('onrowload');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('loading-spinner-donor').style.display = 'none';
+                    // document.getElementById('onrowload').style.display = 'none';
+                    onload.classList.remove('onrowload');
+                    var response = JSON.parse(xhr.responseText);
+
+                    const dataContainer = document.getElementById('table-rows-donor');
+                    // console.log(response.html);
+                    
+
+                    dataContainer.innerHTML = response.html;
+                    // resizeWindow();
+
+                    dataContainer.classList.remove('fade-in'); // Remove the class to reset animation
+                    void dataContainer.offsetWidth; // Trigger reflow
+                    dataContainer.classList.add('fade-in'); // Apply fade-in animation
+                    document.getElementById('table-pagi-donor').innerHTML = response.pagination;
+
+                    if (page === 1) {
+                        // document.getElementById('admin').textContent = "From " + response.total + " donations";
+                        DisplayNumber(response.total_received, 'donor')
+                    }
+                }
+
+                resizeWindow();
+            };
+
+            xhr.send();
+
+        }
+
         // Load the first page initially
         window.onload = function() {
             adminsload(1);
+            pmsload(1);
+            donorload(1);
+
         };
 
         window.addEventListener("resize", resizeWindow);
@@ -273,7 +361,7 @@
         
         const addBtn = document.querySelector('.add-btn');
         addBtn.addEventListener('click', function() {
-            console.log('clicked');
+            // console.log('clicked');
 
             addBtn.classList.add('clicked')
 
