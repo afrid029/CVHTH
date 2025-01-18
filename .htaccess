@@ -13,10 +13,19 @@ RewriteEngine On
 
 # RewriteRule ^$ index.php [L]
 # RewriteRule ^$ Pages/AllDonations.php [L]
- RewriteRule ^$ Pages/AllUsers.php [L]
+#  RewriteRule ^$ Pages/AllUsers.php [L]
+#  RewriteRule ^$ Pages/AllSentDonation.php [L]
+#  RewriteRule ^$ Pages/AllProjects.php [L]
+ RewriteRule ^$ Pages/AllBeneficent.php [L]
 
 
-#  RewriteRule ^$ Controllers/GetUsers.php [L]
+#  RewriteRule ^$ Controllers/DBConeectivity.php [L]
+#  RewriteRule ^.*$ error.php [L]
+
+
+#  RewriteRule ^$ Controllers/GetAllProjects.php [L]
+#  RewriteRule ^$ Controllers/GetDonations.php [L]
+#  RewriteRule ^$ Controllers/GetAllBeneficent.php [L]
 
 
 # RewriteRule ^addlive$ Controllers/liveUpload.php [L]
@@ -31,9 +40,9 @@ RewriteEngine On
 # RewriteRule ^Religious-All$ ReligiousPlayList.php [L]
 # RewriteRule ^Stage-All$ StagePlayList.php [L]
 
-# RewriteRule ^.*$ error.php [L]
+
 
 # RewriteRule ^(?!home|about).*$ MassTvPhp/error.php [L]
 
-ErrorDocument 404 /error.php
+# ErrorDocument 404 /error.php
 

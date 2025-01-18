@@ -31,6 +31,7 @@
                         <div id="superadmin">01</div>
                     </div>
                 </div>
+                <hr class="line">
                 <div class="bar-row">
                     <div class="row-type">
                         Admins
@@ -68,7 +69,7 @@
         </div>
         <div class="main-content main-content-mobile">
         <div class="main-conent-mobile-bg"></div>
-            <div style="width: 100%;">
+            <div style="width: 100%; ">
                 <!-- <div class="main-conent-mobile-bg"></div> -->
 
                 <div class="content-title mobile-ani">
@@ -99,7 +100,8 @@
                 <div id="loading-spinner-admin" class="loading-spinner"></div>
             </div>
 
-            <div style="width: 100%;">
+
+            <div style="width: 100%; margin-top: 0.8rem">
                 <!-- <div class="main-conent-mobile-bg"></div> -->
 
                 <div class="content-title mobile-ani">
@@ -134,7 +136,8 @@
                 <div id="loading-spinner-pm" class="loading-spinner"></div>
             </div>
 
-            <div style="width: 100%;">
+
+            <div style="width: 100%; margin-top: 0.8rem">
                 <!-- <div class="main-conent-mobile-bg"></div> -->
 
                 <div class="content-title mobile-ani">
@@ -149,9 +152,12 @@
 
                         <div class="table-header table-header-donor">
                             <div>&nbsp;</div>
+
+                            
                             <div>Name</div>
-                            <div >Contact</div>
-                            <div >Donated (RS)</div>
+                            <div >Contact No.</div>
+                            <div style="text-align: center;" >Donated (RS)</div>
+                            <div style="visibility: hidden";></div>
                             <div >DOB</div>
                             <div style='text-align: center'>Functions</div>
 
@@ -185,7 +191,6 @@
             const navHeight = document.querySelector('.navbar');
             const mainBody = document.querySelector('.main-body');
             const mainSideBar = document.querySelector('.main-sidebar');
-            const mainConetntMobile = document.querySelector('.main-content');
             const mainConetntMobileBg = document.querySelector('.main-conent-mobile-bg');
             const navbarHeight = navHeight.offsetHeight;
             const sideBarHeight = mainSideBar.offsetHeight;
@@ -195,8 +200,10 @@
             const viewportWidth = window.innerWidth;
 
             if (viewportWidth < 900) {
+                
+            const mainConetntMobile = document.querySelector('.main-content-mobile');
                 const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
-                console.log(mainConetntMobileHeight);
+                // console.log(mainConetntMobileHeight);
                 
                 mainConetntMobileBg.style.height = `calc(${mainConetntMobileHeight}px + 20px)`;
                 // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
@@ -215,8 +222,8 @@
         function DisplayNumber(targetNumber, ID) {
             const numberElement = document.getElementById(ID);
             let currentNumber = 0;
-            const duration = 2000; // 2 seconds
-            const incrementTime = 50;
+            const duration = 1000; // 2 seconds
+            const incrementTime = 100;
             const incrementStep = targetNumber / (duration / incrementTime);
             const countUp = () => {
                 currentNumber += incrementStep;
@@ -230,9 +237,9 @@
             const interval = setInterval(countUp, incrementTime);
         }
 
-        DisplayNumber(5, 'admin');
-        DisplayNumber(10, 'prjmgr');
-        DisplayNumber(25, 'donor');
+        // DisplayNumber(5, 'admin');
+        // DisplayNumber(10, 'prjmgr');
+        // DisplayNumber(150, 'donor');
         // DisplayNumber(90000, 'total');
 
 
@@ -324,7 +331,7 @@
                     var response = JSON.parse(xhr.responseText);
 
                     const dataContainer = document.getElementById('table-rows-donor');
-                    // console.log(response.html);
+                    console.log(response.html);
                     
 
                     dataContainer.innerHTML = response.html;
@@ -341,7 +348,20 @@
                     }
                 }
 
+                let i = 0;
                 resizeWindow();
+                const resizeINterval = setInterval(()=> {
+                    console.log(i);
+
+                    i++;
+                    
+                    resizeWindow();
+
+                    if(i == 10){
+                        clearInterval(resizeINterval)
+                    }
+
+                }, 1000)
             };
 
             xhr.send();

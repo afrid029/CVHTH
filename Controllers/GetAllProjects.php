@@ -1,8 +1,5 @@
 <?php
-
-
-$db = mysqli_connect('localhost', 'root', '', 'CVHTH');
-
+include('DBConnectivity.php');
 
 $results_per_page = 10;
 
@@ -13,35 +10,41 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $results_per_page;
 
 // Get the total number of records
-$sql = "SELECT COUNT(*) AS total FROM donationreceived";
+$sql = "SELECT COUNT(*) AS total FROM project";
 $result = mysqli_query($db, $sql);
 $row = mysqli_fetch_assoc($result);
 $total_records = $row['total'];
 
 $total_received = '';
-if ($page === 1) {
-    $sql = "SELECT sum(amount) AS total_received FROM donationreceived";
-    $result = mysqli_query($db, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $total_received = $row['total_received'];
-}
+// if ($page === 1) {
+//     $sql = "SELECT sum(amount) AS total_received FROM project";
+//     $result = mysqli_query($db, $sql);
+//     $row = mysqli_fetch_assoc($result);
+//     $total_received = $row['total_received'];
+// }
 
-$query = "SELECT dr.ID, dr.amount, dr.date, u.firstname, u.lastname from donationreceived dr, users u
-         WHERE dr.donor_ID = u.ID ORDER BY dr.date desc , u.firstname asc LIMIT $offset, $results_per_page";
+$query="SELECT p.ID, p.name, p.description, GROUP_CONCAT(CONCAT(u.firstname,' ', u.lastname) SEPARATOR ', ') as manager 
+from project p, users u, projectmanager pm 
+WHERE u.ID = pm.Manager_ID 
+AND pm.Project_ID = p.ID 
+GROUP by p.ID 
+order by p.name ASC 
+LIMIT $offset, $results_per_page";
 
 $result = mysqli_query($db, $query);
-
+// echo $result;
 
 $html = '';
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
         $html .= "
                     <div class='table-row'>
                    
                     
-                                <div>" . $row['firstname'] . " ".$row['lastname']."</div>
-                                <div style='text-align: end'>" . $row['amount'] . "</div>
-                                <div style='text-align: end'>" . $row['date'] . "</div>
+                                <div>" . $row['name'] . "</div>
+                                <div>" . $row['description'] . "</div>
+                                <div >" . $row['manager'] . "</div>
+                                <div style='text-align:center' > 25 </div>
                                 <div class='buttons'>
                                         <div class='btn edit'>
                                             Edit
@@ -100,8 +103,7 @@ $pagination .= "</div>";
 echo json_encode([
     'html' => $html,
     'pagination' => $pagination,
-    'total' => $total_records,
-    'total_received' => $total_received
+    'total' => $total_records
 ]);
 
 mysqli_close($db);

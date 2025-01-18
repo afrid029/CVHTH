@@ -1,7 +1,7 @@
 <?php
 
 
-$db = mysqli_connect('localhost', 'root', '', 'CVHTH');
+include('DBConnectivity.php');
 
 
 $results_per_page = 10;
@@ -13,21 +13,34 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $results_per_page;
 
 // Get the total number of records
-$sql = "SELECT COUNT(*) AS total FROM donationreceived";
+$sql = "SELECT COUNT(*) AS total FROM donationsent";
 $result = mysqli_query($db, $sql);
 $row = mysqli_fetch_assoc($result);
 $total_records = $row['total'];
 
 $total_received = '';
+$total_sent = '';
+$current_bal='';
 if ($page === 1) {
     $sql = "SELECT sum(amount) AS total_received FROM donationreceived";
     $result = mysqli_query($db, $sql);
     $row = mysqli_fetch_assoc($result);
     $total_received = $row['total_received'];
+
+    $sql = "SELECT sum(amount) AS total_sent FROM donationsent";
+    $result = mysqli_query($db, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $total_sent = $row['total_sent'];
+
+    $current_bal = $total_received - $total_sent;
 }
 
-$query = "SELECT dr.ID, dr.amount, dr.date, u.firstname, u.lastname from donationreceived dr, users u
-         WHERE dr.donor_ID = u.ID ORDER BY dr.date desc , u.firstname asc LIMIT $offset, $results_per_page";
+$query = "SELECT b.id, b.firstname AS ben_fn, b.lastname AS ben_ln, u.firstname AS u_fn, u.lastname AS u_ln, ds.amount, ds.date
+from users u, beneficiant b, donationsent ds
+where ds.Donor_ID = u.ID
+and ds.Beneficiant_ID = b.ID
+ORDER BY ds.date DESC, b.firstName ASC
+ LIMIT $offset, $results_per_page";
 
 $result = mysqli_query($db, $query);
 
@@ -38,8 +51,10 @@ if ($result->num_rows > 0) {
         $html .= "
                     <div class='table-row'>
                    
-                    
-                                <div>" . $row['firstname'] . " ".$row['lastname']."</div>
+                                 <div >
+                            <img style='width: 20px;' src='/Assets/Images/infogreen.png' alt='info'></div>
+                                <div>" . $row['ben_fn'] . " ".$row['ben_ln']."</div>
+                                <div>" . $row['u_fn'] . " ".$row['u_ln']."</div>
                                 <div style='text-align: end'>" . $row['amount'] . "</div>
                                 <div style='text-align: end'>" . $row['date'] . "</div>
                                 <div class='buttons'>
@@ -53,9 +68,11 @@ if ($result->num_rows > 0) {
                             </div>
                             <hr>";
     }
+
 } else {
     // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
 }
+
 
 // $html .= '</tbody></table>';
 
@@ -101,7 +118,9 @@ echo json_encode([
     'html' => $html,
     'pagination' => $pagination,
     'total' => $total_records,
-    'total_received' => $total_received
+    'total_received' => $total_received,
+    'total_sent' => $total_sent,
+    'current_bal' => $current_bal,
 ]);
 
 mysqli_close($db);

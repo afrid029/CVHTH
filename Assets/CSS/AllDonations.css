@@ -50,19 +50,23 @@
 .row-type {
   font-family: "DM Serif Text", serif;
   font-size: 5vw;
-  color: #636363;
+  color: #f5f5f5;
   margin-bottom: 20px;
 }
 
 .row-value {
   display: flex;
   justify-content: space-between;
-  font-family: "Josefin Sans", serif;
+  font-family: "ubuntu", serif;
   font-size: 3vw;
+  font-weight: 700;
+  color: #3a3a3aaf;
 }
 
 .line {
   margin-bottom: 2vh;
+  border-color: transparent;
+  background-color: #6160603b;
 }
 
 .add-btn {
