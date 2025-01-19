@@ -230,6 +230,7 @@
   
   .table-row div {
     padding-right: 10px;
+    word-wrap: break-word;
   }
   
   .onrowload {
@@ -335,6 +336,10 @@
     .table-row{
       font-size: 1.05vw;
     }
+
+    .table-row img {
+      width: 30px;
+    }
   
     .pagination {
       font-size: 1vw;
@@ -372,6 +377,10 @@
   
     .table-row{
       font-size: 1.1vw;
+    }
+
+    .table-row img {
+      width: 20px;
     }
   /* 
     .pagination {
@@ -660,13 +669,24 @@
   
     .table-header{
       font-size: 2.6vw;
-      padding: 3% 5%;
+      padding: 3% 6% 3% 5%;
+      grid-template-columns: 7% 23% 20% 15% 15% 20%;
      
     }
   
     .table-row{
       font-size: 2.4vw;
-      padding: 3% 5%;
+      padding: 3% 6% 3% 5%;
+      grid-template-columns: 7% 23% 20% 15% 15% 20%;
+    }
+    .buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 75%;
+      text-align: center;
     }
   
     .pagination {

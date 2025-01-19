@@ -13,10 +13,10 @@ RewriteEngine On
 
 # RewriteRule ^$ index.php [L]
 # RewriteRule ^$ Pages/AllDonations.php [L]
-#  RewriteRule ^$ Pages/AllUsers.php [L]
+ RewriteRule ^$ Pages/AllUsers.php [L]
 #  RewriteRule ^$ Pages/AllSentDonation.php [L]
 #  RewriteRule ^$ Pages/AllProjects.php [L]
- RewriteRule ^$ Pages/AllBeneficent.php [L]
+#  RewriteRule ^$ Pages/AllBeneficent.php [L]
 
 
 #  RewriteRule ^$ Controllers/DBConeectivity.php [L]
@@ -26,6 +26,7 @@ RewriteEngine On
 #  RewriteRule ^$ Controllers/GetAllProjects.php [L]
 #  RewriteRule ^$ Controllers/GetDonations.php [L]
 #  RewriteRule ^$ Controllers/GetAllBeneficent.php [L]
+#  RewriteRule ^$ Controllers/GetAllUsers.php [L]
 
 
 # RewriteRule ^addlive$ Controllers/liveUpload.php [L]

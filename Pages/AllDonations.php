@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Assets/CSS/AllDonations.css">
 
 
@@ -20,7 +20,7 @@
             <div class="sidebar-content">
 
                 <div class="bar-row">
-                    <button class="add-btn">Add Donation</button>
+                    <button onclick="handleAdd(true)" class="add-btn">Add Donation</button>
                 </div>
                 <div class="bar-row">
                     <div class="row-type">
@@ -99,11 +99,13 @@
         <div class="footer"></div>
 
     </footer> -->
+
+    <?php include('/CVHTH/Models/AddDonation.php') ?>
     <script>
         
 
         function resizeWindow() {
-            console.log('resizing');
+            // console.log('resizing');
 
             const navHeight = document.querySelector('.navbar');
             const mainBody = document.querySelector('.main-body');
@@ -131,15 +133,49 @@
 
             }
 
-            if(viewportWidth < 900){
+            if (viewportWidth < 900) {
                 // const contentTitle = document.querySelector('content-title');
                 // const contentTable = document.querySelector('content-table');
+                const viewPortHeight = window.innerHeight
+
+                const restPage = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
+                const restPagePx = viewPortHeight - navbarHeight - sideBarHeight;
+                const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
+                console.log(restPagePx, mainConetntMobileHeight);
+
+                if (restPagePx > mainConetntMobileHeight) {
+                    // console.log('great');
+                    // console.log('rest ', restPagePx);
+
+                    mainConetntMobileBg.style.height = restPage;
+                     mainConetntMobile.style.height = restPage;
+
+                    // requestAnimationFrame(()=>{
+                       
+                    // })
+                } else {
+                    // console.log('less');
+
+                    // requestAnimationFrame(()=>{
+                        
+                    // })
+                    mainConetntMobile.style.height = 'auto';
+                    
+                    // requestAnimationFrame(() => {
+                    //     console.log(mainConetntMobile.offsetHeight);
+
+                    //     // Apply the new height to the background
+                        
+                    // });
+                    mainConetntMobileBg.style.height = `calc(${mainConetntMobile.offsetHeight}px + 20px)`;
+                }
+
 
                 // const contentTitleHeight = contentTitle.offsetHeight;
                 // const contentTableHeight = contentTable.off
 
                 // mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-                mainConetntMobileBg.style.height = `calc(${mainConetntMobileHeight}px + 20px)`;
+                // mainConetntMobileBg.style.height = `calc(${mainConetntMobileHeight}px + 20px)`;
                 // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
 
             }
@@ -165,7 +201,7 @@
             // console.log(mainConetntMobile.style.height,navbarHeight, sideBarHeight);
         }
 
-        resizeWindow();
+        // resizeWindow();
 
         window.addEventListener("resize", resizeWindow);
         // console.log(navbarHeight, sideBarHeight);
@@ -188,10 +224,6 @@
             };
             const interval = setInterval(countUp, incrementTime);
         }
-
-        DisplayNumber(70000, 'current');
-        DisplayNumber(20000, 'spent');
-        // DisplayNumber(90000, 'total');
 
         const addBtn = document.querySelector('.add-btn');
         addBtn.addEventListener('click', function() {
@@ -232,6 +264,8 @@
                     if (page === 1) {
                         document.getElementById('count').textContent = "From " + response.total + " donations";
                         DisplayNumber(response.total_received, 'total')
+                        DisplayNumber(response.total_sent, 'spent')
+                        DisplayNumber(response.current_bal, 'current')
                     }
                 }
             };
@@ -243,6 +277,25 @@
         window.onload = function() {
             loadPage(1);
         };
+
+        function handleAdd(value){
+            const model = document.getElementById('addModel');
+            if(value){
+                loadDonors(); 
+                model.style.display = 'flex';
+                setTop();
+                window.addEventListener('resize', (()=>{
+                    setTop();
+                }))
+            } else {
+                model.style.display = 'none' ;
+                document.querySelector('.dropdown-container').style.display = 'none';
+                document.getElementById('select-donor').setAttribute('value','')
+                document.getElementById('select-donor-value').setAttribute('value','')
+                document.getElementById('select-amount').value = '';
+                document.getElementById('select-date').value = '';
+            }
+        }
     </script>
 
 </body>

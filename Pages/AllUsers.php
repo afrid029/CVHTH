@@ -4,7 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Assets/CSS/AllUsers.css">
 
 
@@ -20,7 +21,7 @@
             <div class="sidebar-content">
 
                 <div class="bar-row">
-                    <button class="add-btn">Add User</button>
+                    <button class="add-btn" onclick="handleAdd(true)">Add User</button>
                 </div>
                 <div class="bar-row">
                     <div class="row-type">
@@ -184,9 +185,10 @@
         <div class="footer"></div>
 
     </footer> -->
+    <?php include('/CVHTH/Models/AddUser.php') ?>
     <script>
         function resizeWindow() {
-            console.log('resizing');
+            // console.log('resizing')
 
             const navHeight = document.querySelector('.navbar');
             const mainBody = document.querySelector('.main-body');
@@ -331,7 +333,7 @@
                     var response = JSON.parse(xhr.responseText);
 
                     const dataContainer = document.getElementById('table-rows-donor');
-                    console.log(response.html);
+                    // console.log(response.html);
                     
 
                     dataContainer.innerHTML = response.html;
@@ -351,7 +353,7 @@
                 let i = 0;
                 resizeWindow();
                 const resizeINterval = setInterval(()=> {
-                    console.log(i);
+                    // console.log(i);
 
                     i++;
                     
@@ -381,7 +383,7 @@
         
         const addBtn = document.querySelector('.add-btn');
         addBtn.addEventListener('click', function() {
-            // console.log('clicked');
+            console.log('clicked');
 
             addBtn.classList.add('clicked')
 
@@ -389,6 +391,41 @@
                 addBtn.classList.remove('clicked')
             }, 1000)
         })
+
+        function handleAdd(value){
+            const model = document.getElementById('addModel');
+            if(value){
+                loadProjects(); 
+                loadDonors();
+                model.style.display = 'flex';
+                setTop();
+                window.addEventListener('resize', (()=>{
+                    setTop();
+                }))
+            } else {
+                console.log('falsseee');
+                
+                model.style.display = 'none' ;
+                document.getElementById('dropdown-container-project').style.display = 'none';
+                document.getElementById('dropdown-container-donor').style.display = 'none';
+                document.getElementById('select-fname').value='';
+                document.getElementById('select-lname').value = '';
+                document.getElementById('select-email').value='';
+                document.getElementById('select-role').value = 'none';
+                document.getElementById('select-contact').value = '';
+                document.getElementById('select-dob').value = '';
+                document.getElementById('select-donor').removeAttribute('value');
+                document.getElementById('select-donor-value').removeAttribute('value');
+                document.getElementById('select-project').removeAttribute('value');
+                document.getElementById('select-project-value').removeAttribute('value');
+
+                // document.getElementById('dropdown-list-donor').removeEventListener('click');
+                // document.getElementById('dropdown-list-project').removeEventListener('click')
+                // document.getElementById('donorSearchkey').removeEventListener('input');
+                // document.getElementById('projectSearchkey').removeEventListener('input');
+                
+            }
+        }
     </script>
 
 </body>

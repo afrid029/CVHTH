@@ -40,7 +40,7 @@ if (mysqli_num_rows($result) > 0) {
                    
                     
                                 <div >
-                            <img style='width: 20px;' src='/Assets/Images/infogreen.png' alt='info'></div>
+                            <img src='/Assets/Images/infoorange.png' alt='info'></div>
                                 <div>" . $row['firstName'] ." ". $row['lastName'] ."</div>
                                 <div style='text-align: center'>" . $row['NIC'] . "</div>
                                 <div style='text-align: start'>" . $row['name'] . "</div>

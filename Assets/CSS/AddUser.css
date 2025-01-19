@@ -1,0 +1,429 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-size: cover;
+    /* animation: ModelLoad 1s linear; */
+    animation: model 0.5s ease alternate;
+  }
+  
+  .modal-content {
+    background-color: white;
+    position: relative;
+    /* padding: 20px; */
+    border-radius: 8px;
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    box-shadow: 0px 0px 15px rgba(179, 179, 179, 0.9);
+    transition: box-shadow 0.5s ease;
+    overflow: auto;
+  }
+  
+  @keyframes model {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .closing {
+    animation: model-close 0.5s ease alternate;
+  }
+  
+  @keyframes model-close {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  
+    100% {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+  
+  .modal-content:hover {
+    box-shadow: 0px 0px 30px rgba(238, 238, 238, 0.9);
+  }
+  
+  .close {
+    background-color: #5a0f0f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+    /* position: absolute; */
+    /* top: 10px;
+    right: 10px; */
+    font-size: 1vw;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid white;
+    transition: all 0.5s ease;
+    align-items: center;
+    display: inline-flex;
+  }
+  
+  .close:hover {
+    /* background-color: transparent;
+    border-color: red;
+    color: red; */
+  }
+  
+  .Form {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: auto;
+    position: relative;
+    padding-bottom: 20px;
+   
+  }
+
+  .div {
+    background-image: url(/Assets/Images/bluredbg.png);
+    height: auto;
+    background-size: contain;
+    overflow: visible;
+    height: 100vh;
+    position: fixed;
+    /* z-index: 0; */
+    width: 100%;
+  }
+  
+  .FormRow {
+    display: flex;
+    width: 95%;
+    flex-direction: column;
+    margin: auto;
+    margin-bottom: 3vh !important;
+
+  }
+
+  
+  .FormRow input, .FormRow select {
+    height: 40px;
+    border-radius: 7px;
+    box-shadow: 0 0 5px #00000030;
+    border-color: transparent;
+    width: 100%;
+    font-family: 'Lato', serif;
+    padding-left: 5px;
+    font-weight: 600;
+    color: #454444f0;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 10px #000000c4;
+  }
+
+  .dropdown-container {
+    display: none;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .dropdown-list {
+    width: 100%;
+    /* From https://css.glass */
+background: rgba(109, 108, 108, 0.22);
+/* border-radius: 16px; */
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+
+    display: inline-flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2% 3%;
+    border-radius: 10px;
+    margin-top: 10px;
+    height: auto;
+    overflow: auto;
+  }
+
+  .dropdown-option {
+    margin-bottom: 1vh;
+    cursor: pointer;
+    font-family: 'Lato', serif;
+    font-weight: 600;
+    color: #333232bf;
+  }
+
+  .line {
+    width: 100%;
+  }
+
+  .small {
+    color: red;
+    text-shadow: 0 0 5px rgb(228, 153, 153);
+    text-align: start;
+    font-family:serif;
+    margin-top: 5px;
+    /* display: none; */
+  }
+
+  .green {
+    color: rgb(6, 46, 6);
+    text-shadow: 0 0 5px rgb(58, 146, 47);
+  }
+
+  .banner {
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    text-align: left;
+    font-family: 'ubuntu', serif;
+    font-size: 2vw;
+    font-weight: 700;
+    color: #f8f4f4;
+    position: fixed;
+    z-index: 10;
+    background-color: rgb(143, 99, 99);
+    display: flex;
+    justify-content: space-between;
+    /* width: calc(100% - 40px); */
+    width: 100%;
+    top: 0;
+    padding-left: 2vw;
+    padding-right: 2vw;
+  }
+
+  .button {
+    display: flex;
+    justify-content: center;
+  }
+
+  .submit {
+    background-color: rgb(109, 20, 6);
+    border-radius: 5px;
+    width: 50%;
+    border: none;
+    height: 6vh;
+    color: white;
+    font-family: "Inter", serif;
+    cursor: pointer;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+
+  .submit:disabled {
+    background-color: #160a0a;
+  }
+
+  
+  @media (min-width: 1600px) {
+    .banner {
+     font-size: 1.5vw;
+    }
+ 
+    .Form {
+     width: 65%;
+    }
+ 
+    .FormRow input, .FormRow select {
+     height:70px ;
+     font-size: 1vw;
+     padding-left: 30px;
+     padding-right: 30px;
+    }
+ 
+    .dropdown-list {
+     max-height: 20vh;
+    }
+ 
+    .dropdown-option {
+     font-size: 1vw;
+    }
+ 
+    .small {
+     font-size: 1vw;
+    }
+ 
+    .submit {
+     font-size: 1.3vw;
+    }
+ 
+    .close {
+     padding: 8px 12px;
+    }
+   }
+   
+   @media (max-width: 1600px) {
+     .banner {
+       font-size: 2vw;
+      }
+   
+      .Form {
+       width: 65%;
+      }
+   
+      .FormRow input, .FormRow select {
+       height:45px ;
+       font-size: 0.8vw;
+       padding-left: 10px;
+       padding-right: 10px;
+      }
+   
+      .small {
+       font-size: 0.8vw;
+      }
+ 
+      .dropdown-option {
+       font-size: 0.8vw;
+      }
+      .dropdown-list {
+       max-height: 30vh;
+      }
+   
+      .submit {
+       font-size: 1.2vw;
+      }
+   
+      .close {
+       padding: 8px 12px;
+      }
+    
+   }
+   
+   @media (max-width: 1200px) {
+ 
+   
+      .FormRow input, .FormRow select {
+       font-size: 1vw;
+      }
+      .dropdown-option {
+       font-size: 1vw;
+      }
+   
+      .small {
+       font-size: 1vw;
+      }
+   
+    
+   }
+   
+   @media (max-width: 900px) {
+ 
+ 
+     .banner {
+       font-size: 3vw;
+      }
+   
+      .Form {
+       width: 65%;
+      }
+   
+      .FormRow input, .FormRow select {
+       height:45px ;
+       font-size: 1.2vw;
+       padding-left: 10px;
+       padding-right: 10px;
+      }
+   
+      .small {
+       font-size: 1.2vw;
+      }
+ 
+      .dropdown-option {
+       font-size: 1.2vw;
+      }
+ 
+      .dropdown-list {
+       max-height: 30vh;
+      }
+   
+      .submit {
+       font-size: 2vw;
+       height: 4vh;
+      }
+   
+      .close {
+       padding: 8px 12px;
+       font-size: 1.2vw;
+      }
+    
+ 
+     
+   }
+   
+   @media (max-width: 786px) {
+     .FormRow input, .FormRow select {
+       font-size: 1.4vw;
+      }
+ 
+      .small, .dropdown-option {
+       font-size: 1.4vw;
+      }
+ 
+      .search-mobile {
+       width: 15% !important;
+      }
+   }
+   
+   @media (max-width: 600px) {
+ 
+     .Form {
+       width: 80%;
+     }
+ 
+     .banner {
+       font-size: 5.2vw;
+     }
+ 
+     .small {
+       font-size: 5.2vw;
+     }
+ 
+     .close {
+       font-size: 3.2vw;
+     }
+     .FormRow input,.FormRow select {
+       font-size: 2vw;
+      }
+ 
+      .small, .dropdown-option {
+       font-size: 2vw;
+      }
+ 
+ 
+      .search-mobile {
+       width: 20% !important;
+      }
+      .searchbar-mobile {
+       width: 70% !important;
+      }
+    
+   }
+   
+   @media (max-width: 400px) {
+    
+     .FormRow input,.FormRow select {
+       font-size: 2.2vw;
+      }
+ 
+      .small, .dropdown-option {
+       font-size: 2.2vw;
+      }
+ 
+   }
+  

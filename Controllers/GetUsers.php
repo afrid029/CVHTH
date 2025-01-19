@@ -1,7 +1,7 @@
 <?php
 
 
-$db = mysqli_connect('localhost', 'root', '', 'CVHTH');
+include('DBConnectivity.php');
 
 $role = urldecode($_GET['user']);
 
@@ -72,14 +72,14 @@ if ($role === 'admin') {
     }
 } else if ($role === 'project manager') {
     // echo("into PM");
-    $query = "SELECT u.ID, u.firstname, u.lastname, u.email, u.contactno, GROUP_CONCAT(p.name SEPARATOR ', ') AS name
-        FROM users u, projectmanager pm, project p
-        WHERE u.ID = pm.manager_id
-        AND pm.project_ID = p.ID
-        AND role = '$role' 
-        GROUP BY u.ID
-        ORDER BY u.firstname
-        LIMIT $offset, $results_per_page";
+    $query = "SELECT u.ID, u.firstname, u.lastname, u.email, u.contactno, NVL(GROUP_CONCAT(p.name SEPARATOR ', '), 'Not Assigned') AS name
+            FROM users u 
+            LEFT JOIN projectmanager pm ON u.ID = pm.Manager_ID
+            LEFT JOIN project p ON pm.Project_ID = p.ID
+            WHERE role = '$role' 
+            GROUP BY u.ID
+            ORDER BY u.firstname
+            LIMIT $offset, $results_per_page";
 
     $result = mysqli_query($db, $query);
 
@@ -118,7 +118,7 @@ if ($role === 'admin') {
                             <div class='table-row $addonClass'>
                            
                                         <div >
-                            <img style='width: 20px;' src='/Assets/Images/info.png' alt='info'></div>
+                            <img src='/Assets/Images/info.png' alt='info'></div>
                                         <div>" . $row['firstname'] . " " . $row['lastname'] . "</div>
                                         <div  >" . $row['contactno'] . "</div>
                                         <div style = 'text-align: right;'>" . $row['donation'] . "</div>

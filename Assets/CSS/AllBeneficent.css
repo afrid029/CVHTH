@@ -227,6 +227,8 @@
     font-family: "Inter", serif;
     /* margin-bottom: 1px; */
   }
+
+ 
   
   .table-row div {
     padding-right: 10px;
@@ -335,6 +337,10 @@
     .table-row{
       font-size: 1.05vw;
     }
+
+    .table-row img {
+      width: 30px;
+    }
   
     .pagination {
       font-size: 1vw;
@@ -372,6 +378,10 @@
   
     .table-row{
       font-size: 1.1vw;
+    }
+
+    .table-row img {
+      width: 20px;
     }
   /* 
     .pagination {
@@ -665,6 +675,10 @@
       font-size: 2.4vw;
       padding: 3% 5%;
       word-wrap: break-word;
+    }
+
+    .table-row img {
+      width: 18px;
     }
   
     .pagination {

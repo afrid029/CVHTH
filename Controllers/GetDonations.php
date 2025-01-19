@@ -1,7 +1,7 @@
 <?php
 
 
-$db = mysqli_connect('localhost', 'root', '', 'CVHTH');
+include('DBConnectivity.php');
 
 
 $results_per_page = 10;
@@ -19,11 +19,20 @@ $row = mysqli_fetch_assoc($result);
 $total_records = $row['total'];
 
 $total_received = '';
+$total_sent = '';
+$current_bal='';
 if ($page === 1) {
     $sql = "SELECT sum(amount) AS total_received FROM donationreceived";
     $result = mysqli_query($db, $sql);
     $row = mysqli_fetch_assoc($result);
     $total_received = $row['total_received'];
+
+    $sql = "SELECT sum(amount) AS total_sent FROM donationsent";
+    $result = mysqli_query($db, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $total_sent = $row['total_sent'];
+
+    $current_bal = $total_received - $total_sent;
 }
 
 $query = "SELECT dr.ID, dr.amount, dr.date, u.firstname, u.lastname from donationreceived dr, users u
@@ -33,8 +42,8 @@ $result = mysqli_query($db, $query);
 
 
 $html = '';
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
         $html .= "
                     <div class='table-row'>
                    
@@ -101,7 +110,9 @@ echo json_encode([
     'html' => $html,
     'pagination' => $pagination,
     'total' => $total_records,
-    'total_received' => $total_received
+    'total_received' => $total_received,
+    'total_sent' => $total_sent,
+    'current_bal' => $current_bal,
 ]);
 
 mysqli_close($db);

@@ -72,9 +72,10 @@
 
 
                     <div class="table-header">
+                        <div>&nbsp;</div>
                         <div>Project</div>
-                        <div>Description (RS)</div>
-                        <div>Managers</div>
+                        <div>Description</div>
+                        <div>Manager(s)</div>
                         <div style='text-align:center' >Grantees</div>
                         <div style='text-align: center'>Functions</div>
 

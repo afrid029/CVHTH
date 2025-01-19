@@ -23,12 +23,24 @@ $total_received = '';
 //     $total_received = $row['total_received'];
 // }
 
-$query="SELECT p.ID, p.name, p.description, GROUP_CONCAT(CONCAT(u.firstname,' ', u.lastname) SEPARATOR ', ') as manager 
-from project p, users u, projectmanager pm 
-WHERE u.ID = pm.Manager_ID 
-AND pm.Project_ID = p.ID 
-GROUP by p.ID 
-order by p.name ASC 
+$query="SELECT 
+    p.ID,
+    p.name AS projectName,
+    p.description AS projectDescription,
+    GROUP_CONCAT(CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', ') AS managers,
+    (SELECT COUNT(*) 
+     FROM projectbeneficiant pb_sub 
+     WHERE pb_sub.Project_ID = p.ID) AS beneCount
+FROM 
+    project p
+JOIN 
+    projectmanager pm ON p.ID = pm.Project_ID
+JOIN 
+    users u ON u.ID = pm.Manager_ID
+GROUP BY 
+    p.ID, p.name, p.description
+ORDER BY 
+    p.name ASC
 LIMIT $offset, $results_per_page";
 
 $result = mysqli_query($db, $query);
@@ -41,10 +53,12 @@ if (mysqli_num_rows($result) > 0) {
                     <div class='table-row'>
                    
                     
-                                <div>" . $row['name'] . "</div>
-                                <div>" . $row['description'] . "</div>
-                                <div >" . $row['manager'] . "</div>
-                                <div style='text-align:center' > 25 </div>
+                                <div >
+                            <img src='/Assets/Images/infoorange.png' alt='info'></div>
+                                <div>" . $row['projectName'] . "</div>
+                                <div>" . $row['projectDescription'] . "</div>
+                                <div >" . $row['managers'] . "</div>
+                                <div style='text-align:center' > " . $row['beneCount'] . " </div>
                                 <div class='buttons'>
                                         <div class='btn edit'>
                                             Edit

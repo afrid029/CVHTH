@@ -83,7 +83,7 @@
 }
 
 .clicked {
-  animation: btnclicked 1s ease forwards;
+  animation: btnclicked 0.2s ease forwards;
 }
 
 @keyframes btnclicked {

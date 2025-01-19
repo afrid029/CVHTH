@@ -46,13 +46,13 @@ $result = mysqli_query($db, $query);
 
 
 $html = '';
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
         $html .= "
                     <div class='table-row'>
                    
                                  <div >
-                            <img style='width: 20px;' src='/Assets/Images/infogreen.png' alt='info'></div>
+                            <img src='/Assets/Images/infogreen.png' alt='info'></div>
                                 <div>" . $row['ben_fn'] . " ".$row['ben_ln']."</div>
                                 <div>" . $row['u_fn'] . " ".$row['u_ln']."</div>
                                 <div style='text-align: end'>" . $row['amount'] . "</div>
