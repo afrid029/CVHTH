@@ -14,13 +14,15 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <!-- <div onclick="handleAdd(false)" class='close'>Close</div> -->
             <div class="banner">
-                Add Donation
+                Receive Donation
                 <div onclick="handleAdd(false)" class='close'>Close</div>
             </div>
 
             <form action="/#" method="post" oninput="validateForm()" onsubmit="return submitLoginform()">
                 <div class="div"> </div>
                 <div class="Form">
+
+                    <!-- Select Donor -->
                     <div class="FormRow">
 
                         <input type="text" name="donor" id="select-donor-value" hidden required>
@@ -50,6 +52,7 @@
                        </select> -->
                     </div>
 
+                    <!-- Amount -->
                     <div class="FormRow">
 
                         <input
@@ -62,6 +65,8 @@
 
                         <small class="small">Amount is required</small>
                     </div>
+
+                    <!-- date -->
 
                     <div class="FormRow">
 
@@ -104,13 +109,19 @@
 </html>
 
 <script>
+    const today = new Date();
+    const localDate = today.toLocaleDateString('en-CA');
+    // Set the max attribute to today's date
+    document.getElementById('select-date').setAttribute('max', localDate);
+
+
     let donorResponse;
 
     function loadDonors() {
 
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/Controllers/GetAllUsers.php?role='+ encodeURIComponent('donor'), true);
+        xhr.open('GET', '/Controllers/GetAllUsers.php?role=' + encodeURIComponent('donor'), true);
         // document.getElementById('loading-spinner').style.display = 'block';
         // const onload = document.getElementById('onrowload');
         // onload.classList.add('onrowload');
@@ -217,6 +228,7 @@
         if (event.target.classList.contains('dropdown-option')) {
             selectDonor.setAttribute('value', event.target.textContent)
             selectDonorValue.setAttribute('value', event.target.getAttribute('value'))
+            validateForm();
 
             openSelect(false);
 
@@ -235,7 +247,7 @@
         let button = document.getElementById('submit');
 
 
-        // console.log(donor.value , date.value , amount.value.length);
+        console.log(donor.value, date.value, amount.value.length);
 
 
 
@@ -248,14 +260,8 @@
             // console.log('false');
 
         }
-        // console.log(email);
+        //    event.target.style.border = '1px solid green';
 
-        // let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        // if (!emailPattern.test(email)) {
-        //     event.target.style.border = '1px solid red';
-        // } else {
-        //     event.target.style.border = '1px solid green';
-        // }
     }
 
     function submitLoginform() {

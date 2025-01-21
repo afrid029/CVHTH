@@ -44,8 +44,8 @@
                     <!-- Select Managers -->
 
                     <div class="FormRow">
-                        <input type="text" name="manager" id="select-manager-value" hidden required>
-                        <input style="cursor: pointer;" type="text" id="select-manager" placeholder="Assign project manager(s)" onclick="openSelect('dropdown-container-manager',true)" readonly required>
+                        <input type="text" name="manager" id="select-manager-value" hidden>
+                        <input style="cursor: pointer;" type="text" id="select-manager" placeholder="Assign project manager(s)" onclick="openSelect('dropdown-container-manager',true)" readonly>
 
                         <div class="dropdown-container" id="dropdown-container-manager">
                             <div style="width: 100%;">
@@ -65,8 +65,8 @@
 
                     <!-- Select Beneficents -->
                     <div class="FormRow">
-                        <input type="text" name="beneficent" id="select-beneficent-value" hidden required>
-                        <input style="cursor: pointer;" type="text" id="select-beneficent" placeholder="Add Beneficiaries" onclick="openSelect('dropdown-container-beneficent',true)" readonly required>
+                        <input type="text" name="beneficent" id="select-beneficent-value" hidden >
+                        <input style="cursor: pointer;" type="text" id="select-beneficent" placeholder="Add Beneficiaries" onclick="openSelect('dropdown-container-beneficent',true)" readonly >
 
                         <div class="dropdown-container" id="dropdown-container-beneficent">
                             <div style="width: 100%;">
@@ -256,7 +256,7 @@
 
     function loadBeneficents() {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/Controllers/GetNewBeneficent.php', true);
+        xhr.open('GET', '/Controllers/GetBeneficersOnly.php', true);
         // document.getElementById('loading-spinner').style.display = 'block';
         // const onload = document.getElementById('onrowload');
         // onload.classList.add('onrowload');
@@ -367,5 +367,13 @@
         }
 
 
+    }
+
+    function submitLoginform() {
+        let button = document.getElementById('submit');
+        let button2 = document.getElementById('submiting');
+        button.style.display = 'none';
+        button2.style.display = 'block';
+        return true;
     }
 </script>

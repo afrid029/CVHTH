@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Assets/CSS/AllBeneficent.css">
 
 
@@ -12,15 +12,15 @@
 
 <body style="width: 100vw; display:contents;">
 
-<?php include('../Components/NavBar.php') ?>
-   
+    <?php include('../Components/NavBar.php') ?>
+
 
     <div class="main-body">
         <div class="main-sidebar">
             <div class="sidebar-content">
 
                 <div class="bar-row">
-                    <button class="add-btn">Add Beneficiar</button>
+                    <button onclick="handleAdd(true)" class="add-btn">Add Beneficiary</button>
                 </div>
                 <div class="bar-row">
                     <div class="row-type">
@@ -100,9 +100,9 @@
         <div class="footer"></div>
 
     </footer> -->
-    <script>
-        
 
+    <?php include('/CVHTH/Models/AddBeneficent.php') ?>
+    <script>
         function resizeWindow() {
             console.log('resizing');
 
@@ -115,14 +115,14 @@
             // console.log(navHeight.offsetHeight);
             const navbarHeight = navHeight.offsetHeight;
             const sideBarHeight = mainSideBar.offsetHeight;
-            const mainConetntMobileHeight = mainConetntMobile.offsetHeight; 
+            const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
 
             const viewportWidth = window.innerWidth;
 
-            if(viewportWidth > 900 ){
+            if (viewportWidth > 900) {
                 const contentTitle = document.querySelector('.content-title');
                 console.log(window.getComputedStyle(mainConetntMobile).getPropertyValue('padding-top'));
-                
+
                 const contentTitleHeight = contentTitle.offsetHeight;
                 const contentTable = document.querySelector('.content-table');
 
@@ -147,24 +147,24 @@
                     console.log('rest ', restPagePx);
 
                     mainConetntMobileBg.style.height = restPage;
-                     mainConetntMobile.style.height = restPage;
+                    mainConetntMobile.style.height = restPage;
 
                     // requestAnimationFrame(()=>{
-                       
+
                     // })
                 } else {
                     console.log('less');
 
                     // requestAnimationFrame(()=>{
-                        
+
                     // })
                     mainConetntMobile.style.height = 'auto';
-                    
+
                     // requestAnimationFrame(() => {
                     //     console.log(mainConetntMobile.offsetHeight);
 
                     //     // Apply the new height to the background
-                        
+
                     // });
                     mainConetntMobileBg.style.height = `calc(${mainConetntMobile.offsetHeight}px + 20px)`;
                 }
@@ -278,6 +278,57 @@
         window.onload = function() {
             loadPage(1);
         };
+
+        function handleAdd(value) {
+            const model = document.getElementById('addModel');
+            if (value) {
+                loadProjects();
+                // loadDonors();
+                // loadManagers();
+                // loadBeneficents();
+                model.style.display = 'flex';
+                document.getElementById('select-image').addEventListener('change', PreviewImages);
+                setTop();
+                window.addEventListener('resize', (() => {
+                    setTop();
+                }))
+            } else {
+                // console.log('falsseee');
+
+                model.style.display = 'none';
+                document.querySelectorAll('.dropdown-container').forEach((ele) => {
+                    ele.style.display = 'none'
+                });
+
+                document.getElementById('select-fname').value='';
+                document.getElementById('select-lname').value='';
+                document.getElementById('select-nic').value='';
+                document.getElementById('select-gender').value='none';
+                document.getElementById('select-date').value='';
+                document.getElementById('select-address').value='';
+                document.getElementById('select-gs').value='';
+                document.getElementById('select-grade').value='';
+                document.getElementById('select-school').value='';
+                document.getElementById('select-dependant').removeAttribute('value');
+                document.getElementById('select-dependant-value').removeAttribute('value');
+                document.getElementById('select-project-value').removeAttribute('value');
+                document.getElementById('select-project').removeAttribute('value');
+                document.getElementById('select-relation').value='';
+                document.getElementById('select-dname').value='';
+                document.getElementById('projectSearchkey').value='';
+                document.getElementById('select-image').value='';
+                document.getElementById('preview-container').innerHTML = '';
+                document.getElementById('submit').disabled = true;
+
+                document.getElementById('select-image').removeEventListener('change', PreviewImages);
+                document.getElementById('projectSearchkey').removeEventListener('input', projectSearchListener);
+                document.getElementById('dropdown-list-project').removeEventListener('click', selectProjects);
+
+               
+
+              
+            }
+        }
     </script>
 
 </body>

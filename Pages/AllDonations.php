@@ -295,6 +295,7 @@
                 document.getElementById('select-amount').value = '';
                 document.getElementById('select-date').value = '';
                 document.getElementById('searchkey').value = '';
+                document.getElementById('submit').disabled = true;
 
                 document.getElementById('searchkey').removeEventListener('input', donorSearchListener);
                 document.getElementById('dropdown-list').removeEventListener('click', selectDonor)

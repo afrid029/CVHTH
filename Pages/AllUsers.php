@@ -424,6 +424,7 @@
                 document.getElementById('select-project-cont').style.display = 'none';
                 document.getElementById('select-donor-cont').style.display = 'none';
                 document.getElementById('select-dob-cont').style.display = 'none';
+                document.getElementById('submit').disabled = true;
 
                 document.getElementById('projectSearchkey').removeEventListener('input', projectSearchListener);
 

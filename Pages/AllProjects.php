@@ -309,6 +309,7 @@
                 document.getElementById('select-description').value= ''
                 document.getElementById('managerSearchkey').value = ''
                 document.getElementById('beneficentSearchkey').value = ''
+                document.getElementById('submit').disabled = true;
 
                 document.getElementById('managerSearchkey').removeEventListener('input', managerSearchListener);
                 document.getElementById('dropdown-list-manager').removeEventListener('click', selectDonors);

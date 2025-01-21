@@ -21,18 +21,25 @@
             <form action="#" method="post" oninput="validateForm()" onsubmit="return submitLoginform()">
                 <div class="div"> </div>
                 <div class="Form">
+                    <!-- First Name -->
                     <div class="FormRow">
                         <input type="text" id="select-fname" name="fname" placeholder="First Name" required>
                         <small class="small">First name is required</small>
                     </div>
+
+                    <!-- Last Name -->
                     <div class="FormRow">
                         <input type="text" id="select-lname" name="lname" placeholder="Last Name" required>
                         <small class="small">Last name is required</small>
                     </div>
+
+                    <!-- Email -->
                     <div class="FormRow">
                         <input type="email" id="select-email" name="email" placeholder="Email" required>
                         <small class="small">Email is required</small>
                     </div>
+
+                    <!-- Role -->
                     <div class="FormRow">
 
                         <select name="role" id="select-role" required>
@@ -44,6 +51,8 @@
 
                         <small class="small">Role is required</small>
                     </div>
+
+                    <!-- Contact No -->
                     <div class="FormRow">
 
                         <input type="text" id="select-contact" name="contact" placeholder="Contact Number" required>
@@ -51,6 +60,7 @@
                         <small class="small">Contact Number is required</small>
                     </div>
 
+                    <!-- DOB of Donor -->
                     <div class="FormRow">
                         <div style="display: none;" id="select-dob-cont">
                         <small style="color: gray; display: flex; width: 100%; font-size: 12px; margin-bottom: 5px; font-family: ubuntu, serif">Date of Birth</small>
@@ -60,9 +70,10 @@
 
                     </div>
 
+                    <!-- Project Selection of PM -->
                     <div style="display: none;" id="select-project-cont" class="FormRow">
-                        <input type="text" name="project" id="select-project-value" hidden required>
-                        <input style="cursor: pointer;" type="text" id="select-project" placeholder="Assign Project(s)" onclick="openSelect('dropdown-container-project',true)" readonly required>
+                        <input type="text" name="project" id="select-project-value" hidden>
+                        <input style="cursor: pointer;" type="text" id="select-project" placeholder="Assign Project(s)" onclick="openSelect('dropdown-container-project',true)" readonly>
 
                         <div class="dropdown-container" id="dropdown-container-project">
                             <div style="width: 100%;">
@@ -83,9 +94,10 @@
                         <small class="small green">Optional. You can assign projects later.</small>
                     </div>
 
+                    <!-- Donor selection for PM -->
                     <div style="display: none;" id="select-donor-cont" class="FormRow">
-                        <input type="text" name="donor" id="select-donor-value" hidden required>
-                        <input style="cursor: pointer;" type="text" id="select-donor" placeholder="Assign donors" onclick="openSelect('dropdown-container-donor',true)" readonly required>
+                        <input type="text" name="donor" id="select-donor-value" hidden >
+                        <input style="cursor: pointer;" type="text" id="select-donor" placeholder="Assign donors" onclick="openSelect('dropdown-container-donor',true)" readonly>
 
                         <div class="dropdown-container" id="dropdown-container-donor">
                             <div style="width: 100%;">
@@ -134,6 +146,12 @@
 </html>
 
 <script>
+
+const today = new Date();
+    const localDate = today.toLocaleDateString('en-CA');
+    // Set the max attribute to today's date
+    document.getElementById('select-dob').setAttribute('max', localDate);
+
     let projectResponse;
     let donorResponse;
 
@@ -457,9 +475,9 @@
 
 
 
-        // console.log(role.value);
+        console.log(role);
 
-        if (emailPattern.test(email) && firstname.length > 0 && lastname.length > 0 && role.length > 0 && contact.length > 0) {
+        if (emailPattern.test(email) && firstname.length > 0 && lastname.length > 0 && role !== 'none' && contact.length > 0) {
             button.disabled = false;
         } else {
             button.disabled = true;

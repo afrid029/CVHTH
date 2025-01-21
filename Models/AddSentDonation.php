@@ -18,7 +18,7 @@
                 <div onclick="handleAdd(false)" class='close'>Close</div>
             </div>
 
-            <form action="/#" method="post" oninput="validateForm()" onsubmit="return submitLoginform()">
+            <form action="/#" method="post" oninput="validateForm()" onsubmit="return submitLoginform()" enctype="multipart/form-data">
             <!-- <form action="/#" method="post"> -->
                 <div class="div"> </div>
                 <div class="Form">
@@ -46,7 +46,7 @@
                     <!-- Select Date -->
                     <div class="FormRow">
                         <small style="color: gray; display: flex; width: 100%; font-size: 12px; margin-bottom: 5px; font-family: Lato, serif">Donated Date</small>
-                        <input type="date" id="select-date" name="date">
+                        <input type="date" id="select-date" name="date" required>
                         <small class="small">Date is required</small>
                     </div>
 
@@ -119,6 +119,70 @@
 
                         <small class="small">Purpose is required</small>
                     </div>
+
+                    
+                    <!-- Images -->
+                    <div class="FormRow">
+                    <small style="color: gray; display: flex; width: 100%; font-size: 12px; margin-bottom: 5px; font-family: Lato, serif">Attach Document(s)</small>
+                        <input type="file" accept="image/jpeg, image/png, image/gif, image/jpg" id="select-image" name="image" placeholder="Upload Images" required multiple>
+                        <small class="small">Documents required</small>
+                        <div id="preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px;"></div>
+                    </div>
+
+                    <script>
+                        // document.getElementById('select-image').addEventListener('change', PreviewImages);
+
+                        function PreviewImages(event) {
+                            // console.log(val);
+
+                            
+                            const files = event.target.files;
+                            const previewContainer = document.getElementById('preview-container');
+                            previewContainer.innerHTML = ''; // Clear the container before showing new images
+
+                            if (files.length > 6) {
+                                alert('You can select a maximum of 6 images.');
+                                event.target.value = ''; // Clear the input (prevents submitting the 7th file)
+                                return;
+                            }
+
+                            // Loop through the selected files
+                            for (let i = 0; i < files.length; i++) {
+                                const file = files[i];
+
+                                // Check if the selected file is an image
+                                if (file.type.startsWith('image/')) {
+                                    const reader = new FileReader();
+                                    reader.onload = function(e) {
+
+                                        const divEl = document.createElement('div');
+                                        divEl.style.width = '100px';
+                                        divEl.style.height = '100px';
+                                        divEl.style.position = 'relative';
+                                        divEl.style.display = 'flex'
+                                        divEl.style.gap = '5px'
+                                        divEl.style.backgroundColor = '#CBCBCB'
+                                        divEl.style.borderRadius = '10px'
+
+                                        const imgElement = document.createElement('img');
+                                        imgElement.src = e.target.result;
+                                        imgElement.style.width = '100px'; // Optional: resize the image for preview
+                                        imgElement.style.objectFit = 'cover'; // Optional: resize the image for preview
+                                        // imgElement.style.margin = '10px';
+                                        
+                                        // Optional: add margin between images
+
+                                        divEl.appendChild(imgElement)
+                                        previewContainer.appendChild(divEl);
+                                    };
+                                    reader.readAsDataURL(file); // Read the file as a data URL for previewing
+                                } else {
+                                    alert('Please select only image files.');
+                                }
+                            }
+                            
+                        }
+                    </script>
 
                     <div class="button">
                         <button
@@ -280,6 +344,7 @@
             selectDonorValue.setAttribute('value', event.target.getAttribute('value'))
 
             openSelect('dropdown-container-donor', false);
+            validateForm();
 
             // console.log(event.target.getAttribute('value'), event.target.textContent);
         }
@@ -371,7 +436,7 @@
             selectDonorValue.setAttribute('value', value)
 
             openSelect('dropdown-container-project', false);
-
+          
             showBeneficents(value);
 
         }
@@ -384,6 +449,7 @@
 
         document.getElementById('select-beneficent').removeAttribute('value');
         document.getElementById('select-beneficent-value').removeAttribute('value');
+        validateForm();
 
         selectedBene = beneficent.filter((el) => {
             // console.log(el, value);
@@ -391,7 +457,7 @@
             return el.project_id === value
         })
 
-        console.log(selectedBene);
+        // console.log(selectedBene);
         
 
         loadSearchOptionsForBene(selectedBene);
@@ -444,6 +510,7 @@
             selectDonor.setAttribute('value', textContent)
             selectDonorValue.setAttribute('value', value)
 
+            validateForm();
             openSelect('dropdown-container-beneficent', false);
 
         }
@@ -457,9 +524,10 @@
         const beneficent = document.getElementById('select-beneficent-value').value.length > 0;
         const amount = document.getElementById('select-amount').value.length > 0;
         const purpose = document.getElementById('select-purpose').value.length > 0;
+        const selectedImage = document.getElementById('select-image').value.length > 0;
         const button = document.getElementById('submit');
 
-        if(donor && date && project && beneficent && amount && purpose){
+        if(donor && date && project && beneficent && amount && purpose && selectedImage){
             button.disabled = false;
         } else {
             button.disabled = true;

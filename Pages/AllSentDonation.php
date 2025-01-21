@@ -295,6 +295,7 @@
                 loadProjBene();
                 model.style.display = 'flex';
                 setTop();
+                document.getElementById('select-image').addEventListener('change', PreviewImages);
                 window.addEventListener('resize', (()=>{
                     setTop();
                 }))
@@ -319,8 +320,13 @@
 
 
                 document.getElementById('select-beneficent-cont').style.display = 'none';
-                // document.getElementById('select-amount').value = '';
-                // document.getElementById('select-date').value = '';
+
+                document.getElementById('select-image').value='';
+                document.getElementById('preview-container').innerHTML = '';
+
+                document.getElementById('submit').disabled = true;
+
+                document.getElementById('select-image').removeEventListener('change', PreviewImages);
 
                 document.getElementById('donorSearchkey').removeEventListener('input',donorSearchListener);
                 document.getElementById('dropdown-list-donor').removeEventListener('click', selectDonors);
