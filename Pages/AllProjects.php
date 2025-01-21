@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Assets/CSS/AllProjects.css">
 
 
@@ -20,7 +20,7 @@
             <div class="sidebar-content">
 
                 <div class="bar-row">
-                    <button class="add-btn">Create Project</button>
+                    <button onclick="handleAdd(true)" class="add-btn">Create Project</button>
                 </div>
                 <div class="bar-row">
                     <div class="row-type">
@@ -101,6 +101,7 @@
         <div class="footer"></div>
 
     </footer> -->
+    <?php include('/CVHTH/Models/AddProject.php') ?>
     <script>
         
 
@@ -279,6 +280,56 @@
         window.onload = function() {
             loadPage(1);
         };
+
+        function handleAdd(value) {
+            const model = document.getElementById('addModel');
+            if (value) {
+                // loadProjects();
+                // loadDonors();
+                loadManagers();
+                loadBeneficents();
+                model.style.display = 'flex';
+                setTop();
+                window.addEventListener('resize', (() => {
+                    setTop();
+                }))
+            } else {
+                // console.log('falsseee');
+
+                model.style.display = 'none';
+                document.querySelectorAll('.dropdown-container').forEach((ele) => {
+                    ele.style.display = 'none'
+                });
+               
+                document.getElementById('select-manager').removeAttribute('value');
+                document.getElementById('select-manager-value').removeAttribute('value');
+                document.getElementById('select-beneficent').removeAttribute('value')
+                document.getElementById('select-beneficent-value').removeAttribute('value')
+                document.getElementById('select-pname').value = ''
+                document.getElementById('select-description').value= ''
+                document.getElementById('managerSearchkey').value = ''
+                document.getElementById('beneficentSearchkey').value = ''
+
+                document.getElementById('managerSearchkey').removeEventListener('input', managerSearchListener);
+                document.getElementById('dropdown-list-manager').removeEventListener('click', selectDonors);
+
+                document.getElementById('beneficentSearchkey').removeEventListener('input', beneficentSearchListener);
+                document.getElementById('dropdown-list-beneficent').removeEventListener('click', selectBeneficents)
+
+                // document.getElementById('beneficentSearchkey').removeEventListener('input', BeneSearchListener);
+                // document.getElementById('dropdown-list-beneficent').removeEventListener('click', selectBeneficents);
+
+                // document.getElementById('donorSearchkey').removeEventListener('input', donorSearchListener);
+                // document.getElementById('dropdown-list-project').removeEventListener('click', selectProjects);
+                // document.getElementById('dropdown-list-donor').removeEventListener('click', selectDonors)
+
+                // document.getElementById('dropdown-list-donor').removeEventListener('click');
+                // document.getElementById('dropdown-list-project').removeEventListener('click')
+                // document.getElementById('donorSearchkey').removeEventListener('input');
+                // document.getElementById('projectSearchkey').removeEventListener('input');
+
+            }
+        }
     </script>
 
 </body>

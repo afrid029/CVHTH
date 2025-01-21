@@ -23,9 +23,10 @@ $total_received = '';
 //     $total_received = $row['total_received'];
 // }
 
-$query="SELECT b.ID, b.firstName, b.lastName,b.NIC, p.name 
-from beneficiant b, projectbeneficiant pb, project p 
-WHERE b.ID = pb.Beneficiant_ID and pb.Project_ID = p.ID 
+$query="SELECT b.ID, b.firstName, b.lastName,b.NIC, NVL(p.name, '<i>Not Assigned</i>') as name
+from beneficiant b
+LEFT JOIN projectbeneficiant pb ON b.ID = pb.Beneficiant_ID
+LEFT JOIN project p ON  pb.Project_ID = p.ID 
 ORDER BY b.firstName ASC, b.lastName ASC
 LIMIT $offset, $results_per_page";
 

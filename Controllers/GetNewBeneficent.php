@@ -4,10 +4,12 @@
 include('DBConnectivity.php');
 
 // Get the current page from the URL, default to 1 if not set
-$role = urldecode($_GET['role']);
 
-$query = "SELECT u.ID, u.firstname, u.lastname from users u
-         WHERE u.role = '$role' ORDER BY  u.firstname asc";
+$query = "SELECT b.ID, b.firstname, b.lastname, pb.Beneficiant_ID
+from beneficiant b
+LEFT JOIN projectbeneficiant pb ON  b.ID = pb.Beneficiant_ID
+WHERE pb.Beneficiant_ID is NULL
+ORDER BY b.firstname, b.lastname;";
 
 $result = mysqli_query($db, $query);
 

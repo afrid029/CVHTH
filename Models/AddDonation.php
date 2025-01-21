@@ -10,7 +10,7 @@
 
 <body>
     <div
-        class="modal-overlay" id="addModel" >
+        class="modal-overlay" id="addModel">
         <div class="modal-content" onclick="event.stopPropagation()">
             <!-- <div onclick="handleAdd(false)" class='close'>Close</div> -->
             <div class="banner">
@@ -23,7 +23,7 @@
                 <div class="Form">
                     <div class="FormRow">
 
-                        <input type="text" name="donor" id="select-donor-value"  hidden required>
+                        <input type="text" name="donor" id="select-donor-value" hidden required>
                         <input style="cursor: pointer;" type="text" id="select-donor" placeholder="Select Donor" onclick="openSelect(true)" readonly required>
 
                         <div class="dropdown-container">
@@ -40,7 +40,7 @@
 
                         </div>
 
-                        <small class="small" >Selecting a donor is required</small>
+                        <small class="small">Donor is required</small>
                         <!-- <select name="" id="">
                         <input type="text">
                         <option value="" selected hidden>Select a value</option>
@@ -55,12 +55,12 @@
                         <input
                             type="number"
                             name="amount"
-                            placeholder="Donation Amount"
+                            placeholder="Donation Amount (Rs)"
                             min="1"
-                             id="select-amount"
+                            id="select-amount"
                             required />
 
-                        <small class="small">Enter a valid amount</small>
+                        <small class="small">Amount is required</small>
                     </div>
 
                     <div class="FormRow">
@@ -72,7 +72,7 @@
                             placeholder="Donated Date"
                             required />
 
-                        <small class="small" >Selecting donated date is required</small>
+                        <small class="small">Date is required</small>
                     </div>
 
                     <div class="button">
@@ -104,11 +104,13 @@
 </html>
 
 <script>
+    let donorResponse;
+
     function loadDonors() {
 
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor', true);
+        xhr.open('GET', '/Controllers/GetAllUsers.php?role='+ encodeURIComponent('donor'), true);
         // document.getElementById('loading-spinner').style.display = 'block';
         // const onload = document.getElementById('onrowload');
         // onload.classList.add('onrowload');
@@ -118,50 +120,35 @@
                 // document.getElementById('loading-spinner').style.display = 'none';
                 // // document.getElementById('onrowload').style.display = 'none';
                 // onload.classList.remove('onrowload');
-                var response = JSON.parse(xhr.responseText);
+                donorResponse = JSON.parse(xhr.responseText);
                 // console.log(response.data);
 
                 const listContainer = document.getElementById('dropdown-list');
                 const search = document.getElementById('searchkey');
                 // search.setAttribute('onclick',`searchOption(${response.data})`)
 
-                search.addEventListener('input', (() => {
-                    // searchOption(search.value)
-                    const key = search.value;
-                    if (key == '') {
-                        loadSearchOptions(response.data)
-                    } else {
-                        let copyData = response.data.filter((ele) =>
-                        (ele.firstname + " " + ele.lastname).toUpperCase().includes(key.toUpperCase()));
-                        loadSearchOptions(copyData)
+                search.addEventListener('input', donorSearchListener)
 
+                loadSearchOptions(donorResponse.data)
 
-                    }
-
-                }))
-
-                loadSearchOptions(response.data)
-
-                // const dataContainer = document.getElementById('table-rows')
-
-                // dataContainer.innerHTML = response.html;
-                // resizeWindow();
-
-                // dataContainer.classList.remove('fade-in'); // Remove the class to reset animation
-                // void dataContainer.offsetWidth; // Trigger reflow
-                // dataContainer.classList.add('fade-in'); // Apply fade-in animation
-                // document.getElementById('table-pagi').innerHTML = response.pagination;
-
-                // if (page === 1) {
-                //     document.getElementById('count').textContent = "From " + response.total + " donations";
-                //     DisplayNumber(response.total_received, 'total')
-                //     DisplayNumber(response.total_sent, 'spent')
-                //     DisplayNumber(response.current_bal, 'current')
-                // }
             }
         };
 
         xhr.send();
+    }
+
+    function donorSearchListener(event) {
+
+        const key = event.target.value;
+        if (key == '') {
+            loadSearchOptions(donorResponse.data)
+        } else {
+            let copyData = donorResponse.data.filter((ele) =>
+                (ele.firstname + " " + ele.lastname).toUpperCase().includes(key.toUpperCase()));
+            loadSearchOptions(copyData)
+
+
+        }
     }
 
     // window.onload = function() {
@@ -193,8 +180,8 @@
     }
 
     function loadSearchOptions(data) {
-       
-        
+
+
         const listContainer = document.getElementById('dropdown-list');
         listContainer.innerHTML = ""
 
@@ -215,23 +202,27 @@
         });
 
         // const selctOption = document.querySelector('.dropdown-option');
+        // const selectDonor = document.getElementById('select-donor');
+        // const selectDonorValue = document.getElementById('select-donor-value');
+
+        listContainer.addEventListener('click', selectDonor)
+
+    }
+
+    function selectDonor(event) {
+
         const selectDonor = document.getElementById('select-donor');
         const selectDonorValue = document.getElementById('select-donor-value');
 
-        listContainer.addEventListener('click', ((event) => {
-
-            if(event.target.classList.contains('dropdown-option')){
-                 selectDonor.setAttribute('value', event.target.textContent)
-            selectDonorValue.setAttribute('value',event.target.getAttribute('value'))
+        if (event.target.classList.contains('dropdown-option')) {
+            selectDonor.setAttribute('value', event.target.textContent)
+            selectDonorValue.setAttribute('value', event.target.getAttribute('value'))
 
             openSelect(false);
-            
+
             // console.log(event.target.getAttribute('value'), event.target.textContent);
-            }
+        }
 
-           
-
-        }))
 
     }
 
@@ -245,17 +236,17 @@
 
 
         // console.log(donor.value , date.value , amount.value.length);
-        
-        
+
+
 
         if (donor.value && date.value && amount.value.length > 0) {
             // console.log('true');
-            
+
             button.disabled = false;
         } else {
             button.disabled = true;
             // console.log('false');
-            
+
         }
         // console.log(email);
 

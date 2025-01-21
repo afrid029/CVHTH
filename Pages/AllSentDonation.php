@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Assets/CSS/AllSentDonation.css">
 
 
@@ -20,7 +20,7 @@
             <div class="sidebar-content">
 
                 <div class="bar-row">
-                    <button class="add-btn">Serve Fund</button>
+                    <button onclick="handleAdd(true)" class="add-btn">Serve Fund</button>
                 </div>
                 <div class="bar-row">
                     <div class="row-type">
@@ -99,11 +99,15 @@
         </div>
     </div>
 
+    
+
     <!--     
     <footer>
         <div class="footer"></div>
 
     </footer> -->
+    
+    <?php include('/CVHTH/Models/AddSentDonation.php') ?>
     <script>
         function resizeWindow() {
             console.log('resizing');
@@ -282,6 +286,56 @@
         window.onload = function() {
             loadPage(1);
         };
+
+
+        function handleAdd(value){
+            const model = document.getElementById('addModel');
+            if(value){
+                loadDonors(); 
+                loadProjBene();
+                model.style.display = 'flex';
+                setTop();
+                window.addEventListener('resize', (()=>{
+                    setTop();
+                }))
+            } else {
+                model.style.display = 'none' ;
+                document.querySelectorAll('.dropdown-container').forEach((ele) => {
+                    ele.style.display = 'none'
+                });
+                document.getElementById('select-donor').removeAttribute('value')
+                document.getElementById('select-donor-value').removeAttribute('value')
+                document.getElementById('select-date').value = ''
+                document.getElementById('select-project').removeAttribute('value')
+                document.getElementById('select-project-value').removeAttribute('value')
+                document.getElementById('select-beneficent').removeAttribute('value')
+                document.getElementById('select-beneficent-value').removeAttribute('value')
+                document.getElementById('select-amount').value = ''
+                document.getElementById('select-purpose').value= ''
+                document.getElementById('donorSearchkey').value = ''
+                document.getElementById('projectSearchkey').value = ''
+                document.getElementById('beneficentSearchkey').value = ''
+
+
+
+                document.getElementById('select-beneficent-cont').style.display = 'none';
+                // document.getElementById('select-amount').value = '';
+                // document.getElementById('select-date').value = '';
+
+                document.getElementById('donorSearchkey').removeEventListener('input',donorSearchListener);
+                document.getElementById('dropdown-list-donor').removeEventListener('click', selectDonors);
+
+                document.getElementById('projectSearchkey').removeEventListener('input', projectSearchListener);
+                document.getElementById('dropdown-list-project').removeEventListener('click', selectProjects)
+
+                document.getElementById('beneficentSearchkey').removeEventListener('input', BeneSearchListener);
+                document.getElementById('dropdown-list-beneficent').removeEventListener('click', selectBeneficents);
+
+                // document.getElementById('searchkey').removeEventListener('input', donorSearchListener);
+                // document.getElementById('dropdown-list').removeEventListener('click', selectDonor)
+
+            }
+        }
     </script>
 
 </body>

@@ -14,7 +14,7 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <!-- <div onclick="handleAdd(false)" class='close'>Close</div> -->
             <div class="banner">
-                Add User
+                Create User
                 <div onclick="handleAdd(false)" class='close'>Close</div>
             </div>
 
@@ -53,21 +53,23 @@
 
                     <div class="FormRow">
                         <div style="display: none;" id="select-dob-cont">
+                        <small style="color: gray; display: flex; width: 100%; font-size: 12px; margin-bottom: 5px; font-family: ubuntu, serif">Date of Birth</small>
                             <input type="date" id="select-dob" name="dob" placeholder="Date of Birth">
                             <small style="color: green; text-shadow: 0 0 5px green; display: flex; width: 100%" class="small">Optional</small>
                         </div>
 
                     </div>
 
-                    <div class="FormRow">
+                    <div style="display: none;" id="select-project-cont" class="FormRow">
                         <input type="text" name="project" id="select-project-value" hidden required>
                         <input style="cursor: pointer;" type="text" id="select-project" placeholder="Assign Project(s)" onclick="openSelect('dropdown-container-project',true)" readonly required>
 
                         <div class="dropdown-container" id="dropdown-container-project">
                             <div style="width: 100%;">
                                 <input class="search-mobile" style="background-color:rgba(204, 204, 204, 0.79); width: 10%; text-align: center; color: #000000c9; font-weight: 700;" type="text" readonly value="Search">
-                                <input class="searchbar-mobile" style="width: 70%" type="text" id="projectSearchkey" placeholder="Search Projects">
+                                <input class="searchbar-mobile" style="width: 60%" type="text" id="projectSearchkey" placeholder="Search Projects">
                                 <input onclick="openSelect('dropdown-container-project',false)" class="search-mobile" style="background-color:rgba(240, 180, 180, 0.79); width: 10%; text-align: center; color:rgba(145, 11, 11, 0.79); font-weight: 700; cursor: pointer" type="text" readonly value="Close">
+                                <input onclick="ClearSelection('select-project-value','select-project')" class="search-mobile" style="background-color:rgba(182, 240, 180, 0.79); width: 10%; text-align: center; color:rgb(17, 66, 2); font-weight: 700; cursor: pointer" type="text" readonly value="Clear">
                             </div>
                             <div class="dropdown-list" id="dropdown-list-project">
                                 <!-- <div class="dropdown-option" value="1">Hi</div>
@@ -81,18 +83,19 @@
                         <small class="small green">Optional. You can assign projects later.</small>
                     </div>
 
-                    <div class="FormRow">
+                    <div style="display: none;" id="select-donor-cont" class="FormRow">
                         <input type="text" name="donor" id="select-donor-value" hidden required>
                         <input style="cursor: pointer;" type="text" id="select-donor" placeholder="Assign donors" onclick="openSelect('dropdown-container-donor',true)" readonly required>
 
                         <div class="dropdown-container" id="dropdown-container-donor">
                             <div style="width: 100%;">
                                 <input class="search-mobile" style="background-color:rgba(204, 204, 204, 0.79); width: 10%; text-align: center; color: #000000c9; font-weight: 700;" type="text" readonly value="Search">
-                                <input class="searchbar-mobile" style="width: 70%" type="text" id="donorSearchkey" placeholder="Search Donors">
+                                <input class="searchbar-mobile" style="width: 60%" type="text" id="donorSearchkey" placeholder="Search Donors">
                                 <input onclick="openSelect('dropdown-container-donor',false)" class="search-mobile" style="background-color:rgba(240, 180, 180, 0.79); width: 10%; text-align: center; color:rgba(145, 11, 11, 0.79); font-weight: 700; cursor: pointer" type="text" readonly value="Close">
+                                <input onclick="ClearSelection('select-donor-value','select-donor')" class="search-mobile" style="background-color:rgba(182, 240, 180, 0.79); width: 10%; text-align: center; color:rgb(17, 66, 2); font-weight: 700; cursor: pointer" type="text" readonly value="Clear">
                             </div>
                             <div class="dropdown-list" id="dropdown-list-donor">
-                               
+
                             </div>
 
                         </div>
@@ -131,9 +134,10 @@
 </html>
 
 <script>
+    let projectResponse;
+    let donorResponse;
+
     function loadProjects() {
-
-
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetProjectsOnly.php', true);
         // document.getElementById('loading-spinner').style.display = 'block';
@@ -145,29 +149,16 @@
                 // document.getElementById('loading-spinner').style.display = 'none';
                 // // document.getElementById('onrowload').style.display = 'none';
                 // onload.classList.remove('onrowload');
-                var response = JSON.parse(xhr.responseText);
+                projectResponse = JSON.parse(xhr.responseText);
                 // console.log(response.data);
 
                 // const listContainer = document.getElementById('dropdown-list-project');
                 const search = document.getElementById('projectSearchkey');
                 // search.setAttribute('onclick',`searchOption(${response.data})`)
 
-                search.addEventListener('input', (() => {
-                    // searchOption(search.value)
-                    const key = search.value;
-                    if (key == '') {
-                        loadSearchOptionsForProject(response.data)
-                    } else {
-                        let copyData = response.data.filter((ele) =>
-                            ele.name.toUpperCase().includes(key.toUpperCase()));
-                            loadSearchOptionsForProject(copyData)
+                search.addEventListener('input', projectSearchListener)
 
-
-                    }
-
-                }))
-
-                loadSearchOptionsForProject(response.data)
+                loadSearchOptionsForProject(projectResponse.data)
 
                 // const dataContainer = document.getElementById('table-rows')
 
@@ -191,6 +182,20 @@
         xhr.send();
     }
 
+    function projectSearchListener(event) {
+        // const search = document.getElementById('projectSearchkey');
+        const key = event.target.value;
+        if (key == '') {
+            loadSearchOptionsForProject(projectResponse.data)
+        } else {
+            let copyData = projectResponse.data.filter((ele) =>
+                ele.name.toUpperCase().includes(key.toUpperCase()));
+            loadSearchOptionsForProject(copyData)
+
+
+        }
+    }
+
     function loadDonors() {
 
 
@@ -205,29 +210,16 @@
                 // document.getElementById('loading-spinner').style.display = 'none';
                 // // document.getElementById('onrowload').style.display = 'none';
                 // onload.classList.remove('onrowload');
-                var response = JSON.parse(xhr.responseText);
+                donorResponse = JSON.parse(xhr.responseText);
                 // console.log(response.data);
 
                 // const listContainer = document.getElementById('dropdown-list-project');
                 const search = document.getElementById('donorSearchkey');
                 // search.setAttribute('onclick',`searchOption(${response.data})`)
 
-                search.addEventListener('input', (() => {
-                    // searchOption(search.value)
-                    const key = search.value;
-                    if (key == '') {
-                        loadSearchOptionsForDonor(response.data)
-                    } else {
-                        let copyData = response.data.filter((ele) =>
-                        (ele.firstname + " " + ele.lastname).toUpperCase().includes(key.toUpperCase()));
-                        loadSearchOptionsForDonor(copyData)
+                search.addEventListener('input', donorSearchListener)
 
-
-                    }
-
-                }))
-
-                loadSearchOptionsForDonor(response.data)
+                loadSearchOptionsForDonor(donorResponse.data)
 
                 // const dataContainer = document.getElementById('table-rows')
 
@@ -249,6 +241,22 @@
         };
 
         xhr.send();
+    }
+
+    function donorSearchListener(event) {
+        // console.log('donor listenmer');
+
+        // const search = document.getElementById('donorSearchkey');
+        const key = event.target.value;
+        if (key == '') {
+            loadSearchOptionsForDonor(donorResponse.data)
+        } else {
+            let copyData = donorResponse.data.filter((ele) =>
+                (ele.firstname + " " + ele.lastname).toUpperCase().includes(key.toUpperCase()));
+            loadSearchOptionsForDonor(copyData)
+
+
+        }
     }
 
     // window.onload = function() {
@@ -302,34 +310,53 @@
         });
 
         // const selctOption = document.querySelector('.dropdown-option');
+        // const selectProject = document.getElementById('select-project');
+        // const selectProjectValue = document.getElementById('select-project-value');
+
+        listContainer.addEventListener('click', selectProjects)
+
+    }
+
+    function selectProjects(event) {
+
+        // console.log(event);
+
         const selectProject = document.getElementById('select-project');
         const selectProjectValue = document.getElementById('select-project-value');
+        if (event.target.classList.contains('dropdown-option')) {
+            let available = false;
+            let value = selectProjectValue.getAttribute('value');
+            let content = selectProject.getAttribute('value');
+            // console.log(value);
 
-        listContainer.addEventListener('click', ((event) => {
 
-            if (event.target.classList.contains('dropdown-option')) {
+            if (value) {
+                // console.log(value.split(", ").includes(event.target.getAttribute('value')));
 
-                let content = selectProject.getAttribute('value');
-                console.log('project ', content);
-                
+                available = value.split(", ").includes(event.target.getAttribute('value'));
+            }
+
+            if (!available) {
+
                 content = content ? content + ", " + event.target.textContent : event.target.textContent;
                 selectProject.setAttribute('value', content);
 
-                let value = selectProjectValue.getAttribute('value');
-                console.log('project Value ', value);
+                // console.log('project Value ', value);
                 value = value ? value + ", " + event.target.getAttribute('value') : event.target.getAttribute('value');
                 selectProjectValue.setAttribute('value', value)
 
-                // openSelect(false); 
-
-                // console.log(event.target.getAttribute('value'), event.target.textContent);
             }
 
+            // console.log('project ', content);
 
 
-        }))
 
+            // openSelect(false); 
+
+            // console.log(event.target.getAttribute('value'), event.target.textContent);
+        }
     }
+
     function loadSearchOptionsForDonor(data) {
 
 
@@ -353,30 +380,49 @@
         });
 
         // const selctOption = document.querySelector('.dropdown-option');
+        // const selectProject = document.getElementById('select-donor');
+        // const selectProjectValue = document.getElementById('select-donor-value');
+
+        listContainer.addEventListener('click', selectDonors)
+
+    }
+
+    function selectDonors(event) {
+
         const selectProject = document.getElementById('select-donor');
         const selectProjectValue = document.getElementById('select-donor-value');
+        if (event.target.classList.contains('dropdown-option')) {
 
-        listContainer.addEventListener('click', ((event) => {
+            let available = false;
 
-            if (event.target.classList.contains('dropdown-option')) {
+            let content = selectProject.getAttribute("value");
+            let value = selectProjectValue.getAttribute("value");
 
-                let content = selectProject.getAttribute("value");
+            console.log(value);
+            
+
+            if (value) {
+                available = value.split(", ").includes(event.target.getAttribute('value'));
+            }
+
+            if (!available) {
                 content = content ? content + ", " + event.target.textContent : event.target.textContent;
                 selectProject.setAttribute('value', content);
 
-                let value = selectProjectValue.getAttribute("value");
+
                 value = value ? value + ", " + event.target.getAttribute('value') : event.target.getAttribute('value');
                 selectProjectValue.setAttribute('value', value)
-
-                // openSelect(false); 
-
-                // console.log(event.target.getAttribute('value'), event.target.textContent);
             }
 
+            // openSelect(false); 
 
+            // console.log(event.target.getAttribute('value'), event.target.textContent);
+        }
+    }
 
-        }))
-
+    function ClearSelection(ID1, ID2){
+        document.getElementById(ID1).removeAttribute('value');
+        document.getElementById(ID2).removeAttribute('value');
     }
 
 
@@ -388,6 +434,8 @@
         const role = document.getElementById('select-role').value;
         const contact = document.getElementById('select-contact').value;
         const dob = document.getElementById('select-dob-cont');
+        const projectContainer = document.getElementById('select-project-cont');
+        const donorContainer = document.getElementById('select-donor-cont');
         const button = document.getElementById('submit');
 
         let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -397,6 +445,17 @@
         } else {
             dob.style.display = 'none';
         }
+
+        if(role == 'project manager') {
+            projectContainer.style.display = 'flex';
+            donorContainer.style.display = 'flex';
+        }else {
+            projectContainer.style.display = 'none';
+            donorContainer.style.display = 'none';
+
+        }
+
+
 
         // console.log(role.value);
 

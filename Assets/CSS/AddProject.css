@@ -65,7 +65,7 @@
   }
   
   .close {
-    background-color: #5a0f0f;
+    background-color: #3f3e02;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -132,7 +132,20 @@
     color: #454444f0;
   }
 
-  input:focus, select:focus {
+  .FormRow textarea {
+    height: 80px;
+    border-radius: 7px;
+    box-shadow: 0 0 5px #00000030;
+    border-color: transparent;
+    width: 100%;
+    font-family: "Lato", serif;
+    padding-left: 5px;
+    padding-top: 5px;
+    font-weight: 600;
+    color: #454444f0;
+  }
+
+  input:focus, select:focus, textarea:focus {
     outline: none;
     box-shadow: 0 0 10px #000000c4;
   }
@@ -198,7 +211,7 @@ backdrop-filter: blur(5px);
     color: #f8f4f4;
     position: fixed;
     z-index: 10;
-    background-color: rgb(143, 99, 99);
+    background-color: rgb(109, 108, 61);
     display: flex;
     justify-content: space-between;
     /* width: calc(100% - 40px); */

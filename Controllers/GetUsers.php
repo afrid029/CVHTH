@@ -72,7 +72,7 @@ if ($role === 'admin') {
     }
 } else if ($role === 'project manager') {
     // echo("into PM");
-    $query = "SELECT u.ID, u.firstname, u.lastname, u.email, u.contactno, NVL(GROUP_CONCAT(p.name SEPARATOR ', '), 'Not Assigned') AS name
+    $query = "SELECT u.ID, u.firstname, u.lastname, u.email, u.contactno, NVL(GROUP_CONCAT(p.name SEPARATOR ', '), '<i>Not Assigned</i>') AS name
             FROM users u 
             LEFT JOIN projectmanager pm ON u.ID = pm.Manager_ID
             LEFT JOIN project p ON pm.Project_ID = p.ID

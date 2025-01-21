@@ -69,7 +69,7 @@
 
         </div>
         <div class="main-content main-content-mobile">
-        <div class="main-conent-mobile-bg"></div>
+            <div class="main-conent-mobile-bg"></div>
             <div style="width: 100%; ">
                 <!-- <div class="main-conent-mobile-bg"></div> -->
 
@@ -85,9 +85,9 @@
 
                         <div class="table-header table-header-admin">
                             <div>Name</div>
-                            <div >Email</div>
-                            <div >Contact No.</div>
-                            <div style='text-align: center' >Functions</div>
+                            <div>Email</div>
+                            <div>Contact No.</div>
+                            <div style='text-align: center'>Functions</div>
 
                         </div>
 
@@ -118,7 +118,7 @@
                         <div class="table-header table-header-pm">
                             <div>Name</div>
                             <div>Email</div>
-                            <div >Contact No.</div>
+                            <div>Contact No.</div>
                             <div>Project</div>
                             <div style='text-align: center'>Functions</div>
 
@@ -154,12 +154,12 @@
                         <div class="table-header table-header-donor">
                             <div>&nbsp;</div>
 
-                            
+
                             <div>Name</div>
-                            <div >Contact No.</div>
-                            <div style="text-align: center;" >Donated (RS)</div>
-                            <div style="visibility: hidden";></div>
-                            <div >DOB</div>
+                            <div>Contact No.</div>
+                            <div style="text-align: center;">Donated (RS)</div>
+                            <div style="visibility: hidden" ;></div>
+                            <div>DOB</div>
                             <div style='text-align: center'>Functions</div>
 
                         </div>
@@ -197,16 +197,16 @@
             const navbarHeight = navHeight.offsetHeight;
             const sideBarHeight = mainSideBar.offsetHeight;
 
-           
+
 
             const viewportWidth = window.innerWidth;
 
             if (viewportWidth < 900) {
-                
-            const mainConetntMobile = document.querySelector('.main-content-mobile');
+
+                const mainConetntMobile = document.querySelector('.main-content-mobile');
                 const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
                 // console.log(mainConetntMobileHeight);
-                
+
                 mainConetntMobileBg.style.height = `calc(${mainConetntMobileHeight}px + 20px)`;
                 // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
 
@@ -220,7 +220,7 @@
 
         // resizeWindow();
 
-    
+
         function DisplayNumber(targetNumber, ID) {
             const numberElement = document.getElementById(ID);
             let currentNumber = 0;
@@ -247,7 +247,7 @@
 
         function adminsload(page) {
             // console.log(page);
-            
+
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/Controllers/GetUsers.php?page=' + page + '&user=' + encodeURIComponent('admin'), true);
             document.getElementById('loading-spinner-admin').style.display = 'block';
@@ -281,7 +281,7 @@
             xhr.send();
         }
 
-        function pmsload(page){
+        function pmsload(page) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/Controllers/GetUsers.php?page=' + page + '&user=' + encodeURIComponent('project manager'), true);
             document.getElementById('loading-spinner-pm').style.display = 'block';
@@ -297,7 +297,7 @@
 
                     const dataContainer = document.getElementById('table-rows-pm');
                     // console.log(response.html);
-                    
+
 
                     dataContainer.innerHTML = response.html;
                     // resizeWindow();
@@ -318,7 +318,7 @@
 
         }
 
-        function donorload(page){
+        function donorload(page) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/Controllers/GetUsers.php?page=' + page + '&user=' + encodeURIComponent('donor'), true);
             document.getElementById('loading-spinner-donor').style.display = 'block';
@@ -334,7 +334,7 @@
 
                     const dataContainer = document.getElementById('table-rows-donor');
                     // console.log(response.html);
-                    
+
 
                     dataContainer.innerHTML = response.html;
                     // resizeWindow();
@@ -352,14 +352,14 @@
 
                 let i = 0;
                 resizeWindow();
-                const resizeINterval = setInterval(()=> {
+                const resizeINterval = setInterval(() => {
                     // console.log(i);
 
                     i++;
-                    
+
                     resizeWindow();
 
-                    if(i == 10){
+                    if (i == 10) {
                         clearInterval(resizeINterval)
                     }
 
@@ -380,7 +380,7 @@
 
         window.addEventListener("resize", resizeWindow);
 
-        
+
         const addBtn = document.querySelector('.add-btn');
         addBtn.addEventListener('click', function() {
             console.log('clicked');
@@ -392,25 +392,25 @@
             }, 1000)
         })
 
-        function handleAdd(value){
+        function handleAdd(value) {
             const model = document.getElementById('addModel');
-            if(value){
-                loadProjects(); 
+            if (value) {
+                loadProjects();
                 loadDonors();
                 model.style.display = 'flex';
                 setTop();
-                window.addEventListener('resize', (()=>{
+                window.addEventListener('resize', (() => {
                     setTop();
                 }))
             } else {
                 console.log('falsseee');
-                
-                model.style.display = 'none' ;
+
+                model.style.display = 'none';
                 document.getElementById('dropdown-container-project').style.display = 'none';
                 document.getElementById('dropdown-container-donor').style.display = 'none';
-                document.getElementById('select-fname').value='';
+                document.getElementById('select-fname').value = '';
                 document.getElementById('select-lname').value = '';
-                document.getElementById('select-email').value='';
+                document.getElementById('select-email').value = '';
                 document.getElementById('select-role').value = 'none';
                 document.getElementById('select-contact').value = '';
                 document.getElementById('select-dob').value = '';
@@ -418,12 +418,24 @@
                 document.getElementById('select-donor-value').removeAttribute('value');
                 document.getElementById('select-project').removeAttribute('value');
                 document.getElementById('select-project-value').removeAttribute('value');
+                document.getElementById('projectSearchkey').value = '';
+                document.getElementById('donorSearchkey').value = '';
+
+                document.getElementById('select-project-cont').style.display = 'none';
+                document.getElementById('select-donor-cont').style.display = 'none';
+                document.getElementById('select-dob-cont').style.display = 'none';
+
+                document.getElementById('projectSearchkey').removeEventListener('input', projectSearchListener);
+
+                document.getElementById('donorSearchkey').removeEventListener('input', donorSearchListener);
+                document.getElementById('dropdown-list-project').removeEventListener('click', selectProjects);
+                document.getElementById('dropdown-list-donor').removeEventListener('click', selectDonors)
 
                 // document.getElementById('dropdown-list-donor').removeEventListener('click');
                 // document.getElementById('dropdown-list-project').removeEventListener('click')
                 // document.getElementById('donorSearchkey').removeEventListener('input');
                 // document.getElementById('projectSearchkey').removeEventListener('input');
-                
+
             }
         }
     </script>

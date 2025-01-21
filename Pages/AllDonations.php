@@ -294,6 +294,11 @@
                 document.getElementById('select-donor-value').setAttribute('value','')
                 document.getElementById('select-amount').value = '';
                 document.getElementById('select-date').value = '';
+                document.getElementById('searchkey').value = '';
+
+                document.getElementById('searchkey').removeEventListener('input', donorSearchListener);
+                document.getElementById('dropdown-list').removeEventListener('click', selectDonor)
+
             }
         }
     </script>

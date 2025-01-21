@@ -27,15 +27,15 @@ $query="SELECT
     p.ID,
     p.name AS projectName,
     p.description AS projectDescription,
-    GROUP_CONCAT(CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', ') AS managers,
+    NVL(GROUP_CONCAT(CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '<i>Not Assigned</i>') AS managers,
     (SELECT COUNT(*) 
      FROM projectbeneficiant pb_sub 
      WHERE pb_sub.Project_ID = p.ID) AS beneCount
 FROM 
     project p
-JOIN 
+LEFT JOIN 
     projectmanager pm ON p.ID = pm.Project_ID
-JOIN 
+LEFT JOIN 
     users u ON u.ID = pm.Manager_ID
 GROUP BY 
     p.ID, p.name, p.description
