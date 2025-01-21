@@ -101,6 +101,7 @@
     </footer> -->
 
     <?php include('/CVHTH/Models/AddDonation.php') ?>
+    <?php include('/CVHTH/Models/EditDonation.php') ?>
     <script>
         
 
@@ -203,7 +204,7 @@
 
         // resizeWindow();
 
-        window.addEventListener("resize", resizeWindow);
+        // window.addEventListener("resize", resizeWindow);
         // console.log(navbarHeight, sideBarHeight);
 
 
@@ -284,9 +285,9 @@
                 loadDonors(); 
                 model.style.display = 'flex';
                 setTop();
-                window.addEventListener('resize', (()=>{
-                    setTop();
-                }))
+                // window.addEventListener('resize', (()=>{
+                //     setTop();
+                // }))
             } else {
                 model.style.display = 'none' ;
                 document.querySelector('.dropdown-container').style.display = 'none';
@@ -302,6 +303,33 @@
 
             }
         }
+
+        function Edit(ID){
+            const model = document.getElementById('editModel');
+            model.style.display = 'flex';
+            editSetTop();
+           
+            editLoadDonors(); 
+            getSingleDonation(ID);
+            
+
+        }
+
+        function Delete(ID){
+
+        }
+
+        function closeEdit(){
+            const model = document.getElementById('editModel');
+            model.style.display = 'none'
+
+        }
+
+        window.addEventListener('resize', (()=>{
+            setTop();
+            resizeWindow();
+            editSetTop();
+        }))
     </script>
 
 </body>
