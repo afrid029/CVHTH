@@ -57,12 +57,12 @@ if ($role === 'admin') {
                                         <div >" . $row['email'] . "</div>
                                         <div>" . $row['contactno'] . "</div>
                                         <div style='text-align: center' class='buttons'>
-                                                <div class='btn edit'>
-                                                    Edit
-                                                </div>
-                                                <div class='btn del'>
-                                                    Delete
-                                                </div>
+                                            <div onclick=Edit(" . $row['ID'] . ") class='btn edit'>
+                                                Edit
+                                            </div>
+                                            <div  onclick=Delete(" . $row['ID'] . ") class='btn del'>
+                                                Delete
+                                            </div>
                                         </div>
                                     </div>
                                     <hr>";
@@ -94,12 +94,12 @@ if ($role === 'admin') {
                                         <div >" . $row['contactno'] . "</div>
                                         <div >" . $row['name'] . "</div>
                                         <div style='text-align: center' class='buttons'>
-                                                <div class='btn edit'>
-                                                    Edit
-                                                </div>
-                                                <div class='btn del'>
-                                                    Delete
-                                                </div>
+                                            <div onclick=Edit(" . $row['ID'] . ") class='btn edit'>
+                                                Edit
+                                            </div>
+                                            <div  onclick=Delete(" . $row['ID'] . ") class='btn del'>
+                                                Delete
+                                            </div>
                                         </div>
                                     </div>
                                     <hr>";
@@ -125,12 +125,12 @@ if ($role === 'admin') {
                                         <div style='visibility:hidden'></div>
                                         <div >" . $row['dob'] . "</div>
                                         <div style='text-align: center' class='buttons'>
-                                                <div class='btn edit'>
-                                                    Edit
-                                                </div>
-                                                <div class='btn del'>
-                                                    Delete
-                                                </div>
+                                            <div onclick=Edit(" . $row['ID'] . ") class='btn edit'>
+                                                Edit
+                                            </div>
+                                            <div  onclick=Delete(" . $row['ID'] . ") class='btn del'>
+                                                Delete
+                                            </div>  
                                         </div>
                                     </div>
                                     <hr>";

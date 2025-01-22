@@ -186,6 +186,7 @@
 
     </footer> -->
     <?php include('/CVHTH/Models/AddUser.php') ?>
+    <?php include('/CVHTH/Models/EditUser.php') ?>
     <script>
         function resizeWindow() {
             // console.log('resizing')
@@ -399,9 +400,7 @@
                 loadDonors();
                 model.style.display = 'flex';
                 setTop();
-                window.addEventListener('resize', (() => {
-                    setTop();
-                }))
+               
             } else {
                 console.log('falsseee');
 
@@ -432,13 +431,43 @@
                 document.getElementById('dropdown-list-project').removeEventListener('click', selectProjects);
                 document.getElementById('dropdown-list-donor').removeEventListener('click', selectDonors)
 
-                // document.getElementById('dropdown-list-donor').removeEventListener('click');
-                // document.getElementById('dropdown-list-project').removeEventListener('click')
-                // document.getElementById('donorSearchkey').removeEventListener('input');
-                // document.getElementById('projectSearchkey').removeEventListener('input');
 
             }
         }
+
+        function Edit(ID){
+            const model = document.getElementById('editModel');
+            model.style.display = 'flex';
+            editSetTop();
+            editLoadDonors(); 
+            editLoadProjects();
+            getSingleUser(ID);
+
+        }
+
+        function Delete(){
+
+        }
+
+        function closeEdit(){
+            document.getElementById('editModel').style.display = 'none';
+            document.querySelectorAll('.dropdown-container').forEach((el) => {
+                el.style.display = 'none';
+            })
+
+            document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
+            document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)
+
+            document.getElementById('editDonorSearchkey').removeEventListener('input', editDonorSearchListener);
+            document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors)
+        }
+
+        window.addEventListener("resize", (()=>{
+            resizeWindow();
+            editSetTop();
+            setTop();
+        }));
+
     </script>
 
 </body>

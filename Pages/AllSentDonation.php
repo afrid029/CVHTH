@@ -108,6 +108,7 @@
     </footer> -->
     
     <?php include('/CVHTH/Models/AddSentDonation.php') ?>
+    <?php include('/CVHTH/Models/EditSentDonation.php') ?>
     <script>
         function resizeWindow() {
             console.log('resizing');
@@ -208,7 +209,7 @@
 
         // resizeWindow();
 
-        window.addEventListener("resize", resizeWindow);
+        // window.addEventListener("resize", resizeWindow);
         // console.log(navbarHeight, sideBarHeight);
 
 
@@ -296,9 +297,7 @@
                 model.style.display = 'flex';
                 setTop();
                 document.getElementById('select-image').addEventListener('change', PreviewImages);
-                window.addEventListener('resize', (()=>{
-                    setTop();
-                }))
+               
             } else {
                 model.style.display = 'none' ;
                 document.querySelectorAll('.dropdown-container').forEach((ele) => {
@@ -342,6 +341,56 @@
 
             }
         }
+
+        function Edit(ID){
+            const model = document.getElementById('editModel');
+            model.style.display = 'flex';
+            editLoadDonors(); 
+            editLoadProjBene(ID);
+           
+            editSetTop();
+            document.getElementById('edit-image').addEventListener('change', editPreviewImages);
+            // editSetTop();
+            // editLoadDonors(); 
+            // editLoadProjects();
+            // getSingleUser(ID);
+
+        }
+
+        function Delete(){
+
+        }
+
+        function closeEdit(){
+            document.getElementById('editModel').style.display = 'none';
+
+            // document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
+            // document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)
+
+            // document.getElementById('editDonorSearchkey').removeEventListener('input', editDonorSearchListener);
+            // document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors)
+
+            document.getElementById('edit-image').removeEventListener('change', editPreviewImages);
+
+            document.querySelectorAll('.dropdown-container').forEach((ele) => {
+                    ele.style.display = 'none'
+                }); 
+
+                document.getElementById('editDonorSearchkey').removeEventListener('input',editDonorSearchListener);
+                document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors);
+
+                document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
+                document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)
+
+                document.getElementById('editBeneficentSearchkey').removeEventListener('input', editBeneSearchListener);
+                document.getElementById('edit-dropdown-list-beneficent').removeEventListener('click', editSelectBeneficents);
+        }
+
+        window.addEventListener("resize", (()=> {
+            resizeWindow();
+            setTop();
+            editSetTop();
+        }));
     </script>
 
 </body>

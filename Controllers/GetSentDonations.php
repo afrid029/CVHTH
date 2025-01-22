@@ -35,7 +35,7 @@ if ($page === 1) {
     $current_bal = $total_received - $total_sent;
 }
 
-$query = "SELECT b.id, b.firstname AS ben_fn, b.lastname AS ben_ln, u.firstname AS u_fn, u.lastname AS u_ln, ds.amount, ds.date
+$query = "SELECT ds.ID, b.firstname AS ben_fn, b.lastname AS ben_ln, u.firstname AS u_fn, u.lastname AS u_ln, ds.amount, ds.date
 from users u, beneficiant b, donationsent ds
 where ds.Donor_ID = u.ID
 and ds.Beneficiant_ID = b.ID
@@ -58,12 +58,12 @@ if (mysqli_num_rows($result) > 0) {
                                 <div style='text-align: end'>" . $row['amount'] . "</div>
                                 <div style='text-align: end'>" . $row['date'] . "</div>
                                 <div class='buttons'>
-                                        <div class='btn edit'>
-                                            Edit
-                                        </div>
-                                        <div class='btn del'>
-                                            Delete
-                                        </div>
+                                        <div onclick=Edit(" . $row['ID'] . ") class='btn edit'>
+                                                Edit
+                                            </div>
+                                            <div  onclick=Delete(" . $row['ID'] . ") class='btn del'>
+                                                Delete
+                                            </div>
                                 </div>
                             </div>
                             <hr>";

@@ -308,7 +308,6 @@
             const model = document.getElementById('editModel');
             model.style.display = 'flex';
             editSetTop();
-           
             editLoadDonors(); 
             getSingleDonation(ID);
             
@@ -322,6 +321,8 @@
         function closeEdit(){
             const model = document.getElementById('editModel');
             model.style.display = 'none'
+            document.getElementById('edit-dropdown-list').removeEventListener('click', editSelectDonor);
+            document.getElementById('editSearchkey').removeEventListener('input', editDonorSearchListener)
 
         }
 

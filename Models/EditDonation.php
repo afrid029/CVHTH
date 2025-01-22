@@ -228,7 +228,7 @@
         if (event.target.classList.contains('dropdown-option')) {
             selectDonor.setAttribute('value', event.target.textContent)
             selectDonorValue.setAttribute('value', event.target.getAttribute('value'))
-            validateForm();
+            validateEditForm();
 
             editOpenSelect(false);
 
@@ -255,22 +255,10 @@
 
                 document.getElementById("edit-donor-value").setAttribute('value', data.Donor_ID);
                 document.getElementById("edit-donor").setAttribute('value', data.name);
-                document.getElementById("edit-donor").setAttribute('value', data.name);
                 document.getElementById("edit-amount").value = data.amount;
                 document.getElementById("edit-date").value = data.date;
 
                 validateEditForm();
-
-
-
-
-                // const listContainer = document.getElementById('edit-dropdown-list');
-                // const search = document.getElementById('editSearchkey');
-                // // search.setAttribute('onclick',`searchOption(${response.data})`)
-
-                // search.addEventListener('input', editDonorSearchListener)
-
-                // loadSearchOptions(editDonorResponse.data)
 
             }
         };
