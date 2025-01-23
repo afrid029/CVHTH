@@ -60,12 +60,12 @@ if (mysqli_num_rows($result) > 0) {
                                 <div >" . $row['managers'] . "</div>
                                 <div style='text-align:center' > " . $row['beneCount'] . " </div>
                                 <div class='buttons'>
-                                        <div class='btn edit'>
-                                            Edit
-                                        </div>
-                                        <div class='btn del'>
-                                            Delete
-                                        </div>
+                                        <div onclick=Edit(" . $row['ID'] . ") class='btn edit'>
+                                                Edit
+                                            </div>
+                                            <div  onclick=Delete(" . $row['ID'] . ") class='btn del'>
+                                                Delete
+                                            </div> 
                                 </div>
                             </div>
                             <hr>";

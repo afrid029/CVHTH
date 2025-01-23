@@ -102,6 +102,7 @@
     </footer> -->
 
     <?php include('/CVHTH/Models/AddBeneficent.php') ?>
+    <?php include('/CVHTH/Models/EditBeneficent.php') ?>
     <script>
         function resizeWindow() {
             console.log('resizing');
@@ -202,7 +203,7 @@
 
         // resizeWindow();
 
-        window.addEventListener("resize", resizeWindow);
+     
         // console.log(navbarHeight, sideBarHeight);
 
 
@@ -289,9 +290,7 @@
                 model.style.display = 'flex';
                 document.getElementById('select-image').addEventListener('change', PreviewImages);
                 setTop();
-                window.addEventListener('resize', (() => {
-                    setTop();
-                }))
+              
             } else {
                 // console.log('falsseee');
 
@@ -320,6 +319,7 @@
                 document.getElementById('preview-container').innerHTML = '';
                 document.getElementById('submit').disabled = true;
 
+
                 document.getElementById('select-image').removeEventListener('change', PreviewImages);
                 document.getElementById('projectSearchkey').removeEventListener('input', projectSearchListener);
                 document.getElementById('dropdown-list-project').removeEventListener('click', selectProjects);
@@ -329,6 +329,44 @@
               
             }
         }
+
+        function Edit(ID){
+            const model = document.getElementById('editModel');
+            model.style.display = 'flex';
+            // document.getElementById('edit-image').addEventListener('change', editPreviewImages);
+            editSetTop();
+            editLoadProjects();
+            getSingleBeneficent(ID);
+            // editLoadBeneficents(ID);
+           
+
+        }
+
+        function Delete(){
+
+        }
+
+        function closeEdit(){
+            document.getElementById('editModel').style.display = 'none';
+            document.querySelectorAll('.dropdown-container').forEach((el) => {
+                el.style.display = 'none';
+            })
+            document.getElementById('edit-relation').value='';
+                document.getElementById('edit-dname').value='';
+                document.getElementById('editProjectSearchkey').value='';
+               
+                // document.getElementById('edit-image').removeEventListener('change', editPreviewImages);
+                document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
+                document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects);
+
+            
+        }
+
+        window.addEventListener("resize", (()=>{
+            resizeWindow();
+            editSetTop();
+            setTop();
+        }));
     </script>
 
 </body>

@@ -124,6 +124,65 @@ if ($type === 'donation') {
     
     ]);
 
+}else if($type === 'project') {
+    $query = "SELECT p.ID, p.name, p.description, GROUP_CONCAT(DISTINCT pm.Manager_ID SEPARATOR ', ') prid, GROUP_CONCAT(DISTINCT pb.Beneficiant_ID SEPARATOR ', ') benid
+            from project p
+            LEFT JOIN projectmanager pm ON p.ID = pm.Project_ID
+            LEFT JOIN projectbeneficiant pb ON p.ID = pb.Project_ID
+            where p.ID = '$ID'";
+
+    $result = mysqli_query($db, $query);
+
+    $data = array();
+
+
+    // $html = '';
+
+    if (mysqli_num_rows($result) == 1) {
+
+        $data = mysqli_fetch_assoc($result);
+       
+    } else {
+        // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+    }
+
+    echo json_encode([
+        'data' => $data,
+    
+    ]);
+}else if($type === 'beneficent') {
+
+    $query = "SELECT b.ID, b.firstName, b.lastName, b.NIC, b.sex, b.dob, b.address, b.gsDivision, b.school, b.grade,
+            GROUP_CONCAT(DISTINCT pb.Project_ID SEPARATOR ', ') prid, GROUP_CONCAT(DISTINCT p.name SEPARATOR ', ')prname, GROUP_CONCAT(DISTINCT bd.ID SEPARATOR ', ') depid, GROUP_CONCAT(DISTINCT CONCAT(bd.Name,' (',bd.Relation,')') SEPARATOR ', ') depname
+            from beneficiant b
+            LEFT JOIN projectbeneficiant pb ON b.ID = pb.Beneficiant_ID
+            LEFT JOIN beneficiantdependency bd ON b.ID = bd.Beneficiant_ID
+            LEFT JOIN project p ON pb.Project_ID = p.ID
+            where b.ID = '$ID'
+            GROUP BY b.ID";
+
+    $result = mysqli_query($db, $query);
+
+    $data = array();
+
+
+    // $html = '';
+
+    if (mysqli_num_rows($result) == 1) {
+
+        $data = mysqli_fetch_assoc($result);
+       
+    } else {
+        // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+    }
+
+  // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+    
+
+    echo json_encode([
+        'data' => $data
+    
+    ]);
 }
 
 

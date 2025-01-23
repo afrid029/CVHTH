@@ -102,6 +102,7 @@
 
     </footer> -->
     <?php include('/CVHTH/Models/AddProject.php') ?>
+    <?php include('/CVHTH/Models/EditProject.php') ?>
     <script>
         
 
@@ -204,7 +205,7 @@
 
         // resizeWindow();
 
-        window.addEventListener("resize", resizeWindow);
+        // window.addEventListener("resize", resizeWindow);
         // console.log(navbarHeight, sideBarHeight);
 
 
@@ -290,9 +291,9 @@
                 loadBeneficents();
                 model.style.display = 'flex';
                 setTop();
-                window.addEventListener('resize', (() => {
-                    setTop();
-                }))
+                // window.addEventListener('resize', (() => {
+                //     setTop();
+                // }))
             } else {
                 // console.log('falsseee');
 
@@ -312,7 +313,7 @@
                 document.getElementById('submit').disabled = true;
 
                 document.getElementById('managerSearchkey').removeEventListener('input', managerSearchListener);
-                document.getElementById('dropdown-list-manager').removeEventListener('click', selectDonors);
+                document.getElementById('dropdown-list-manager').removeEventListener('click', selectManagers);
 
                 document.getElementById('beneficentSearchkey').removeEventListener('input', beneficentSearchListener);
                 document.getElementById('dropdown-list-beneficent').removeEventListener('click', selectBeneficents)
@@ -331,6 +332,46 @@
 
             }
         }
+
+
+        function Edit(ID){
+            const model = document.getElementById('editModel');
+            model.style.display = 'flex';
+            editSetTop();
+            editLoadManagers();
+            editLoadBeneficents(ID);
+           
+
+        }
+
+        function Delete(){
+
+        }
+
+        function closeEdit(){
+            document.getElementById('editModel').style.display = 'none';
+            document.querySelectorAll('.dropdown-container').forEach((el) => {
+                el.style.display = 'none';
+            })
+
+                document.getElementById('editManagerSearchkey').removeEventListener('input', editManagerSearchListener);
+                document.getElementById('edit-dropdown-list-manager').removeEventListener('click', editSelectManagers);
+
+                document.getElementById('editBeneficentSearchkey').removeEventListener('input', editBeneficentSearchListener);
+                document.getElementById('edit-dropdown-list-beneficent').removeEventListener('click', editSelectBeneficents)
+
+            // document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
+            // document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)
+
+            // document.getElementById('editDonorSearchkey').removeEventListener('input', editDonorSearchListener);
+            // document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors)
+        }
+
+        window.addEventListener("resize", (()=>{
+            resizeWindow();
+            editSetTop();
+            setTop();
+        }));
     </script>
 
 </body>

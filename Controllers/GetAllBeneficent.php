@@ -47,12 +47,12 @@ if (mysqli_num_rows($result) > 0) {
                                 <div style='text-align: center'>" . $row['NIC'] . "</div>
                                 <div style='text-align: start'>" . $row['name'] . "</div>
                                 <div class='buttons'>
-                                        <div class='btn edit'>
-                                            Edit
-                                        </div>
-                                        <div class='btn del'>
-                                            Delete
-                                        </div>
+                                        <div onclick=Edit(" . $row['ID'] . ") class='btn edit'>
+                                                Edit
+                                            </div>
+                                            <div  onclick=Delete(" . $row['ID'] . ") class='btn del'>
+                                                Delete
+                                            </div> 
                                 </div>
                             </div>
                             <hr>";

@@ -122,14 +122,14 @@
 
                     
                     <!-- Images -->
-                    <div class="FormRow">
+                    <!-- <div class="FormRow">
                     <small style="color: gray; display: flex; width: 100%; font-size: 12px; margin-bottom: 5px; font-family: Lato, serif">Attach Document(s)</small>
                         <input type="file" accept="image/jpeg, image/png, image/gif, image/jpg" id="edit-image" name="image" placeholder="Upload Images" required multiple>
                         <small class="small">Documents required</small>
                         <div id="edit-preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px;"></div>
-                    </div>
+                    </div> -->
 
-                    <script>
+                    <!-- <script>
                         // document.getElementById('select-image').addEventListener('change', PreviewImages);
 
                         function editPreviewImages(event) {
@@ -182,7 +182,7 @@
                             }
                             
                         }
-                    </script>
+                    </script> -->
 
                     <div class="button">
                         <button
@@ -251,7 +251,8 @@
                 for(const el of editProject) {
                     if(el.ID === data.Project_ID){
                         document.getElementById("edit-project").setAttribute('value', el.name);
-                        currentBeneficents(el.ID)
+                        currentBeneficents(el.ID);
+                        break;
                     }
                 }
 
@@ -260,6 +261,7 @@
                 for(const el of editBeneficent) {
                     if(el.ID === data.Beneficiant_ID){
                         document.getElementById("edit-beneficent").setAttribute('value',  el.firstname + " " + el.lastname);
+                        break;
                     }
                 }
 
@@ -603,10 +605,9 @@
         const beneficent = document.getElementById('edit-beneficent-value').value.length > 0;
         const amount = document.getElementById('edit-amount').value.length > 0;
         const purpose = document.getElementById('edit-purpose').value.length > 0;
-        const selectedImage = document.getElementById('edit-image').value.length > 0;
         const button = document.getElementById('edit-submit');
 
-        if(donor && date && project && beneficent && amount && purpose && selectedImage){
+        if(donor && date && project && beneficent && amount && purpose){
             button.disabled = false;
         } else {
             button.disabled = true;

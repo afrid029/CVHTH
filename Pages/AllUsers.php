@@ -438,6 +438,7 @@
         function Edit(ID){
             const model = document.getElementById('editModel');
             model.style.display = 'flex';
+            document.getElementById('reset-password').disabled = false;
             editSetTop();
             editLoadDonors(); 
             editLoadProjects();

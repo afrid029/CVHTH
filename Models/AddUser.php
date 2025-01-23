@@ -121,14 +121,14 @@
                             id="submit"
                             name="submit"
                             disabled="true"
-                            class="submit"> Add User
+                            class="submit"> Create User
                         </button>
 
                         <button
                             style="display: none;"
                             id="submiting"
                             disabled="true"
-                            class="submit"> Adding...
+                            class="submit"> Creating...
                         </button>
                     </div>
 

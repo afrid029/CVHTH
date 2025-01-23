@@ -49,7 +49,7 @@
                             <option value="female">Female</option>
                         </select>
 
-                        <small class="small">First name is required</small>
+                        <small class="small">Gender is required</small>
                     </div>
 
                     <!-- DOB -->
@@ -204,14 +204,14 @@
                             id="submit"
                             name="submit"
                             disabled="true"
-                            class="submit"> Add Beneficiary
+                            class="submit"> Create Beneficiary
                         </button>
 
                         <button
                             style="display: none;"
                             id="submiting"
                             disabled="true"
-                            class="submit"> Adding...
+                            class="submit"> Creating...
                         </button>
                     </div>
 

@@ -86,7 +86,7 @@
                             id="submit"
                             name="submit"
                             disabled="true"
-                            class="submit"> Add
+                            class="submit"> Add Donation
                         </button>
 
                         <button

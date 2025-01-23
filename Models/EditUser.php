@@ -121,6 +121,7 @@
                             style="background-color: green"
                             onclick="test()"
                             name="submit"
+                            id="reset-password"
                             class="submit"> Reset Password
                         </button>
                     </div>
@@ -157,10 +158,6 @@
 
 <script>
 
-    function test() {
-        console.log('Helllow');
-        
-    }
 
 const editToday = new Date();
     const editLocalDate = editToday.toLocaleDateString('en-CA');
@@ -199,12 +196,18 @@ const editToday = new Date();
                 if(donors.ID){
                     document.getElementById('edit-donor').setAttribute('value',donors.name );
                     document.getElementById('edit-donor-value').setAttribute('value', donors.ID);
+                }else {
+                    document.getElementById('edit-donor').removeAttribute('value' );
+                    document.getElementById('edit-donor-value').removeAttribute('value');
                 }
                
 
                 if(projects.ID){
                     document.getElementById('edit-project').setAttribute('value', projects.name);
                     document.getElementById('edit-project-value').setAttribute('value', projects.ID);
+                }else {
+                    document.getElementById('edit-project').removeAttribute('value' );
+                    document.getElementById('edit-project-value').removeAttribute('value');
                 }
                 
 
@@ -583,6 +586,7 @@ const editToday = new Date();
     function submitEditForm() {
         let button = document.getElementById('edit-submit');
         let button2 = document.getElementById('edit-submiting');
+        document.getElementById('reset-password').disabled = true
         button.style.display = 'none';
         button2.style.display = 'block';
         return true;

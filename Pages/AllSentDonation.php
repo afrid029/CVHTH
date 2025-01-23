@@ -349,7 +349,7 @@
             editLoadProjBene(ID);
            
             editSetTop();
-            document.getElementById('edit-image').addEventListener('change', editPreviewImages);
+            // document.getElementById('edit-image').addEventListener('change', editPreviewImages);
             // editSetTop();
             // editLoadDonors(); 
             // editLoadProjects();
@@ -370,7 +370,7 @@
             // document.getElementById('editDonorSearchkey').removeEventListener('input', editDonorSearchListener);
             // document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors)
 
-            document.getElementById('edit-image').removeEventListener('change', editPreviewImages);
+            // document.getElementById('edit-image').removeEventListener('change', editPreviewImages);
 
             document.querySelectorAll('.dropdown-container').forEach((ele) => {
                     ele.style.display = 'none'
