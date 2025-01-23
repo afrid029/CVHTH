@@ -169,7 +169,8 @@
   }
 
   .table-header-pm {
-    grid-template-columns: 20% 25% 15% 25% 15%;
+    grid-template-columns: 4% 19% 24% 14% 24% 15%;
+    padding-left: 3% !important;
   }
 
   .table-header-donor{
@@ -249,7 +250,8 @@
   }
 
   .table-row-pm {
-    grid-template-columns: 20% 25% 15% 25% 15%;
+    grid-template-columns: 4% 19% 24% 14% 24% 15%;
+    padding-left: 3% !important;
   }
   .table-row-donor {
     grid-template-columns: 8% 20% 12% 20% 5% 15% 20%;
@@ -336,6 +338,8 @@
   .main-conent-mobile-bg {
     display: none;
   }
+
+
   
   
   @media (min-width: 1600px) {
@@ -378,6 +382,8 @@
       width: 32px;
       height: 32px;
     }
+
+    
   }
   
   @media (max-width: 1600px) {
@@ -418,6 +424,12 @@
     .pagination .selected{
       width: 24px;
       height: 24px;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .table-row img{
+      width: 22px;
     }
   }
   
@@ -567,7 +579,7 @@
     }
 
     .table-header-pm {
-      grid-template-columns: 23% 20% 17% 25% 15%;
+      grid-template-columns: 4% 22% 19% 16% 24% 15%;
     }
   
     .table-row{
@@ -579,7 +591,7 @@
     }
 
     .table-row-pm {
-      grid-template-columns: 23% 20% 17% 25% 15%;
+      grid-template-columns: 4% 22% 19% 16% 24% 15%;
     }
 
     .table-row div{
@@ -666,7 +678,7 @@
   
   
   @media (max-width: 600px) {
-  
+
     /* .main-sidebar {
       padding: 3vh 0px;
     } */
@@ -725,18 +737,22 @@
     }
   
     .table-header-pm{
-      grid-template-columns: 23% 22% 15% 25% 15%;
+      grid-template-columns: 6% 21% 20% 14% 22% 17%;
       font-size: 2.3vw;
-      padding: 3% 5%;
-    column-gap: 5px;
+      padding: 3% 5% 3% 0% !important;
+    /* column-gap: 5px; */
      
     }
   
     .table-row-pm{
-      grid-template-columns: 23% 22% 15% 25% 15%;
+      grid-template-columns: 6% 21% 20% 14% 22% 17%;
       font-size: 2.2vw;
-      padding: 1.5% 5%;
-    column-gap: 5px;
+      padding: 1.5% 5% 1.5% 1% !important;
+    /* column-gap: 5px; */
+    }
+
+    .table-row-pm img{
+      margin-right: 2px;
     }
 
     .table-header-pm div:last-child {
@@ -852,21 +868,20 @@
       font-size: 2.3vw;
       padding: 1.5% 5%;
     }
-  
+
+
+/*   
     .table-header-pm{
-      grid-template-columns: 20% 22% 15% 25% 18%;
+      grid-template-columns: 4% 19% 21% 14% 24% 18%;
       font-size: 2.4vw;
       padding: 3% 5%;
     column-gap: 5px;
      
-    }
+    } */
   
-    .table-row-pm{
-      grid-template-columns: 20% 22% 15% 25% 18%;
-      font-size: 2.3vw;
-      padding: 1.5% 5%;
-    column-gap: 5px;
-    }
+    .table-row-pm .btn{
+      width: 90%;
+    } 
 
     .table-header-pm div:last-child {
       text-align: start !important;

@@ -88,7 +88,8 @@ if ($role === 'admin') {
             $html .= "
                             <div class='table-row $addonClass'>
                            
-                            
+                                        <div >
+                            <img style='cursor: pointer' onclick = moreInfo(".$row['ID'].") src='/Assets/Images/info.png' alt='info'></div>
                                         <div>" . $row['firstname'] . " " . $row['lastname'] . "</div>
                                         <div >" . $row['email'] . "</div>
                                         <div >" . $row['contactno'] . "</div>
@@ -108,7 +109,7 @@ if ($role === 'admin') {
         // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
     }
 } else if ($role === 'donor') {
-    $query = "SELECT sq.ID, sq.firstname, sq.lastname, sq.contactno, sq.dob, NVL(amount, 0) AS donation from (SELECT u.id, u.firstname, u.lastname, u.contactno, u.dob, SUM(dr.amount) OVER (PARTITION BY u.ID) as amount, ROW_NUMBER() Over (PARTITION BY U.ID) rownum from users u LEFT JOIN donationreceived dr ON u.ID = dr.Donor_ID WHERE u.role='$role') sq where sq.rownum = 1 ORDER BY donation desc, sq.firstname LIMIT $offset, $results_per_page";
+    $query = "SELECT sq.ID, sq.firstname, sq.lastname, sq.contactno, sq.dob, NVL(amount, 0) AS donation from (SELECT u.id, u.firstname, u.lastname, u.contactno, NVL(u.dob, '<i>Not Provided</i>') dob, SUM(dr.amount) OVER (PARTITION BY u.ID) as amount, ROW_NUMBER() Over (PARTITION BY U.ID) rownum from users u LEFT JOIN donationreceived dr ON u.ID = dr.Donor_ID WHERE u.role='$role') sq where sq.rownum = 1 ORDER BY donation desc, sq.firstname LIMIT $offset, $results_per_page";
 
     $result = mysqli_query($db, $query);
 
@@ -118,7 +119,7 @@ if ($role === 'admin') {
                             <div class='table-row $addonClass'>
                            
                                         <div >
-                            <img src='/Assets/Images/info.png' alt='info'></div>
+                            <img style='cursor: pointer' onclick = moreInfo(".$row['ID'].") src='/Assets/Images/info.png' alt='info'></div>
                                         <div>" . $row['firstname'] . " " . $row['lastname'] . "</div>
                                         <div  >" . $row['contactno'] . "</div>
                                         <div style = 'text-align: right;'>" . $row['donation'] . "</div>

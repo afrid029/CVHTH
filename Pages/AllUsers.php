@@ -116,6 +116,8 @@
 
 
                         <div class="table-header table-header-pm">
+
+                            <div>&nbsp;</div>
                             <div>Name</div>
                             <div>Email</div>
                             <div>Contact No.</div>
@@ -461,6 +463,11 @@
 
             document.getElementById('editDonorSearchkey').removeEventListener('input', editDonorSearchListener);
             document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors)
+        }
+
+        function moreInfo(ID){
+            console.log(ID);
+            
         }
 
         window.addEventListener("resize", (()=>{
