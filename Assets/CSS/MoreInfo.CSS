@@ -1,0 +1,65 @@
+.banner {
+    align-items: center;
+}
+.user{
+    text-transform: capitalize;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+}
+
+.user h6{
+    color: rgba(255, 255, 255, 0.438);
+}
+
+.close{
+    position: absolute;
+    right: 5px;
+}
+
+.top{
+    /* top: 200px; */
+    position: relative;
+    display: none;
+    flex-direction: column;
+}
+
+.infoRow {
+    font-family: 'DM Serif Text', serif;
+    display: grid;
+    grid-template-columns: 65% 30% 5%;
+    /* justify-content: space-between;
+    align-items: center; */
+    height: 15vh;
+    max-height: max-content;
+    overflow-y: visible;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    flex: 1;
+
+}
+
+.infoTitle{
+    text-align: start;
+}
+.info {
+    text-transform: capitalize;
+    font-weight: 400;
+    font-family: 'lato', serif;
+    display: inline-flex;
+    flex-direction: column;
+    text-align: start;
+    
+}
+
+.info div {
+    word-wrap: normal; 
+}
+
+#donor-info-bal {
+    color: rgb(60, 255, 0);
+    font-weight: 700;
+}

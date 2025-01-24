@@ -2,6 +2,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -189,6 +190,7 @@
     </footer> -->
     <?php include('/CVHTH/Models/AddUser.php') ?>
     <?php include('/CVHTH/Models/EditUser.php') ?>
+    <?php include('/CVHTH/Models/InfoUser.php') ?>
     <script>
         function resizeWindow() {
             // console.log('resizing')
@@ -465,15 +467,33 @@
             document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors)
         }
 
-        function moreInfo(ID){
-            console.log(ID);
+        function moreInfo(role, ID){
+            const userRole = role === 'donor' ? 'donor' : 'project manager';
+            userMoreInfo(ID, userRole);
+            document.getElementById('viewModel').style.display = 'flex';
+            if(userRole === 'donor'){
+                document.getElementById('donor-info').style.display = 'flex';
+                document.getElementById('project-info').style.display = 'none';
+            }else {
+                document.getElementById('project-info').style.display = 'flex';
+                document.getElementById('donor-info').style.display = 'none';
+            }
+            ViewSetTop();
             
         }
 
+        function closeView(){
+            document.getElementById('viewModel').style.display = 'none';
+            document.getElementById('project-info').style.display = 'none';
+            document.getElementById('donor-info').style.display = 'none';
+            document.getElementById('pm-info-project').innerHTML = ''
+            document.getElementById('pm-info-donor').innerHTML = ''
+        }
         window.addEventListener("resize", (()=>{
             resizeWindow();
             editSetTop();
             setTop();
+            ViewSetTop();
         }));
 
     </script>
@@ -481,3 +501,4 @@
 </body>
 
 </html>
+

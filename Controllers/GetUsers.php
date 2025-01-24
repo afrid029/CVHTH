@@ -72,7 +72,7 @@ if ($role === 'admin') {
     }
 } else if ($role === 'project manager') {
     // echo("into PM");
-    $query = "SELECT u.ID, u.firstname, u.lastname, u.email, u.contactno, NVL(GROUP_CONCAT(p.name SEPARATOR ', '), '<i>Not Assigned</i>') AS name
+    $query = "SELECT u.ID, u.firstname, u.lastname, u.email, u.contactno, NVL(GROUP_CONCAT(DISTINCT p.name SEPARATOR ', '), '<i>Not Assigned</i>') AS name
             FROM users u 
             LEFT JOIN projectmanager pm ON u.ID = pm.Manager_ID
             LEFT JOIN project p ON pm.Project_ID = p.ID
@@ -89,7 +89,7 @@ if ($role === 'admin') {
                             <div class='table-row $addonClass'>
                            
                                         <div >
-                            <img style='cursor: pointer' onclick = moreInfo(".$row['ID'].") src='/Assets/Images/info.png' alt='info'></div>
+                            <img style='cursor: pointer' onclick = moreInfo('projectmanager'," . $row['ID'] . ") src='/Assets/Images/info.png' alt='info'></div>
                                         <div>" . $row['firstname'] . " " . $row['lastname'] . "</div>
                                         <div >" . $row['email'] . "</div>
                                         <div >" . $row['contactno'] . "</div>
@@ -119,7 +119,7 @@ if ($role === 'admin') {
                             <div class='table-row $addonClass'>
                            
                                         <div >
-                            <img style='cursor: pointer' onclick = moreInfo(".$row['ID'].") src='/Assets/Images/info.png' alt='info'></div>
+                            <img style='cursor: pointer' onclick = moreInfo('donor'," . $row['ID'] . ") src='/Assets/Images/info.png' alt='info'></div>
                                         <div>" . $row['firstname'] . " " . $row['lastname'] . "</div>
                                         <div  >" . $row['contactno'] . "</div>
                                         <div style = 'text-align: right;'>" . $row['donation'] . "</div>

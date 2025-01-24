@@ -3,14 +3,12 @@
 <head>
     <link rel="stylesheet" href="Assets/CSS/AddUser.css">
 
-    </script>
 </head>
 
 
 
 <body>
-    <div
-        class="modal-overlay" id="editModel">
+    <div class="modal-overlay" id="editModel">
         <div class="modal-content" onclick="event.stopPropagation()">
             <!-- <div onclick="handleAdd(false)" class='close'>Close</div> -->
             <div class="banner edit-banner">
