@@ -14,6 +14,13 @@
 
     <?php include('../Components/NavBar.php') ?>
 
+    <script>
+    const node = document.querySelector('.nav-links').children;
+    node[2].children[0].style.color = '#D56543'
+    node[2].children[0].style.fontWeight = '600'
+    
+</script>
+
 
     <div class="main-body">
         <div class="main-sidebar">
@@ -104,6 +111,7 @@
     <?php include('/CVHTH/Models/AddBeneficent.php') ?>
     <?php include('/CVHTH/Models/EditBeneficent.php') ?>
     <?php include('/CVHTH/Models/InfoBeneficent.php') ?>
+    <?php include('/CVHTH/Models/DeleteBeneficentModel.php') ?>
     <script>
         function resizeWindow() {
             console.log('resizing');
@@ -343,9 +351,13 @@
 
         }
 
-        function Delete(){
+        function Delete(ID){
 
-        }
+document.getElementById('del-id').value = ID;
+document.getElementById('deleteModel').style.display = 'flex'
+
+}
+
 
         function closeEdit(){
             document.getElementById('editModel').style.display = 'none';

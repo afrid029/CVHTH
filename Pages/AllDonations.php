@@ -12,7 +12,14 @@
 
 <body style="width: 100vw; display:contents;">
 
-<?php include('../Components/NavBar.php') ?>
+<?php include('/CVHTH/Components/NavBar.php') ?>
+
+<script>
+    const node = document.querySelector('.nav-links').children;
+    node[0].children[0].style.color = '#4CADE4'
+    node[0].children[0].style.fontWeight = '600'
+    
+</script>
    
 
     <div class="main-body">
@@ -102,6 +109,7 @@
 
     <?php include('/CVHTH/Models/AddDonation.php') ?>
     <?php include('/CVHTH/Models/EditDonation.php') ?>
+    <?php include('/CVHTH/Models/DeleteDonationModel.php') ?>
     <script>
         
 
@@ -316,11 +324,16 @@
 
         function Delete(ID){
 
+            document.getElementById('del-id').value = ID;
+            document.getElementById('deleteModel').style.display = 'flex'
+
         }
 
         function closeEdit(){
             const model = document.getElementById('editModel');
             model.style.display = 'none'
+            
+            document.getElementById('editSearchkey').value = '';
             document.getElementById('edit-dropdown-list').removeEventListener('click', editSelectDonor);
             document.getElementById('editSearchkey').removeEventListener('input', editDonorSearchListener)
 

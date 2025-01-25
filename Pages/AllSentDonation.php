@@ -13,6 +13,13 @@
 <body style="width: 100vw; display:contents;">
 
     <?php include('../Components/NavBar.php') ?>
+    
+<script>
+    const node = document.querySelector('.nav-links').children;
+    node[3].children[0].style.color = '#68E44C'
+    node[3].children[0].style.fontWeight = '600'
+    
+</script>
 
 
     <div class="main-body">
@@ -110,6 +117,7 @@
     <?php include('/CVHTH/Models/AddSentDonation.php') ?>
     <?php include('/CVHTH/Models/EditSentDonation.php') ?>
     <?php include('/CVHTH/Models/InfoSentDonation.php') ?>
+    <?php include('/CVHTH/Models/DeleteSentDonation.php') ?>
     <script>
         function resizeWindow() {
             console.log('resizing');
@@ -358,9 +366,12 @@
 
         }
 
-        function Delete(){
+        function Delete(ID){
 
-        }
+document.getElementById('del-id').value = ID;
+document.getElementById('deleteModel').style.display = 'flex'
+
+}
 
         function closeEdit(){
             document.getElementById('editModel').style.display = 'none';
@@ -376,6 +387,10 @@
             document.querySelectorAll('.dropdown-container').forEach((ele) => {
                     ele.style.display = 'none'
                 }); 
+
+                document.getElementById('editDonorSearchkey').value = ''
+                document.getElementById('editProjectSearchkey').value = ''
+                document.getElementById('editBeneficentSearchkey').value = ''
 
                 document.getElementById('editDonorSearchkey').removeEventListener('input',editDonorSearchListener);
                 document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors);

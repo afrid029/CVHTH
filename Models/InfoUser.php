@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <div] class="modal-overlay" id="viewModel">
+    <div class="modal-overlay" id="viewModel">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="banner view-banner">
                 <div class="user">
@@ -81,7 +81,7 @@
                         Contact Number
                     </div>
                     <div class="info" id="donor-info-contact">
-                       
+
                     </div>
                 </div>
                 <hr class="line">
@@ -108,7 +108,7 @@
                         Total Donated
                     </div>
                     <div class="info" id="donor-info-amount">
-                        
+
                     </div>
                 </div>
                 <hr class="line">
@@ -117,7 +117,7 @@
                         Balance
                     </div>
                     <div style="color: green;" class="info" id="donor-info-bal">
-                        
+
                     </div>
                 </div>
                 <hr class="line">
@@ -126,21 +126,22 @@
                         Assigned Project Managers
                     </div>
                     <div class="info" id="donor-info-pm">
-                    
+
                     </div>
                 </div>
                 <hr class="line">
-                
+
             </div>
-
-
-
-
         </div>
-        </div>
+    </div>
 
 
-        <script>
+</body>
+
+
+</html>
+
+<script>
             function userMoreInfo(ID, role) {
                 var xhr = new XMLHttpRequest();
 
@@ -241,7 +242,7 @@
                                 prContainer.innerHTML = '<i>Not Assigned</i>'
                             }
 
-                        
+
 
 
                         }
@@ -253,7 +254,7 @@
 
             function ViewSetTop() {
                 console.log('Serting top');
-                
+
                 const banner = document.querySelector('.view-banner');
                 const top = document.querySelectorAll('.top');
                 const div = document.querySelector('.edit-div');
@@ -266,12 +267,7 @@
                     el.style.top = `calc(${bannerHeight}px + 10px)`;
                 })
 
-               
+
                 // div.style.height = `calc(100vh - ${bannerHeight}px)`;
             }
         </script>
-
-</body>
-
-
-</html>

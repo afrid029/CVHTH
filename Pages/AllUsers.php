@@ -16,6 +16,14 @@
 
     <?php include('../Components/NavBar.php') ?>
 
+    
+<script>
+    const node = document.querySelector('.nav-links').children;
+    node[1].children[0].style.color = '#E44C4C'
+    node[1].children[0].style.fontWeight = '600'
+    
+</script>
+
 
     <div class="main-body">
         <div class="main-sidebar">
@@ -188,9 +196,12 @@
         <div class="footer"></div>
 
     </footer> -->
+    
+   
     <?php include('/CVHTH/Models/AddUser.php') ?>
     <?php include('/CVHTH/Models/EditUser.php') ?>
     <?php include('/CVHTH/Models/InfoUser.php') ?>
+    <?php include('/CVHTH/Models/DeleteUserModel.php') ?>
     <script>
         function resizeWindow() {
             // console.log('resizing')
@@ -404,7 +415,7 @@
                 loadDonors();
                 model.style.display = 'flex';
                 setTop();
-               
+
             } else {
                 console.log('falsseee');
 
@@ -439,26 +450,36 @@
             }
         }
 
-        function Edit(ID){
+        function Edit(ID) {
             const model = document.getElementById('editModel');
             model.style.display = 'flex';
             document.getElementById('reset-password').disabled = false;
             editSetTop();
-            editLoadDonors(); 
+            editLoadDonors();
             editLoadProjects();
             getSingleUser(ID);
 
         }
 
-        function Delete(){
+        function Delete(ID) {
+            console.log(ID);
+
+            document.getElementById('del-id').value = ID;
+            document.getElementById('deleteModel').style.display = 'flex'
+
+            console.log(document.getElementById('del-id'));
+
 
         }
 
-        function closeEdit(){
+        function closeEdit() {
             document.getElementById('editModel').style.display = 'none';
             document.querySelectorAll('.dropdown-container').forEach((el) => {
                 el.style.display = 'none';
             })
+
+            document.getElementById('editProjectSearchkey').value = '';
+                document.getElementById('editDonorSearchkey').value = '';
 
             document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
             document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)
@@ -467,39 +488,37 @@
             document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors)
         }
 
-        function moreInfo(role, ID){
+        function moreInfo(role, ID) {
             const userRole = role === 'donor' ? 'donor' : 'project manager';
             userMoreInfo(ID, userRole);
             document.getElementById('viewModel').style.display = 'flex';
-            if(userRole === 'donor'){
+            if (userRole === 'donor') {
                 document.getElementById('donor-info').style.display = 'flex';
                 document.getElementById('project-info').style.display = 'none';
-            }else {
+            } else {
                 document.getElementById('project-info').style.display = 'flex';
                 document.getElementById('donor-info').style.display = 'none';
             }
             ViewSetTop();
-            
+
         }
 
-        function closeView(){
+        function closeView() {
             document.getElementById('viewModel').style.display = 'none';
             document.getElementById('project-info').style.display = 'none';
             document.getElementById('donor-info').style.display = 'none';
             document.getElementById('pm-info-project').innerHTML = ''
             document.getElementById('pm-info-donor').innerHTML = ''
         }
-        
-        window.addEventListener("resize", (()=>{
+
+        window.addEventListener("resize", (() => {
             resizeWindow();
             editSetTop();
             setTop();
             ViewSetTop();
         }));
-
     </script>
 
 </body>
 
 </html>
-

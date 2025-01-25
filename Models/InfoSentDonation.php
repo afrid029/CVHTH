@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <div] class="modal-overlay" id="viewModel">
+    <div class="modal-overlay" id="viewModel">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="banner view-banner">
                 <div class="user">

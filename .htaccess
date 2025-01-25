@@ -11,12 +11,18 @@ RewriteEngine On
 # RewriteCond %{REQUEST_URI} \.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|php)$
 # RewriteRule ^ - [F,L]
 
-# RewriteRule ^$ index.php [L]
-# RewriteRule ^$ Pages/AllDonations.php [L]
-#  RewriteRule ^$ Pages/AllUsers.php [L]
-#  RewriteRule ^$ Pages/AllSentDonation.php [L]
-#  RewriteRule ^$ Pages/AllProjects.php [L]
- RewriteRule ^$ Pages/AllBeneficent.php [L]
+# RewriteRule ^.*$ error.php [L]
+
+RewriteRule ^$ index.php [L]
+RewriteRule ^donation$ Pages/AllDonations.php [L]
+RewriteRule ^users$ Pages/AllUsers.php [L]
+RewriteRule ^sentdonation$ Pages/AllSentDonation.php [L]
+RewriteRule ^project$ Pages/AllProjects.php [L]
+RewriteRule ^beneficent$ Pages/AllBeneficent.php [L]
+# RewriteRule ^.*$ error.php [L]
+
+
+
 
 
 #  RewriteRule ^$ Controllers/DBConeectivity.php [L]
@@ -44,7 +50,6 @@ RewriteEngine On
 
 
 
-# RewriteRule ^(?!home|about).*$ MassTvPhp/error.php [L]
 
-# ErrorDocument 404 /error.php
+ErrorDocument 404 /error.php
 
