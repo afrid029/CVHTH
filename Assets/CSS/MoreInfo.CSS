@@ -25,6 +25,12 @@
     flex-direction: column;
 }
 
+#don-info, #prj-info, #ben-info{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
 .infoRow {
     font-family: 'DM Serif Text', serif;
     display: grid;
@@ -62,4 +68,25 @@
 #donor-info-bal {
     color: rgb(60, 255, 0);
     font-weight: 700;
+}
+
+@media (max-width: 600px) {
+    .infoRow {
+        grid-template-columns: 55% 40% 5%;;
+    }
+
+    .infoTitle {
+        font-size: 14px;
+    }
+
+    .info {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .infoRow {
+        grid-template-columns: 60% 30% 5%;
+        gap: 2.5%;
+    }
 }

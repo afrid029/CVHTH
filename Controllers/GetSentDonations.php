@@ -52,7 +52,7 @@ if (mysqli_num_rows($result) > 0) {
                     <div class='table-row'>
                    
                                  <div >
-                            <img src='/Assets/Images/infogreen.png' alt='info'></div>
+                            <img style='cursor: pointer' onclick = moreInfo('donationsent'," . $row['ID'] . ") src='/Assets/Images/infogreen.png' alt='info'></div>
                                 <div>" . $row['ben_fn'] . " ".$row['ben_ln']."</div>
                                 <div>" . $row['u_fn'] . " ".$row['u_ln']."</div>
                                 <div style='text-align: end'>" . $row['amount'] . "</div>

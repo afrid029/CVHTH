@@ -109,6 +109,7 @@
     
     <?php include('/CVHTH/Models/AddSentDonation.php') ?>
     <?php include('/CVHTH/Models/EditSentDonation.php') ?>
+    <?php include('/CVHTH/Models/InfoSentDonation.php') ?>
     <script>
         function resizeWindow() {
             console.log('resizing');
@@ -231,8 +232,8 @@
             const interval = setInterval(countUp, incrementTime);
         }
 
-        DisplayNumber(70000, 'current');
-        DisplayNumber(20000, 'spent');
+        // DisplayNumber(70000, 'current');
+        // DisplayNumber(20000, 'spent');
         // DisplayNumber(90000, 'total');
 
         const addBtn = document.querySelector('.add-btn');
@@ -386,10 +387,23 @@
                 document.getElementById('edit-dropdown-list-beneficent').removeEventListener('click', editSelectBeneficents);
         }
 
+        function moreInfo(role, ID){
+            
+            document.getElementById('viewModel').style.display = 'flex';
+          sentDonationMoreInfo(ID, role);
+           
+            
+        }
+
+        function closeView(){
+            document.getElementById('viewModel').style.display = 'none';
+        }
+
         window.addEventListener("resize", (()=> {
             resizeWindow();
             setTop();
             editSetTop();
+            ViewSetTop();
         }));
     </script>
 

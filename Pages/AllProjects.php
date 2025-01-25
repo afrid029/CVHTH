@@ -103,6 +103,7 @@
     </footer> -->
     <?php include('/CVHTH/Models/AddProject.php') ?>
     <?php include('/CVHTH/Models/EditProject.php') ?>
+    <?php include('/CVHTH/Models/InfoProject.php') ?>
     <script>
         
 
@@ -367,10 +368,23 @@
             // document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors)
         }
 
+        function moreInfo(role, ID){
+            
+            document.getElementById('viewModel').style.display = 'flex';
+          projectMoreInfo(ID, role);
+           
+            
+        }
+
+        function closeView(){
+            document.getElementById('viewModel').style.display = 'none';
+        }
+
         window.addEventListener("resize", (()=>{
             resizeWindow();
             editSetTop();
             setTop();
+            ViewSetTop();
         }));
     </script>
 

@@ -27,7 +27,7 @@ $query="SELECT
     p.ID,
     p.name AS projectName,
     p.description AS projectDescription,
-    NVL(DISTINCT GROUP_CONCAT(CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '<i>Not Assigned</i>') AS managers,
+    NVL(GROUP_CONCAT( DISTINCT CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '<i>Not Assigned</i>') AS managers,
     (SELECT COUNT(*) 
      FROM projectbeneficiant pb_sub 
      WHERE pb_sub.Project_ID = p.ID) AS beneCount
@@ -54,7 +54,7 @@ if (mysqli_num_rows($result) > 0) {
                    
                     
                                 <div >
-                            <img src='/Assets/Images/infoorange.png' alt='info'></div>
+                            <img style='cursor: pointer' onclick = moreInfo('project'," . $row['ID'] . ") src='/Assets/Images/infoyellow.png' alt='info'></div>
                                 <div>" . $row['projectName'] . "</div>
                                 <div>" . $row['projectDescription'] . "</div>
                                 <div >" . $row['managers'] . "</div>

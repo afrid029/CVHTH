@@ -145,7 +145,7 @@ if ($type === 'user') {
             ds.date,
             ds.amount,
             ds.purpose,
-            CONCAT(u.firstname, ' ', u.firstname) donor,
+            CONCAT(u.firstname, ' ', u.lastname) donor,
             CONCAT(b.firstName, ' ', b.lastName) beneficent,
             p.name,
             GROUP_CONCAT(DISTINCT de.image SEPARATOR ', ') evidence
@@ -229,11 +229,16 @@ if ($type === 'user') {
             NVL(b.school, '<i>Not Provided</i>') school,
             NVL(b.grade, '<i>Not Provided</i>') grade,
             NVL((SELECT SUM(ds2.amount) FROM donationsent ds2 WHERE ds2.Beneficiant_ID = ds.Beneficiant_ID), 0) sent,
+            GROUP_CONCAT(DISTINCT CONCAT(bd.Name,'-',bd.Relation) SEPARATOR ', ') dependants,
+             GROUP_CONCAT(DISTINCT p.name SEPARATOR ', ') projects,
             GROUP_CONCAT(DISTINCT bi.image SEPARATOR ', ') images
         FROM
             beneficiant b
             LEFT JOIN donationsent ds ON b.ID = ds.Beneficiant_ID
             LEFT JOIN beneficiantimages bi ON b.ID = bi.Beneficiant_ID
+            LEFT JOIN beneficiantdependency bd ON b.ID = bd.Beneficiant_ID
+            LEFT JOIN projectbeneficiant pb ON b.ID = pb.Beneficiant_ID
+            LEFT JOIN project p ON pb.Project_ID = p.ID
         WHERE
             b.ID = '$ID'";
 

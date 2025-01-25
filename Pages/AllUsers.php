@@ -489,6 +489,7 @@
             document.getElementById('pm-info-project').innerHTML = ''
             document.getElementById('pm-info-donor').innerHTML = ''
         }
+        
         window.addEventListener("resize", (()=>{
             resizeWindow();
             editSetTop();

@@ -103,6 +103,7 @@
 
     <?php include('/CVHTH/Models/AddBeneficent.php') ?>
     <?php include('/CVHTH/Models/EditBeneficent.php') ?>
+    <?php include('/CVHTH/Models/InfoBeneficent.php') ?>
     <script>
         function resizeWindow() {
             console.log('resizing');
@@ -362,10 +363,24 @@
             
         }
 
+        
+        function moreInfo(role, ID){
+            
+            document.getElementById('viewModel').style.display = 'flex';
+          beneficentMoreInfo(ID, role);
+           
+            
+        }
+
+        function closeView(){
+            document.getElementById('viewModel').style.display = 'none';
+        }
+
         window.addEventListener("resize", (()=>{
             resizeWindow();
             editSetTop();
             setTop();
+            ViewSetTop();
         }));
     </script>
 

@@ -23,7 +23,7 @@ $total_received = '';
 //     $total_received = $row['total_received'];
 // }
 
-$query="SELECT b.ID, b.firstName, b.lastName,b.NIC, NVL(DISTINCT GROUP_CONCAT((p.name) SEPARATOR ', '), '<i>Not Assigned</i>') as name
+$query="SELECT b.ID, b.firstName, b.lastName,b.NIC, NVL(GROUP_CONCAT(DISTINCT (p.name) SEPARATOR ', '), '<i>Not Assigned</i>') as name
 from beneficiant b
 LEFT JOIN projectbeneficiant pb ON b.ID = pb.Beneficiant_ID
 LEFT JOIN project p ON  pb.Project_ID = p.ID 
@@ -42,7 +42,7 @@ if (mysqli_num_rows($result) > 0) {
                    
                     
                                 <div >
-                            <img src='/Assets/Images/infoorange.png' alt='info'></div>
+                            <img style='cursor: pointer' onclick = moreInfo('beneficent'," . $row['ID'] . ") src='/Assets/Images/infoorange.png' alt='info'></div>
                                 <div>" . $row['firstName'] ." ". $row['lastName'] ."</div>
                                 <div style='text-align: center'>" . $row['NIC'] . "</div>
                                 <div style='text-align: start'>" . $row['name'] . "</div>

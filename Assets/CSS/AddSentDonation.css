@@ -240,7 +240,7 @@ textarea:focus {
 }
 
 .submit:disabled {
-  background-color: #0c160a;
+  background-color: #616161;
 }
 
 @media (min-width: 1600px) {

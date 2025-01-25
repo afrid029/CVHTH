@@ -240,7 +240,7 @@ backdrop-filter: blur(5px);
   }
 
   .submit:disabled {
-    background-color: #160a0a;
+    background-color: #5a5a5a;
   }
 
   

@@ -65,7 +65,7 @@
 }
 
 .close {
-  background-color: #3f3e02;
+  background-color: #3f2502;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -225,7 +225,7 @@ textarea:focus {
   color: #f8f4f4;
   position: fixed;
   z-index: 10;
-  background-color: rgb(109, 108, 61);
+  background-color: rgb(109, 87, 61);
   display: flex;
   justify-content: space-between;
   /* width: calc(100% - 40px); */
@@ -254,7 +254,7 @@ textarea:focus {
 }
 
 .submit:disabled {
-  background-color: #160a0a;
+  background-color: #555555;
 }
 
 @media (min-width: 1600px) {
