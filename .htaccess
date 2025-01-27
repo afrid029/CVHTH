@@ -1,24 +1,29 @@
 RewriteEngine On
 
 # 1. Allow internal requests from localhost or your domain (CSS, JS, images, etc.)
-# RewriteCond %{HTTP_REFERER} ^http://localhost/ [NC]
-# RewriteCond %{REQUEST_URI} ^/(Assets|components|Models|Controllers|public)/  [NC]
-# RewriteCond %{REQUEST_URI} \.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|php)$
-# RewriteRule ^ - [L]
+RewriteCond %{HTTP_REFERER} ^http://localhost/ [NC]
+RewriteCond %{REQUEST_URI} ^/(Assets|Components|Models|Pages|Controllers|public)/  [NC]
+RewriteCond %{REQUEST_URI} \.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|php)$
+RewriteRule ^ - [L]
 
 # 2. Block direct access to files in /Assets/ or /components/ from any external request (direct access to the file)
-# RewriteCond %{REQUEST_URI} ^/(Assets|components|Models|Controllers|public)/  [NC]
-# RewriteCond %{REQUEST_URI} \.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|php)$
-# RewriteRule ^ - [F,L]
+RewriteCond %{REQUEST_URI} ^/(Assets|Components|Models|Pages|Controllers|public)/  [NC]
+RewriteCond %{REQUEST_URI} \.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot|otf|php)$
+RewriteRule ^ - [F,L]
 
 # RewriteRule ^.*$ error.php [L]
 
-RewriteRule ^$ index.php [L]
-RewriteRule ^donation$ Pages/AllDonations.php [L]
-RewriteRule ^users$ Pages/AllUsers.php [L]
-RewriteRule ^sentdonation$ Pages/AllSentDonation.php [L]
-RewriteRule ^project$ Pages/AllProjects.php [L]
-RewriteRule ^beneficent$ Pages/AllBeneficent.php [L]
+RewriteRule ^.*$ router.php [L]
+
+# RewriteRule ^$ index.php [L]
+# RewriteRule ^donation$ Pages/AllDonations.php [L]
+# RewriteRule ^users$ Pages/AllUsers.php [L]
+# RewriteRule ^sentdonation$ Pages/AllSentDonation.php [L]
+# RewriteRule ^project$ Pages/AllProjects.php [L]
+# RewriteRule ^beneficent$ Pages/AllBeneficent.php [L]
+
+
+
 # RewriteRule ^.*$ error.php [L]
 
 
@@ -34,6 +39,7 @@ RewriteRule ^beneficent$ Pages/AllBeneficent.php [L]
 #  RewriteRule ^$ Controllers/GetAllBeneficent.php [L]
 #  RewriteRule ^$ Controllers/GetAllUsers.php [L]
 #  RewriteRule ^$ Controllers/GetSingleData.php [L]
+#  RewriteRule ^$ Controllers/GetMoreInfo.php [L]
 
 
 # RewriteRule ^addlive$ Controllers/liveUpload.php [L]

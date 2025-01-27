@@ -18,10 +18,24 @@
                 <div onclick="handleAdd(false)" class='close'>Close</div>
             </div>
 
-            <form action="/#" method="post" oninput="validateForm()" onsubmit="return submitLoginform()" enctype="multipart/form-data">
-            <!-- <form action="/#" method="post"> -->
+            <form action="/add-sentdonation" method="post" oninput="validateForm()" onsubmit="return submitLoginform()" enctype="multipart/form-data">
+                <!-- <form action="/#" method="post"> -->
                 <div class="div"> </div>
                 <div class="Form">
+
+                    <!-- Enter Amount -->
+                    <div class="FormRow">
+
+                        <input
+                            type="number"
+                            name="amount"
+                            placeholder="Serving Amount (Rs)"
+                            min="1"
+                            id="select-amount"
+                            required />
+
+                        <small class="small">Amount is required</small>
+                    </div>
                     <!-- Select Donor -->
                     <div class="FormRow">
 
@@ -40,6 +54,7 @@
                         </div>
 
                         <small class="small">Donor is required</small>
+                        <small ID='not-enough' style="display: none; color: #765309" class="small">Donor has not sufficient balance.</small>
 
                     </div>
 
@@ -92,19 +107,7 @@
 
                     </div>
 
-                    <!-- Enter Amount -->
-                    <div class="FormRow">
 
-                        <input
-                            type="number"
-                            name="amount"
-                            placeholder="Serving Amount (Rs)"
-                            min="1"
-                            id="select-amount"
-                            required />
-
-                        <small class="small">Amount is required</small>
-                    </div>
 
 
                     <!-- Enter Purpose -->
@@ -120,11 +123,11 @@
                         <small class="small">Purpose is required</small>
                     </div>
 
-                    
+
                     <!-- Images -->
                     <div class="FormRow">
-                    <small style="color: gray; display: flex; width: 100%; font-size: 12px; margin-bottom: 5px; font-family: Lato, serif">Attach Document(s)</small>
-                        <input type="file" accept="image/jpeg, image/png, image/gif, image/jpg" id="select-image" name="image" placeholder="Upload Images" required multiple>
+                        <small style="color: gray; display: flex; width: 100%; font-size: 12px; margin-bottom: 5px; font-family: Lato, serif">Attach Document(s)</small>
+                        <input type="file" accept="image/jpeg, image/png, image/gif, image/jpg" id="select-image" name="image[]" placeholder="Upload Images" required multiple>
                         <small class="small">Documents required</small>
                         <div id="preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px;"></div>
                     </div>
@@ -135,14 +138,15 @@
                         function PreviewImages(event) {
                             // console.log(val);
 
-                            
+
                             const files = event.target.files;
                             const previewContainer = document.getElementById('preview-container');
                             previewContainer.innerHTML = ''; // Clear the container before showing new images
 
                             if (files.length > 6) {
                                 alert('You can select a maximum of 6 images.');
-                                event.target.value = ''; // Clear the input (prevents submitting the 7th file)
+                                event.target.value = '';
+                                validateForm() // Clear the input (prevents submitting the 7th file)
                                 return;
                             }
 
@@ -166,10 +170,11 @@
 
                                         const imgElement = document.createElement('img');
                                         imgElement.src = e.target.result;
+                                        imgElement.style.borderRadius = '10px';
                                         imgElement.style.width = '100px'; // Optional: resize the image for preview
                                         imgElement.style.objectFit = 'cover'; // Optional: resize the image for preview
                                         // imgElement.style.margin = '10px';
-                                        
+
                                         // Optional: add margin between images
 
                                         divEl.appendChild(imgElement)
@@ -180,7 +185,7 @@
                                     alert('Please select only image files.');
                                 }
                             }
-                            
+
                         }
                     </script>
 
@@ -324,6 +329,11 @@
             option.setAttribute('value', element.ID);
             option.textContent = element.firstname + " " + element.lastname;
 
+            const small = document.createElement('div');
+            small.setAttribute('class','balance')
+            small.textContent = 'Balance (Rs) : ' + element.balance;
+            option.appendChild(small);
+
             listContainer.appendChild(option);
             listContainer.appendChild(hr)
 
@@ -340,7 +350,8 @@
         const selectDonorValue = document.getElementById('select-donor-value');
 
         if (event.target.classList.contains('dropdown-option')) {
-            selectDonor.setAttribute('value', event.target.textContent)
+            const name = event.target.textContent.split('Balance')
+            selectDonor.setAttribute('value', name[0])
             selectDonorValue.setAttribute('value', event.target.getAttribute('value'))
 
             openSelect('dropdown-container-donor', false);
@@ -436,7 +447,7 @@
             selectDonorValue.setAttribute('value', value)
 
             openSelect('dropdown-container-project', false);
-          
+
             showBeneficents(value);
 
         }
@@ -453,12 +464,12 @@
 
         selectedBene = beneficent.filter((el) => {
             // console.log(el, value);
-            
+
             return el.project_id === value
         })
 
         // console.log(selectedBene);
-        
+
 
         loadSearchOptionsForBene(selectedBene);
 
@@ -517,17 +528,38 @@
 
     }
 
-    function validateForm(){
-        const donor = document.getElementById('select-donor-value').value.length > 0;
+    function validateForm() {
+        const donor = document.getElementById('select-donor-value').value;
         const date = document.getElementById('select-date').value.length > 0;
         const project = document.getElementById('select-project-value').value.length > 0;
         const beneficent = document.getElementById('select-beneficent-value').value.length > 0;
-        const amount = document.getElementById('select-amount').value.length > 0;
+        const amount = document.getElementById('select-amount').value;
         const purpose = document.getElementById('select-purpose').value.length > 0;
         const selectedImage = document.getElementById('select-image').value.length > 0;
         const button = document.getElementById('submit');
 
-        if(donor && date && project && beneficent && amount && purpose && selectedImage){
+        if(donor.length > 0 && amount.length > 0){
+            const selectedDonor = donorResponse.data.filter((ele) =>
+            (ele.ID === donor));
+            console.log(selectedDonor);
+            
+            if(parseInt(selectedDonor[0].balance) < amount){
+                
+                
+                document.getElementById('not-enough').style.display = 'flex';
+                document.getElementById('select-donor-value').removeAttribute('value');
+                document.getElementById('select-donor').removeAttribute('value');
+                // validateForm();
+
+            }else {
+                document.getElementById('not-enough').style.display = 'none';
+                // validateForm();
+            }
+        }
+
+        const donor2 = document.getElementById('select-donor-value').value;
+
+        if (donor2.length > 0 && date && project && beneficent && amount.length > 0 && purpose && selectedImage) {
             button.disabled = false;
         } else {
             button.disabled = true;

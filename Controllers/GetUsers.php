@@ -57,10 +57,10 @@ if ($role === 'admin') {
                                         <div >" . $row['email'] . "</div>
                                         <div>" . $row['contactno'] . "</div>
                                         <div style='text-align: center' class='buttons'>
-                                            <div onclick=Edit(" . $row['ID'] . ") class='btn edit'>
+                                            <div onclick=Edit('" . $row['ID'] . "') class='btn edit'>
                                                 Edit
                                             </div>
-                                            <div  onclick=Delete(" . $row['ID'] . ") class='btn del'>
+                                            <div  onclick=Delete('" . $row['ID'] . "') class='btn del'>
                                                 Delete
                                             </div>
                                         </div>
@@ -89,18 +89,18 @@ if ($role === 'admin') {
                             <div class='table-row $addonClass'>
                            
                                         <div >
-                            <img style='cursor: pointer' onclick = moreInfo('projectmanager'," . $row['ID'] . ") src='/Assets/Images/info.png' alt='info'></div>
+                            <img style='cursor: pointer' onclick = moreInfo('projectmanager','" . $row['ID'] . "') src='/Assets/Images/info.png' alt='info'></div>
                                         <div>" . $row['firstname'] . " " . $row['lastname'] . "</div>
                                         <div >" . $row['email'] . "</div>
                                         <div >" . $row['contactno'] . "</div>
                                         <div >" . $row['name'] . "</div>
                                         <div style='text-align: center' class='buttons'>
-                                            <div onclick=Edit(" . $row['ID'] . ") class='btn edit'>
+                                             <div onclick=Edit('" . $row['ID'] . "') class='btn edit'>
                                                 Edit
                                             </div>
-                                            <div  onclick=Delete(" . $row['ID'] . ") class='btn del'>
+                                            <div  onclick=Delete('" . $row['ID'] . "') class='btn del'>
                                                 Delete
-                                            </div>
+                                            </div>  
                                         </div>
                                     </div>
                                     <hr>";
@@ -119,17 +119,17 @@ if ($role === 'admin') {
                             <div class='table-row $addonClass'>
                            
                                         <div >
-                            <img style='cursor: pointer' onclick = moreInfo('donor'," . $row['ID'] . ") src='/Assets/Images/info.png' alt='info'></div>
+                            <img style='cursor: pointer' onclick = moreInfo('donor','" . $row['ID'] . "') src='/Assets/Images/info.png' alt='info'></div>
                                         <div>" . $row['firstname'] . " " . $row['lastname'] . "</div>
                                         <div  >" . $row['contactno'] . "</div>
                                         <div style = 'text-align: right;'>" . $row['donation'] . "</div>
                                         <div style='visibility:hidden'></div>
                                         <div >" . $row['dob'] . "</div>
                                         <div style='text-align: center' class='buttons'>
-                                            <div onclick=Edit(" . $row['ID'] . ") class='btn edit'>
+                                            <div onclick=Edit('" . $row['ID'] . "') class='btn edit'>
                                                 Edit
                                             </div>
-                                            <div  onclick=Delete(" . $row['ID'] . ") class='btn del'>
+                                            <div  onclick=Delete('" . $row['ID'] . "') class='btn del'>
                                                 Delete
                                             </div>  
                                         </div>

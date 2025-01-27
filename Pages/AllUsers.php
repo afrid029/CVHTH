@@ -3,6 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
+    <title>CVHTH | Users</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -14,7 +15,35 @@
 
 <body style="width: 100vw; display:contents;">
 
-    <?php include('../Components/NavBar.php') ?>
+<?php
+    SESSION_START();
+    if (isset($_SESSION['fromAction']) && $_SESSION['fromAction'] === true) { ?>
+
+
+        <div class="alert-container" id="alert">
+            <div class="alert" id="alertCont">
+                <p><?php echo $_SESSION['message'] ?></p>
+            </div>
+        </div>
+
+        <?php
+        if ($_SESSION['status'] === true) {
+            echo "<script>document.getElementById('alertCont').style.backgroundColor = '#1D7524';</script>";
+        } else {
+            echo "<script>document.getElementById('alertCont').style.backgroundColor = '#E44C4C';</script>";
+        }
+        ?>
+        <script>
+            document.getElementById('alert').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('alert').style.display = 'none';
+            }, 3000);
+        </script>
+    <?php
+    }
+    $_SESSION['fromAction'] = false;
+
+    include('Components/NavBar.php') ?>
 
     
 <script>

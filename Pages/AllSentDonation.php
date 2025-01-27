@@ -2,6 +2,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CVHTH | Sent Donations</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
@@ -12,7 +13,35 @@
 
 <body style="width: 100vw; display:contents;">
 
-    <?php include('../Components/NavBar.php') ?>
+<?php
+    SESSION_START();
+    if (isset($_SESSION['fromAction']) && $_SESSION['fromAction'] === true) { ?>
+
+
+        <div class="alert-container" id="alert">
+            <div class="alert" id="alertCont">
+                <p><?php echo $_SESSION['message'] ?></p>
+            </div>
+        </div>
+
+        <?php
+        if ($_SESSION['status'] === true) {
+            echo "<script>document.getElementById('alertCont').style.backgroundColor = '#1D7524';</script>";
+        } else {
+            echo "<script>document.getElementById('alertCont').style.backgroundColor = '#E44C4C';</script>";
+        }
+        ?>
+        <script>
+            document.getElementById('alert').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('alert').style.display = 'none';
+            }, 3000);
+        </script>
+    <?php
+    }
+    $_SESSION['fromAction'] = false;
+
+    include('Components/NavBar.php') ?>
     
 <script>
     const node = document.querySelector('.nav-links').children;

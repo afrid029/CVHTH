@@ -18,9 +18,12 @@
                 <div onclick="closeEdit()" class='close'>Close</div>
             </div>
 
-            <form action="#" method="post" oninput="validateEditForm()" onsubmit="return submitEditForm()">
+            <form action="/add-project" method="post" oninput="validateEditForm()" onsubmit="return submitEditForm()">
                 <div class="div edit-div"> </div>
                 <div class="Form edit-Form">
+
+                <!-- ID -->
+                <input name = "ID" id="edit-id" type="text" hidden/>
 
                     <!-- Project Name -->
                     <div class="FormRow">
@@ -90,7 +93,7 @@
                         <button
                             type="submit"
                             id="edit-submit"
-                            name="submit"
+                            name="edit-submit"
                             disabled="true"
                             class="submit"> Update
                         </button>
@@ -135,7 +138,7 @@
                 const {data} = JSON.parse(xhr.responseText);
                 console.log(data);
 
-               
+                document.getElementById('edit-id').value = data.ID;
                 document.getElementById("edit-pname").value = data.name;
                 document.getElementById("edit-description").value = data.description;
 

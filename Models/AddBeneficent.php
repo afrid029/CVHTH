@@ -18,7 +18,7 @@
                 <div onclick="handleAdd(false)" class='close'>Close</div>
             </div>
 
-            <form action="#" method="post" oninput="validateForm()" onsubmit="return submitLoginform()" enctype="multipart/form-data">
+            <form action="/add-beneficiary" method="post" oninput="validateForm()" onsubmit="return submitLoginform()" enctype="multipart/form-data">
                 <div class="div"> </div>
                 <div class="Form">
 
@@ -61,7 +61,7 @@
 
                     <!-- Dependents -->
                     <div class="FormRow">
-                        <input type="text" name="project" id="select-dependant-value" hidden>
+                        <input type="text" name="dependant" id="select-dependant-value" hidden>
                         <input style="cursor: pointer;" type="text" id="select-dependant" placeholder="Dependant(s)" onclick="openSelect('dropdown-container-dependant',true)" readonly>
 
                         <div class="dropdown-container" id="dropdown-container-dependant">
@@ -134,7 +134,7 @@
                     <!-- Images -->
                     <div class="FormRow">
                     <small style="color: gray; display: flex; width: 100%; font-size: 12px; margin-bottom: 5px; font-family: Lato, serif">Attach Document(s)</small>
-                        <input type="file" accept="image/jpeg, image/png, image/gif, image/jpg" id="select-image" name="image" placeholder="Upload Images" required multiple>
+                        <input type="file" accept="image/jpeg, image/png, image/gif, image/jpg" id="select-image" name="image[]" placeholder="Upload Images" required  multiple>
                         <small class="small">Documents required</small>
                         <div id="preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px;"></div>
                     </div>
@@ -155,7 +155,8 @@
 
                             if (files.length > 6) {
                                 alert('You can select a maximum of 6 images.');
-                                event.target.value = ''; // Clear the input (prevents submitting the 7th file)
+                                event.target.value = '';
+                                validateForm(); // Clear the input (prevents submitting the 7th file)
                                 return;
                             }
 
@@ -179,6 +180,7 @@
 
                                         const imgElement = document.createElement('img');
                                         imgElement.src = e.target.result;
+                                        imgElement.style.borderRadius = '10px'
                                         imgElement.style.width = '100px'; // Optional: resize the image for preview
                                         imgElement.style.objectFit = 'cover'; // Optional: resize the image for preview
                                         // imgElement.style.margin = '10px';
@@ -423,13 +425,13 @@
         const date = document.getElementById('select-date').value.length > 0;
         const address = document.getElementById('select-address').value.length > 0;
         const gs = document.getElementById('select-gs').value.length > 0;
-        const selectedImage = document.getElementById('select-image').value.length > 0;
+        const selectedImage = document.getElementById('select-image').value;
         let button = document.getElementById('submit');
 
-        // console.log(selectedImage);
+        console.log(selectedImage);
 
 
-        if (fname && lname && nic && gender && date && address && gs && selectedImage) {
+        if (fname && lname && nic && gender && date && address && gs && selectedImage.length > 0) {
             button.disabled = false;
         } else {
             button.disabled = true;

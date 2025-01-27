@@ -52,12 +52,12 @@ if (mysqli_num_rows($result) > 0) {
                                 <div style='text-align: end'>" . $row['amount'] . "</div>
                                 <div style='text-align: end'>" . $row['date'] . "</div>
                                 <div class='buttons'>
-                                        <div onclick=Edit(". $row['ID']. ") class='btn edit'>
-                                            Edit
-                                        </div>
-                                        <div  onclick=Delete(". $row['ID']. ") class='btn del'>
-                                            Delete
-                                        </div>
+                                         <div onclick=Edit('" . $row['ID'] . "') class='btn edit'>
+                                                Edit
+                                            </div>
+                                            <div  onclick=Delete('" . $row['ID'] . "') class='btn del'>
+                                                Delete
+                                            </div>  
                                 </div>
                             </div>
                             <hr>";

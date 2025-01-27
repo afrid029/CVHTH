@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-transform: capitalize;
   }
   
   .main-body {
@@ -285,7 +286,7 @@
   }
   .pagination .selected {
     color: rgb(233, 234, 238);
-    background-color: #553b04;
+    background-color: #551704;
     width: 16px;
     height: 16px;
     border-radius: 5px;
@@ -296,12 +297,12 @@
   
   .pagination span {
     font-weight: 600;
-    color: #9b6d38;
+    color: #9b5438;
     cursor: pointer;
   }
   
   .textPagi {
-    color: #584717 !important;
+    color: #9b5438 !important;
   }
   
   .main-conent-mobile-bg {
@@ -527,7 +528,9 @@
     .add-btn {
       font-size: 2vw;
       letter-spacing: 5px;
-      height: 6vh;
+      height: auto;
+      padding-top: 10px;
+      padding-bottom: 10px;
       width: 70vw;
       margin: auto;
     }

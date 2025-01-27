@@ -18,10 +18,28 @@
                 <div onclick="closeEdit()" class='close'>Close</div>
             </div>
 
-            <form action="/#" method="post" oninput="validateEditForm()" onsubmit="return submitEditForm()" enctype="multipart/form-data">
+            <form action="/add-sentdonation" method="post" oninput="validateEditForm()" onsubmit="return submitEditForm()" enctype="multipart/form-data">
             <!-- <form action="/#" method="post"> -->
                 <div class="div edit-div"> </div>
                 <div class="Form edit-Form">
+
+                <!-- ID -->
+                <input name = "ID" id="edit-id" type="text" hidden/>
+
+                    <!-- Enter Amount -->
+                    <div class="FormRow">
+
+                        <input
+                            type="number"
+                            name="amount"
+                            placeholder="Serving Amount (Rs)"
+                            min="1"
+                            id="edit-amount"
+                            required />
+
+                        <small class="small">Amount is required</small>
+                    </div>
+
                     <!-- Select Donor -->
                     <div class="FormRow">
 
@@ -40,6 +58,7 @@
                         </div>
 
                         <small class="small">Donor is required</small>
+                        <small ID='edit-not-enough' style="display: none; color: #765309" class="small">Donor has not sufficient balance.</small>
 
                     </div>
 
@@ -91,21 +110,6 @@
                         <small class="small">Beneficiary is required</small>
 
                     </div>
-
-                    <!-- Enter Amount -->
-                    <div class="FormRow">
-
-                        <input
-                            type="number"
-                            name="amount"
-                            placeholder="Serving Amount (Rs)"
-                            min="1"
-                            id="edit-amount"
-                            required />
-
-                        <small class="small">Amount is required</small>
-                    </div>
-
 
                     <!-- Enter Purpose -->
                     <div class="FormRow">
@@ -188,7 +192,7 @@
                         <button
                             type="submit"
                             id="edit-submit"
-                            name="submit"
+                            name="edit-submit"
                             disabled="true"
                             class="submit"> Update
                         </button>
@@ -235,6 +239,7 @@
                 const {data} = JSON.parse(xhr.responseText);
                 console.log(data);
 
+                document.getElementById('edit-id').value = data.ID;
                 document.getElementById("edit-donor-value").setAttribute('value', data.Donor_ID);
 
                 console.log(editDonorResponse);
@@ -382,6 +387,12 @@
             option.setAttribute('value', element.ID);
             option.textContent = element.firstname + " " + element.lastname;
 
+            const small = document.createElement('div');
+            small.setAttribute('class','balance')
+            small.textContent = 'Balance (Rs) : ' + element.balance;
+            option.appendChild(small);
+
+
             listContainer.appendChild(option);
             listContainer.appendChild(hr)
 
@@ -398,7 +409,9 @@
         const selectDonorValue = document.getElementById('edit-donor-value');
 
         if (event.target.classList.contains('dropdown-option')) {
-            selectDonor.setAttribute('value', event.target.textContent)
+            const name = event.target.textContent.split('Balance')
+            selectDonor.setAttribute('value', name[0])
+            // selectDonor.setAttribute('value', name)
             selectDonorValue.setAttribute('value', event.target.getAttribute('value'))
 
             editOpenSelect('edit-dropdown-container-donor', false);
@@ -599,15 +612,40 @@
     }
 
     function validateEditForm(){
-        const donor = document.getElementById('edit-donor-value').value.length > 0;
+        const donor = document.getElementById('edit-donor-value').value;
         const date = document.getElementById('edit-date').value.length > 0;
         const project = document.getElementById('edit-project-value').value.length > 0;
         const beneficent = document.getElementById('edit-beneficent-value').value.length > 0;
-        const amount = document.getElementById('edit-amount').value.length > 0;
+        const amount = document.getElementById('edit-amount').value;
         const purpose = document.getElementById('edit-purpose').value.length > 0;
         const button = document.getElementById('edit-submit');
 
-        if(donor && date && project && beneficent && amount && purpose){
+
+
+        if(donor.length > 0 && amount.length > 0){
+            const selectedDonor = editDonorResponse.data.filter((ele) =>
+            (ele.ID === donor));
+            console.log(selectedDonor);
+            
+            if(parseInt(selectedDonor[0].balance) < amount){
+                
+                
+                document.getElementById('edit-not-enough').style.display = 'flex';
+                document.getElementById('edit-donor-value').removeAttribute('value');
+                document.getElementById('edit-donor').removeAttribute('value');
+                // validateForm();
+
+            }else {
+                document.getElementById('edit-not-enough').style.display = 'none';
+                // validateForm();
+            }
+        }
+
+        const donor2 = document.getElementById('edit-donor-value').value;
+
+
+
+        if(donor2.length > 0 && date && project && beneficent && amount.length > 0 && purpose){
             button.disabled = false;
         } else {
             button.disabled = true;

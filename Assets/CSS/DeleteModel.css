@@ -89,6 +89,12 @@
     box-shadow: 0 0 10px rgb(187, 97, 97);
   }
 
+  .no:disabled, .yes:disabled {
+    background-color: #464646;
+  }
+
+
+
   @media (min-width: 1600px) {
     .del-modal-content{
 

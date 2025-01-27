@@ -42,17 +42,17 @@ if (mysqli_num_rows($result) > 0) {
                    
                     
                                 <div >
-                            <img style='cursor: pointer' onclick = moreInfo('beneficent'," . $row['ID'] . ") src='/Assets/Images/infoorange.png' alt='info'></div>
+                            <img style='cursor: pointer' onclick = moreInfo('beneficent','" . $row['ID'] . "') src='/Assets/Images/infoorange.png' alt='info'></div>
                                 <div>" . $row['firstName'] ." ". $row['lastName'] ."</div>
                                 <div style='text-align: center'>" . $row['NIC'] . "</div>
                                 <div style='text-align: start'>" . $row['name'] . "</div>
                                 <div class='buttons'>
-                                        <div onclick=Edit(" . $row['ID'] . ") class='btn edit'>
+                                         <div onclick=Edit('" . $row['ID'] . "') class='btn edit'>
                                                 Edit
                                             </div>
-                                            <div  onclick=Delete(" . $row['ID'] . ") class='btn del'>
+                                            <div  onclick=Delete('" . $row['ID'] . "') class='btn del'>
                                                 Delete
-                                            </div> 
+                                            </div>  
                                 </div>
                             </div>
                             <hr>";

@@ -66,7 +66,7 @@
                 </div>
                 <hr class="line">
 
-                <div id="view-preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px;"></div>
+                <div id="view-preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px;margin-bottom: 20px; margin-left: 10px;"></div>
 
                 <!-- <img src="/Assets/Images/info.png" alt=""> -->
             </div>
@@ -104,7 +104,7 @@
                         document.getElementById('don-project').textContent = data.name;
                         ViewSetTop();
 
-                        // viewPreviewImages(data.evidence);
+                        viewPreviewImages(data.evidence);
 
                     }
                 };
@@ -153,7 +153,9 @@
                     divEl.style.borderRadius = '10px'
 
                     const imgElement = document.createElement('img');
-                    imgElement.src = "/Assets/Images/info.png";
+                    imgElement.src = imgSrc;
+                    imgElement.alt = 'Image not available';
+                    imgElement.style.borderRadius = '10px';
                     imgElement.style.width = '100px'; // Optional: resize the image for preview
                     imgElement.style.objectFit = 'cover'; // Optional: resize the image for preview
                     // imgElement.style.margin = '10px';

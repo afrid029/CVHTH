@@ -181,6 +181,14 @@ textarea:focus {
   font-family: "Lato", serif;
   font-weight: 600;
   color: #333232bf;
+  text-align: start;
+}
+
+.balance {
+  text-align: start;
+  margin-top: 7px;
+  color: #a2a3a1;
+  
 }
 
 .line {
@@ -271,6 +279,11 @@ textarea:focus {
 
   .dropdown-option {
     font-size: 1vw;
+
+  }
+
+  .balance {
+    font-size: 0.6vw;
   }
 
   .small {
@@ -322,6 +335,11 @@ textarea:focus {
   .dropdown-option {
     font-size: 0.8vw;
   }
+
+  .balance {
+    font-size: 0.6vw;
+  }
+
   .dropdown-list {
     max-height: 30vh;
   }
@@ -347,6 +365,10 @@ textarea:focus {
   }
   .dropdown-option {
     font-size: 1vw;
+  }
+
+  .balance {
+    font-size: 0.7vw;
   }
 
   .small {
@@ -384,13 +406,19 @@ textarea:focus {
     font-size: 1.2vw;
   }
 
+  .balance {
+    font-size: 0.9vw;
+  }
+
   .dropdown-list {
     max-height: 30vh;
   }
 
   .submit {
     font-size: 2vw;
-    height: 4vh;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   .close {
@@ -420,6 +448,10 @@ textarea:focus {
   .small,
   .dropdown-option {
     font-size: 1.4vw;
+  }
+
+  .balance {
+    font-size: 1vw;
   }
 
   /* .search-mobile {
@@ -459,6 +491,10 @@ textarea:focus {
     font-size: 2vw;
   }
 
+  .balance {
+    font-size: 1.5vw;
+  }
+
   .search-mobile {
     width: 19% !important;
   }
@@ -481,4 +517,36 @@ textarea:focus {
   .dropdown-option {
     font-size: 2.2vw;
   }
+
+  .balance {
+    font-size: 1.5vw;
+  }
+}
+
+
+.alert-container {
+  display: flex;
+  width: inherit;
+  height: auto;
+  bottom: 25px;
+  position: fixed;
+  color: #f3efef;
+  z-index: 1000;
+}
+
+.alert-container  .alert {
+  border-radius: 5px;
+  background-color: black;
+  width: 60vw;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.alert-container .alert p {
+  text-align: left;
+  margin: 15px;
+  width: inherit;
+  font-size: 12px;
+  font-family: 'inter', serif;
 }

@@ -18,7 +18,7 @@
                 <div onclick="handleAdd(false)" class='close'>Close</div>
             </div>
 
-            <form action="/#" method="post" oninput="validateForm()" onsubmit="return submitLoginform()">
+            <form action="/add-donation" method="post" oninput="validateForm()" onsubmit="return submitLoginform()">
                 <div class="div"> </div>
                 <div class="Form">
 

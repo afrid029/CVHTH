@@ -130,7 +130,7 @@
                         const {
                             data
                         } = JSON.parse(xhr.responseText);
-                        // console.log(data);
+                        console.log(data);
 
                         document.getElementById('ben-name').textContent = data.firstName + ' ' + data.lastName;
                         document.getElementById('ben-id').textContent = 'Benificent ID : ' + data.ID;
@@ -225,7 +225,9 @@
                     divEl.style.borderRadius = '10px'
 
                     const imgElement = document.createElement('img');
-                    imgElement.src = "/Assets/Images/info.png";
+                    imgElement.src = imgSrc;
+                    imgElement.alt = 'Image Not Available';
+                    imgElement.style.borderRadius = '10px';
                     imgElement.style.width = '100px'; // Optional: resize the image for preview
                     imgElement.style.objectFit = 'cover'; // Optional: resize the image for preview
                     // imgElement.style.margin = '10px';

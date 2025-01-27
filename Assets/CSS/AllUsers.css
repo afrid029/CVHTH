@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-transform: capitalize;
   }
   
   .main-body {
@@ -563,7 +564,9 @@
     .add-btn {
       font-size: 2vw;
       letter-spacing: 5px;
-      height: 6vh;
+      height: auto;
+      padding-top: 10px;
+      padding-bottom: 10px;
       width: 70vw;
       margin: auto;
     }

@@ -367,7 +367,9 @@ backdrop-filter: blur(5px);
    
       .submit {
        font-size: 2vw;
-       height: 4vh;
+       height: auto;
+       padding-top: 10px;
+       padding-bottom: 10px;
       }
    
       .close {
@@ -443,3 +445,31 @@ backdrop-filter: blur(5px);
  
    }
   
+
+   
+.alert-container {
+  display: flex;
+  width: inherit;
+  height: auto;
+  bottom: 25px;
+  position: fixed;
+  color: #f3efef;
+  z-index: 1000;
+}
+
+.alert-container  .alert {
+  border-radius: 5px;
+  background-color: black;
+  width: 60vw;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.alert-container .alert p {
+  text-align: left;
+  margin: 15px;
+  width: inherit;
+  font-size: 12px;
+  font-family: 'inter', serif;
+}

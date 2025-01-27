@@ -153,7 +153,8 @@ if ($type === 'donation') {
 }else if($type === 'beneficent') {
 
     $query = "SELECT b.ID, b.firstName, b.lastName, b.NIC, b.sex, b.dob, b.address, b.gsDivision, b.school, b.grade,
-            GROUP_CONCAT(DISTINCT pb.Project_ID SEPARATOR ', ') prid, GROUP_CONCAT(DISTINCT p.name SEPARATOR ', ')prname, GROUP_CONCAT(DISTINCT bd.ID SEPARATOR ', ') depid, GROUP_CONCAT(DISTINCT CONCAT(bd.Name,' (',bd.Relation,')') SEPARATOR ', ') depname
+            GROUP_CONCAT(DISTINCT pb.Project_ID SEPARATOR ', ') prid, GROUP_CONCAT(DISTINCT p.name SEPARATOR ', ')prname, GROUP_CONCAT(DISTINCT CONCAT(bd.Name,' (',bd.Relation,')') SEPARATOR ', ') depnamedisplay,
+            GROUP_CONCAT(DISTINCT CONCAT(bd.Name,'-',bd.Relation) SEPARATOR ', ') depname
             from beneficiant b
             LEFT JOIN projectbeneficiant pb ON b.ID = pb.Beneficiant_ID
             LEFT JOIN beneficiantdependency bd ON b.ID = bd.Beneficiant_ID

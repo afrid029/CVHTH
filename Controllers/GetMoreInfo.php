@@ -230,7 +230,7 @@ if ($type === 'user') {
             NVL(b.grade, '<i>Not Provided</i>') grade,
             NVL((SELECT SUM(ds2.amount) FROM donationsent ds2 WHERE ds2.Beneficiant_ID = ds.Beneficiant_ID), 0) sent,
             GROUP_CONCAT(DISTINCT CONCAT(bd.Name,'-',bd.Relation) SEPARATOR ', ') dependants,
-             GROUP_CONCAT(DISTINCT p.name SEPARATOR ', ') projects,
+            GROUP_CONCAT(DISTINCT p.name SEPARATOR ', ') projects,
             GROUP_CONCAT(DISTINCT bi.image SEPARATOR ', ') images
         FROM
             beneficiant b

@@ -18,9 +18,13 @@
                 <div onclick="closeEdit()" class='close'>Close</div>
             </div>
 
-            <form action="#" method="post" oninput="validateEditForm()" onsubmit="return submitEditForm()" enctype="multipart/form-data">
+            <form action="/add-beneficiary" method="post" oninput="validateEditForm()" onsubmit="return submitEditForm()" enctype="multipart/form-data">
                 <div class="div edit-div"> </div>
                 <div class="Form edit-Form">
+
+                
+                <!-- ID -->
+                <input name = "ID" id="edit-id" type="text" hidden/>
 
                     <!-- First Name -->
                     <div class="FormRow">
@@ -61,7 +65,7 @@
 
                     <!-- Dependents -->
                     <div class="FormRow">
-                        <input type="text" name="project" id="edit-dependant-value" hidden>
+                        <input type="text" name="dependant" id="edit-dependant-value" hidden>
                         <input style="cursor: pointer;" type="text" id="edit-dependant" placeholder="Dependant(s)" onclick="editOpenSelect('edit-dropdown-container-dependant',true)" readonly>
 
                         <div class="dropdown-container edit-dropdown-container" id="edit-dropdown-container-dependant">
@@ -199,7 +203,7 @@
                         <button
                             type="submit"
                             id="edit-submit"
-                            name="submit"
+                            name="edit-submit"
                             disabled="true"
                             class="submit"> Update
                         </button>
@@ -243,7 +247,8 @@
                 const {data} = JSON.parse(xhr.responseText);
               
 
-               
+
+                document.getElementById('edit-id').value = data.ID;  
                 document.getElementById("edit-fname").value = data.firstName;
                 document.getElementById("edit-lname").value = data.lastName;
                 document.getElementById("edit-nic").value = data.NIC;
@@ -263,9 +268,9 @@
                     document.getElementById("edit-project").removeAttribute('value');
                 }
 
-                if(data.depid){
-                    document.getElementById("edit-dependant-value").setAttribute('value',data.depid);
-                    document.getElementById("edit-dependant").setAttribute('value',data.depname);
+                if(data.depname){
+                    document.getElementById("edit-dependant-value").setAttribute('value',data.depname);
+                    document.getElementById("edit-dependant").setAttribute('value',data.depnamedisplay);
                 }else {
                     document.getElementById("edit-dependant-value").removeAttribute('value');
                     document.getElementById("edit-dependant").removeAttribute('value');

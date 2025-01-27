@@ -16,9 +16,11 @@
                 <div onclick="closeEdit()" class='close'>Close</div>
             </div>
 
-            <form action="#" method="post" oninput="validateEditForm()" onsubmit="return submitEditForm()">
+            <form action="/add-user" method="post" oninput="validateEditForm()" onsubmit="return submitEditForm()">
                 <div class="div edit-div"> </div>
                 <div class="Form edit-Form">
+                    <!-- ID -->
+                    <input name = "ID" id="edit-id" type="text" hidden/>
                     <!-- First Name -->
                     <div class="FormRow">
                         <input type="text" id="edit-fname" name="fname" placeholder="First Name" required>
@@ -128,7 +130,7 @@
                         <button
                             type="submit"
                             id="edit-submit"
-                            name="submit"
+                            name="edit-submit"
                             disabled="true"
                             class="submit"> Update
                         </button>
@@ -182,6 +184,7 @@ const editToday = new Date();
                 const {donors} = JSON.parse(xhr.responseText);
                 console.log(projects);
 
+                document.getElementById('edit-id').value = data.ID;
                 document.getElementById('edit-fname').value = data.firstname;
                 document.getElementById('edit-lname').value = data.lastname;
                 document.getElementById('edit-email').value = data.email;

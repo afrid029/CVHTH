@@ -18,9 +18,12 @@
                 <div onclick="closeEdit()" class='close'>Close</div>
             </div>
 
-            <form action="/#" method="post" oninput="validateEditForm()" onsubmit="return submitEditform()">
+            <form action="/add-donation" method="post" oninput="validateEditForm()" onsubmit="return submitEditform()">
                 <div class="div edit-div"> </div>
                 <div class="Form edit-Form">
+
+                <!-- ID -->
+                <input name = "ID" id="edit-id" type="text" hidden/>
 
                     <!-- Select Donor -->
                     <div class="FormRow">
@@ -84,7 +87,7 @@
                         <button
                             type="submit"
                             id="edit-submit"
-                            name="submit"
+                            name="edit-submit"
                             disabled="true"
                             class="submit"> Update
                         </button>
@@ -252,6 +255,7 @@
                 const {data} = JSON.parse(xhr.responseText);
                 console.log(data);
 
+                document.getElementById('edit-id').value = data.ID;
                 document.getElementById("edit-donor-value").setAttribute('value', data.Donor_ID);
                 document.getElementById("edit-donor").setAttribute('value', data.name);
                 document.getElementById("edit-amount").value = data.amount;

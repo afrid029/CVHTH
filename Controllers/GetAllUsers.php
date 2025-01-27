@@ -6,8 +6,19 @@ include('DBConnectivity.php');
 // Get the current page from the URL, default to 1 if not set
 $role = urldecode($_GET['role']);
 
-$query = "SELECT u.ID, u.firstname, u.lastname from users u
+if($role === 'donor'){
+    $query = "SELECT u.ID, u.firstname, u.lastname, (NVL(SUM(dr.amount), 0) - NVL( (SELECT SUM(amount) from donationsent ds where ds.Donor_ID = u.ID ), 0)) balance
+from users u
+LEFT JOIN donationreceived dr ON u.ID = dr.Donor_ID
+WHERE role = 'donor'
+GROUP BY u.ID, u.firstname, u.lastname
+Order BY balance desc, firstname";
+}else {
+    $query = "SELECT u.ID, u.firstname, u.lastname from users u
          WHERE u.role = '$role' ORDER BY  u.firstname asc";
+}
+
+
 
 $result = mysqli_query($db, $query);
 
