@@ -8,6 +8,38 @@
 
 <body style="width: 100vw; display:contents">
 
+    <?php
+    SESSION_START();
+    if (isset($_SESSION['fromAction']) && $_SESSION['fromAction'] === true) { ?>
+
+
+        <div class="alert-container" id="alert">
+            <div class="alert" id="alertCont">
+                <p><?php echo $_SESSION['message'] ?></p>
+            </div>
+        </div>
+
+        <?php
+        if ($_SESSION['status'] === true) {
+            echo "<script>document.getElementById('alertCont').style.backgroundColor = '#1D7524';</script>";
+        } else {
+            echo "<script>document.getElementById('alertCont').style.backgroundColor = '#E44C4C';</script>";
+        }
+        ?>
+        <script>
+            setTimeout(() => {
+                document.getElementById('alert').style.display = 'flex';
+            }, 2000);
+
+            setTimeout(() => {
+                document.getElementById('alert').style.display = 'none';
+            }, 5000);
+        </script>
+    <?php
+    }
+    $_SESSION['fromAction'] = false;
+    ?>
+
     <div class="home-body">
 
         <div class="home-info" id="home-Id">
@@ -19,11 +51,11 @@
             </div> -->
 
             <div class="home-content">
-                
+
                 <div class="thought">
-                <div onclick="openLogin('flex')" id="loginToggle" class="loginMobile">
-                    <img src="./Assets/Images/user.png" alt=""> Login
-                </div>
+                    <div onclick="openLogin('flex')" id="loginToggle" class="loginMobile">
+                        <img src="./Assets/Images/user.png" alt=""> Login
+                    </div>
                     <div class="thought-text">
                         <span style="background-color: #2F41E4; padding: 5px; border-radius: 5px; margin-right: 5px;">Love and charity </span> for the whole human race, that is the test of true religiousness.
                     </div>
@@ -77,28 +109,63 @@
             <div class="loginbg"></div>
 
             <div onclick="openLogin('none')" class="loginMobile" style="color: black;">
-                    <img src="./Assets/Images/close.png" style="width: 32px;"> Close
-                </div>
+                <img src="./Assets/Images/close.png" style="width: 32px;"> Close
+            </div>
 
             <div class="login-title">
                 <h3>Welcome to <span style="color: #2F41E4;">CVHTH</span></h3>
-                <h4>Login</h4>
+
             </div>
 
-            <form class="login-form" action="#" method="post">
-                <div class="FormRow">
-                    <input type="text" id="email" name="email" required placeholder="Enter Your Username or Email">
+            <?php
+
+            if (isset($_COOKIE['user'])) {
+                $data = base64_decode($_COOKIE['user']);
+
+                // Extract the IV (the first 16 bytes)
+                $iv = substr($data, 0, 16);
+
+                // Extract the encrypted email (the rest of the string)
+                $encryptedData = substr($data, 16);
+                $key = '6f5473b5b16a3fd9576b907b2b2dcb3f07b3d59eecac4f5649356be45b5fce99811';
+                // Decrypt the email using AES-256-CBC decryption
+                $decryptedData = openssl_decrypt($encryptedData, 'aes-256-cbc', $key, 0, $iv);
+
+                // $query = "SELECT * from users where email = '$decryptedEmail'";
+                $passedArray = unserialize($decryptedData);
+                // $result = mysqli_query($db, $query);
+
+                if($passedArray['role'] === 'donor'){ ?>
+                    <button onclick="naviOriginal('/donors')">Go to Dashboard</button>
+                <?php }
+                if($passedArray['role'] === 'admin' || $passedArray['role'] === 'superadmin'){ ?>
+                  <button onclick="naviOriginal('/donation')">Go to Dashboard</button>
+                <?php }
+                if($passedArray['role'] === 'project manager'){ ?>
+                    <button onclick="naviOriginal('/sentdonation')">Go to Dashboard</button>
+               <?php }
+
+            ?>
+
+
+            <?php } else { ?>
+                <h4>Login</h4>
+                <form class="login-form" action="/login" method="post">
+                    <div class="FormRow">
+                        <input type="text" id="email" name="email" required placeholder="Enter Your Email">
+                    </div>
+                    <div class="FormRow">
+                        <input type="password" id="password" name="password" required placeholder="Enter Your Password">
+                    </div>
+                    <div class="FormRow">
+                        <button type="submit" name="submit" class="btn-login">Login</button>
+                    </div>
+                </form>
+                <div class="forgot-btn">
+                    <a href="/forgot-password">Forgot Password?</a>
                 </div>
-                <div class="FormRow">
-                    <input type="password" id="password" name="password" required placeholder="Enter Your Password">
-                </div>
-                <div class="FormRow">
-                    <button type="submit" name="login" class="btn-login">Login</button>
-                </div>
-            </form>
-            <div class="forgot-btn">
-                Forgot Password?
-            </div>
+            <?php } ?>
+
 
 
 
@@ -148,33 +215,39 @@
 
         });
 
-        function openLogin(value){
+        function openLogin(value) {
             const loginSide = document.getElementById('home-login');
-           
-            // console.log(loginSide);
-            
 
-            if(value === 'flex'){
-                
+            // console.log(loginSide);
+
+
+            if (value === 'flex') {
+
                 loginSide.classList.add('mobile-login')
                 loginSide.classList.remove('mobile-login-fade')
-                loginSide.style.display=value;
-                    document.getElementById('loginToggle').style.display='none';
+                loginSide.style.display = value;
+                document.getElementById('loginToggle').style.display = 'none';
 
                 // setTimeout(() => {
-                    
+
                 // }, 100);
-            }else {
-                
+            } else {
+
                 loginSide.classList.remove('mobile-login')
                 loginSide.classList.add('mobile-login-fade')
-                
+
                 setTimeout(() => {
-                    loginSide.style.display=value;
-                document.getElementById('loginToggle').style.display='flex'
+                    loginSide.style.display = value;
+                    document.getElementById('loginToggle').style.display = 'flex'
 
                 }, 100);
             }
+        }
+
+        function naviOriginal(path){
+            console.log(path);
+            
+            window.location.href = path;
         }
 
 

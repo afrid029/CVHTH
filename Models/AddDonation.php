@@ -121,7 +121,7 @@
 
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/Controllers/GetAllUsers.php?role=' + encodeURIComponent('donor'), true);
+        xhr.open('GET', '/Controllers/GetAllUsers.php?role=' + encodeURIComponent('addonor'), true);
         // document.getElementById('loading-spinner').style.display = 'block';
         // const onload = document.getElementById('onrowload');
         // onload.classList.add('onrowload');

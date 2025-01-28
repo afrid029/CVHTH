@@ -66,7 +66,7 @@
                 </div>
                 <hr class="line">
 
-                <div id="view-preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px;margin-bottom: 20px; margin-left: 10px;"></div>
+                <div id="view-preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px;margin-bottom: 20px; margin-left: 10px; justify-content: center;"></div>
 
                 <!-- <img src="/Assets/Images/info.png" alt=""> -->
             </div>
@@ -97,11 +97,12 @@
 
                         document.getElementById('don-amount').textContent = 'Amount (Rs) : ' + data.amount;
                         document.getElementById('don-id').textContent = 'Reciept ID : ' + data.ID;
-                        document.getElementById('ben-name').textContent = data.beneficent;
-                        document.getElementById('don-name').textContent = data.donor;
+                        document.getElementById('ben-name').innerHTML = data.beneficent ? data.beneficent : '<i>Deleted Beneficiary</i>';
+                        document.getElementById('don-name').innerHTML = data.donor ? data.donor : '<i>Deleted Donor</i>' ;
+                        document.getElementById('don-project').innerHTML = data.name ? data.name :'<i>Deleted Project</i>' ;
                         document.getElementById('don-date').textContent = data.date;
                         document.getElementById('don-purpose').textContent = data.purpose;
-                        document.getElementById('don-project').textContent = data.name;
+                        
                         ViewSetTop();
 
                         viewPreviewImages(data.evidence);

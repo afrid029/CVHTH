@@ -14,7 +14,7 @@
                 <div class="user">
                     <h4 id="ben-name"></h4>
                     <h6 id="ben-id"></h6>
-                    <h5 id="ben-amount"></h5>
+                    <h6 id="ben-amount"></h6>
                 </div>
                 <div onclick="closeView()" class='close'>Close</div>
             </div>
@@ -103,7 +103,7 @@
                 </div>
                 <hr class="line">
 
-                <div id="view-preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px; margin-bottom: 20px; margin-left: 10px"></div>
+                <div id="view-preview-container" style="display: flex; justify-content: center; gap: 5px; flex-wrap:wrap; margin-top: 10px; margin-bottom: 20px; margin-left: 10px"></div>
 
 
             </div>
@@ -134,7 +134,7 @@
 
                         document.getElementById('ben-name').textContent = data.firstName + ' ' + data.lastName;
                         document.getElementById('ben-id').textContent = 'Benificent ID : ' + data.ID;
-                        document.getElementById('ben-amount').textContent ='Donated (Rs) : '+ data.sent;
+                        document.getElementById('ben-amount').textContent ='Benefited Amount (Rs) : '+ data.sent;
                         document.getElementById('ben-nic').textContent = data.NIC;
                         document.getElementById('ben-gender').textContent = data.sex;
                         document.getElementById('ben-dob').textContent = data.dob;

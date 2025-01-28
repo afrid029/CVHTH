@@ -32,21 +32,50 @@
         }
         ?>
         <script>
+          setTimeout(() => {
             document.getElementById('alert').style.display = 'flex';
+           }, 2000);
+
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
-            }, 3000);
+            }, 5000);
         </script>
     <?php
     }
     $_SESSION['fromAction'] = false;
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+    } else {
+
+        $data = base64_decode($_COOKIE['user']);
+
+        // Extract the IV (the first 16 bytes)
+        $iv = substr($data, 0, 16);
+
+        // Extract the encrypted email (the rest of the string)
+        $encryptedData = substr($data, 16);
+        $key = '6f5473b5b16a3fd9576b907b2b2dcb3f07b3d59eecac4f5649356be45b5fce99811';
+        // Decrypt the email using AES-256-CBC decryption
+        $decryptedData = openssl_decrypt($encryptedData, 'aes-256-cbc', $key, 0, $iv);
+
+        // $query = "SELECT * from users where email = '$decryptedEmail'";
+        $passedArray = unserialize($decryptedData);
+        // $result = mysqli_query($db, $query);
+
+        if ($passedArray['role'] === 'admin' || $passedArray['role'] === 'superadmin' || $passedArray['role'] === 'project manager') {
+            $_SESSION['ID'] = $passedArray['ID'];
+            $_SESSION['role'] = $passedArray['role'];
+        } else {
+            header('Location: /');
+        }
+    }
 
     include('Components/NavBar.php') ?>
     
 <script>
-    const node = document.querySelector('.nav-links').children;
-    node[3].children[0].style.color = '#68E44C'
-    node[3].children[0].style.fontWeight = '600'
+    const node = document.querySelector('.nav-sentdon');
+    node.style.color = '#68E44C'
+    node.style.fontWeight = '600'
     
 </script>
 
@@ -112,7 +141,7 @@
 
                     <div class="table-header">
                         <div>&nbsp;</div>
-                        <div>Beneficiar</div>
+                        <div>Beneficiary</div>
                         <div>Donor</div>
                         <div style='text-align: center'>Amount</div>
                         <div style='text-align: center'>Date</div>
@@ -287,7 +316,18 @@
 
         function loadPage(page) {
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/Controllers/GetSentDonations.php?page=' + page, true);
+            <?php 
+
+
+                if($_SESSION['role'] === 'project manager'){
+                    $prjID = $_SESSION['ID'];
+                    echo "xhr.open('GET', '/Controllers/GetSentDonations.php?page=' + page + '&pmID=' + '$prjID', true)";
+                }else {
+                    echo "xhr.open('GET', '/Controllers/GetSentDonations.php?page=' + page, true);";
+                }
+            
+            ?>
+           
             document.getElementById('loading-spinner').style.display = 'block';
             const onload = document.getElementById('onrowload');
             onload.classList.add('onrowload');
@@ -333,6 +373,7 @@
                 loadDonors(); 
                 loadProjBene();
                 model.style.display = 'flex';
+                
                 setTop();
                 document.getElementById('select-image').addEventListener('change', PreviewImages);
                
@@ -353,8 +394,7 @@
                 document.getElementById('donorSearchkey').value = ''
                 document.getElementById('projectSearchkey').value = ''
                 document.getElementById('beneficentSearchkey').value = ''
-
-
+                
 
                 document.getElementById('select-beneficent-cont').style.display = 'none';
 
@@ -404,6 +444,7 @@ document.getElementById('deleteModel').style.display = 'flex'
 
         function closeEdit(){
             document.getElementById('editModel').style.display = 'none';
+            document.getElementById('edit-not-enough').style.display = "none";
 
             // document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
             // document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)

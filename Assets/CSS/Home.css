@@ -366,6 +366,11 @@
   width: 100%;
 }
 
+a{
+  text-decoration: none;
+  color: #e4962f;
+}
+
 .FormRow input {
   padding: 10px;
   box-shadow: 0 0 5px #00000030;
@@ -928,4 +933,34 @@
     font-size: 0.8rem;
     height: 6vh;
   } */
+}
+
+
+
+   
+.alert-container {
+  display: flex;
+  width: inherit;
+  height: auto;
+  bottom: 25px;
+  position: fixed;
+  color: #f3efef;
+  z-index: 1000;
+}
+
+.alert-container  .alert {
+  border-radius: 5px;
+  background-color: black;
+  width: 60vw;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.alert-container .alert p {
+  text-align: left;
+  margin: 15px;
+  width: inherit;
+  font-size: 12px;
+  font-family: 'inter', serif;
 }

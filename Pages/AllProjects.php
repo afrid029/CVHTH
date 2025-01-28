@@ -32,22 +32,52 @@
         }
         ?>
         <script>
+             setTimeout(() => {
             document.getElementById('alert').style.display = 'flex';
+           }, 2000);
+
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
-            }, 3000);
+            }, 5000);
         </script>
     <?php
     }
     $_SESSION['fromAction'] = false;
 
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+    } else {
+
+        $data = base64_decode($_COOKIE['user']);
+
+        // Extract the IV (the first 16 bytes)
+        $iv = substr($data, 0, 16);
+
+        // Extract the encrypted email (the rest of the string)
+        $encryptedData = substr($data, 16);
+        $key = '6f5473b5b16a3fd9576b907b2b2dcb3f07b3d59eecac4f5649356be45b5fce99811';
+        // Decrypt the email using AES-256-CBC decryption
+        $decryptedData = openssl_decrypt($encryptedData, 'aes-256-cbc', $key, 0, $iv);
+
+        // $query = "SELECT * from users where email = '$decryptedEmail'";
+        $passedArray = unserialize($decryptedData);
+        // $result = mysqli_query($db, $query);
+
+        if ($passedArray['role'] === 'admin' || $passedArray['role'] === 'superadmin') {
+            $_SESSION['ID'] = $passedArray['ID'];
+            $_SESSION['role'] = $passedArray['role'];
+        } else {
+            header('Location: /');
+        }
+    }
+
     include('Components/NavBar.php') ?>
 
 
 <script>
-    const node = document.querySelector('.nav-links').children;
-    node[4].children[0].style.color = '#D5BB43'
-    node[4].children[0].style.fontWeight = '600'
+    const node = document.querySelector('.nav-projects');
+    node.style.color = '#D5BB43'
+    node.style.fontWeight = '600'
     
 </script>
    

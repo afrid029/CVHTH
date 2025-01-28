@@ -24,11 +24,23 @@ if (mysqli_num_rows($result) > 0) {
     // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
 }
 
+$forPm = isset($_GET['pmID']) ? true : false;
 
-$query = "SELECT DISTINCT p.ID, p.name
-from projectbeneficiant pb 
-JOIN project p ON pb.Project_ID = p.ID
-ORDER BY p.name";
+if($forPm){
+    $pmID = $_GET['pmID'];
+    $query = "SELECT DISTINCT p.ID, p.name
+    from projectbeneficiant pb 
+    JOIN project p ON pb.Project_ID = p.ID
+    JOIN projectmanager pm ON pm.Project_ID = p.ID
+    Where pm.Manager_ID = '$pmID'
+    ORDER BY p.name";
+
+}else{
+    $query = "SELECT DISTINCT p.ID, p.name
+    from projectbeneficiant pb 
+    JOIN project p ON pb.Project_ID = p.ID
+    ORDER BY p.name";
+}
 
 $result = mysqli_query($db, $query);
 

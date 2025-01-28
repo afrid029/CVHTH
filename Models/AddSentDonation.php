@@ -256,7 +256,18 @@
 
     function loadDonors() {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor', true);
+
+        <?php
+        if ($_SESSION['role'] === 'project manager') {
+            $prjID = $_SESSION['ID'];
+            echo "xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor&pmID=' + '$prjID', true)";
+        } else {
+            echo "xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor', true)";
+        }
+
+        ?>
+
+        // xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor', true);
         // document.getElementById('loading-spinner').style.display = 'block';
         // const onload = document.getElementById('onrowload');
         // onload.classList.add('onrowload');
@@ -330,7 +341,7 @@
             option.textContent = element.firstname + " " + element.lastname;
 
             const small = document.createElement('div');
-            small.setAttribute('class','balance')
+            small.setAttribute('class', 'balance')
             small.textContent = 'Balance (Rs) : ' + element.balance;
             option.appendChild(small);
 
@@ -363,7 +374,18 @@
 
     function loadProjBene() {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/Controllers/GetProjectAndBeneficents.php', true);
+
+        <?php
+        if ($_SESSION['role'] === 'project manager') {
+            $prjID = $_SESSION['ID'];
+            echo "xhr.open('GET', '/Controllers/GetProjectAndBeneficents.php?pmID=' + '$prjID', true)";
+        } else {
+            echo "xhr.open('GET', '/Controllers/GetProjectAndBeneficents.php', true)";
+        }
+
+        ?>
+
+        // xhr.open('GET', '/Controllers/GetProjectAndBeneficents.php', true);
         // document.getElementById('loading-spinner').style.display = 'block';
         // const onload = document.getElementById('onrowload');
         // onload.classList.add('onrowload');
@@ -538,20 +560,20 @@
         const selectedImage = document.getElementById('select-image').value.length > 0;
         const button = document.getElementById('submit');
 
-        if(donor.length > 0 && amount.length > 0){
+        if (donor.length > 0 && amount.length > 0) {
             const selectedDonor = donorResponse.data.filter((ele) =>
-            (ele.ID === donor));
+                (ele.ID === donor));
             console.log(selectedDonor);
-            
-            if(parseInt(selectedDonor[0].balance) < amount){
-                
-                
+
+            if (parseInt(selectedDonor[0].balance) < amount) {
+
+
                 document.getElementById('not-enough').style.display = 'flex';
                 document.getElementById('select-donor-value').removeAttribute('value');
                 document.getElementById('select-donor').removeAttribute('value');
                 // validateForm();
 
-            }else {
+            } else {
                 document.getElementById('not-enough').style.display = 'none';
                 // validateForm();
             }

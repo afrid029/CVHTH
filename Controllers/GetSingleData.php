@@ -12,7 +12,7 @@ if ($type === 'donation') {
 
     $query = "SELECT dr.ID, dr.date, dr.amount, dr.Donor_ID, concat(u.firstname, ' ', u.lastname) as name
     from donationreceived dr
-    JOIN users u ON dr.Donor_ID = u.ID
+    LEFT JOIN users u ON dr.Donor_ID = u.ID
     where dr.ID = '$ID'";
 
     $result = mysqli_query($db, $query);

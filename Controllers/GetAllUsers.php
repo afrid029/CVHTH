@@ -7,15 +7,31 @@ include('DBConnectivity.php');
 $role = urldecode($_GET['role']);
 
 if($role === 'donor'){
-    $query = "SELECT u.ID, u.firstname, u.lastname, (NVL(SUM(dr.amount), 0) - NVL( (SELECT SUM(amount) from donationsent ds where ds.Donor_ID = u.ID ), 0)) balance
-from users u
-LEFT JOIN donationreceived dr ON u.ID = dr.Donor_ID
-WHERE role = 'donor'
-GROUP BY u.ID, u.firstname, u.lastname
-Order BY balance desc, firstname";
+    $forPm = isset($_GET['pmID']) ? true : false;
+    if($forPm){
+        $pmID = $_GET['pmID'];
+        $query = "SELECT u.ID, u.firstname, u.lastname, (NVL(SUM(dr.amount), 0) - NVL( (SELECT SUM(amount) from donationsent ds where ds.Donor_ID = u.ID ), 0)) balance
+        from users u
+        LEFT JOIN donationreceived dr ON u.ID = dr.Donor_ID
+        LEFT JOIN projectmanagerdonor pmd ON pmd.Donor_ID = u.ID
+        WHERE role = 'donor'
+        AND pmd.Manager_ID = '$pmID'
+        GROUP BY u.ID, u.firstname, u.lastname
+        Order BY balance desc, firstname";
+    }else {
+        $query = "SELECT u.ID, u.firstname, u.lastname, (NVL(SUM(dr.amount), 0) - NVL( (SELECT SUM(amount) from donationsent ds where ds.Donor_ID = u.ID ), 0)) balance
+        from users u
+        LEFT JOIN donationreceived dr ON u.ID = dr.Donor_ID
+        WHERE role = 'donor'
+        GROUP BY u.ID, u.firstname, u.lastname
+        Order BY balance desc, firstname";
+    }
+}else if($role === 'addonor'){
+    $query = "SELECT u.ID, u.firstname, u.lastname from users u
+    WHERE u.role = 'donor' ORDER BY  u.firstname asc";
 }else {
     $query = "SELECT u.ID, u.firstname, u.lastname from users u
-         WHERE u.role = '$role' ORDER BY  u.firstname asc";
+    WHERE u.role = '$role' ORDER BY  u.firstname asc";
 }
 
 

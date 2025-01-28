@@ -10,6 +10,7 @@ if(isset($_POST['submit'])){
     $role = $_POST['role'];
     $contact = $_POST['contact'];
     $password = generateRandomPassword();
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
     $query = "SELECT COUNT(*) cnt from users";
 
@@ -21,7 +22,7 @@ if(isset($_POST['submit'])){
 
     if($role === 'admin'){
 
-        $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password) VALUES ('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$password')";
+        $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password) VALUES ('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash')";
 
         $result = mysqli_query($db, $query);
 

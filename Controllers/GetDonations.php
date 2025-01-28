@@ -35,8 +35,11 @@ if ($page === 1) {
     $current_bal = $total_received - $total_sent;
 }
 
-$query = "SELECT dr.ID, dr.amount, dr.date, u.firstname, u.lastname from donationreceived dr, users u
-         WHERE dr.donor_ID = u.ID ORDER BY dr.date desc , u.firstname asc LIMIT $offset, $results_per_page";
+$query = "SELECT dr.ID, dr.amount, dr.date, NVL(u.firstname,'<i>Deleted</i>') firstname, NVL(u.lastname, '<i>Donor</i>') lastname
+        from donationreceived dr
+        LEFT JOIN users u ON dr.donor_ID = u.ID 
+        ORDER BY dr.date desc , u.firstname asc 
+        LIMIT $offset, $results_per_page";
 
 $result = mysqli_query($db, $query);
 

@@ -33,6 +33,7 @@
                             type="number"
                             name="amount"
                             placeholder="Serving Amount (Rs)"
+                            oninput="AmountDonar()"
                             min="1"
                             id="edit-amount"
                             required />
@@ -240,35 +241,52 @@
                 console.log(data);
 
                 document.getElementById('edit-id').value = data.ID;
-                document.getElementById("edit-donor-value").setAttribute('value', data.Donor_ID);
+                // document.getElementById("edit-donor-value").setAttribute('value', data.Donor_ID);
 
-                console.log(editDonorResponse);
+                if(data.Donor_ID){
+                    document.getElementById("edit-donor-value").setAttribute('value', data.Donor_ID);
+
+                    for(const el of editDonorResponse.data){
+                        if(el.ID === data.Donor_ID){
+                            document.getElementById("edit-donor").setAttribute('value', el.firstname + " " + el.lastname);
+                            break;
+                        }
+                    }
+                }else {
+                    document.getElementById("edit-donor-value").removeAttribute('value')
+                    document.getElementById("edit-donor").removeAttribute('value')
+                }           
                 
+                if(data.Project_ID){
+                    document.getElementById("edit-project-value").setAttribute('value', data.Project_ID);
 
-                for(const el of editDonorResponse.data){
-                    if(el.ID === data.Donor_ID){
-                        document.getElementById("edit-donor").setAttribute('value', el.firstname + " " + el.lastname);
-                        break;
+                    for(const el of editProject) {
+                        if(el.ID === data.Project_ID){
+                            document.getElementById("edit-project").setAttribute('value', el.name);
+                            currentBeneficents(el.ID);
+                            break;
+                        }
                     }
+                }else {
+                    document.getElementById("edit-project-value").removeAttribute('value');
+                    document.getElementById("edit-project").removeAttribute('value');
                 }
-                document.getElementById("edit-project-value").setAttribute('value', data.Project_ID);
               
-                for(const el of editProject) {
-                    if(el.ID === data.Project_ID){
-                        document.getElementById("edit-project").setAttribute('value', el.name);
-                        currentBeneficents(el.ID);
-                        break;
-                    }
-                }
 
-                document.getElementById("edit-beneficent-value").setAttribute('value', data.Beneficiant_ID);
-              
-                for(const el of editBeneficent) {
-                    if(el.ID === data.Beneficiant_ID){
-                        document.getElementById("edit-beneficent").setAttribute('value',  el.firstname + " " + el.lastname);
-                        break;
+                if(data.Beneficiant_ID){
+                    document.getElementById("edit-beneficent-value").setAttribute('value', data.Beneficiant_ID);
+
+                    for(const el of editBeneficent) {
+                        if(el.ID === data.Beneficiant_ID){
+                            document.getElementById("edit-beneficent").setAttribute('value',  el.firstname + " " + el.lastname);
+                            break;
+                        }
                     }
+                }else {
+                    document.getElementById("edit-beneficent-value").removeAttribute('value');
+                    document.getElementById("edit-beneficent").removeAttribute('value');
                 }
+              
 
                 document.getElementById("edit-amount").value = data.amount;
                 document.getElementById("edit-date").value = data.date;
@@ -314,7 +332,18 @@
 
     function editLoadDonors() {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor', true);
+
+        <?php
+        if ($_SESSION['role'] === 'project manager') {
+            $prjID = $_SESSION['ID'];
+            echo "xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor&pmID=' + '$prjID', true)";
+        } else {
+            echo "xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor', true)";
+        }
+
+        ?>
+
+        // xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor', true);
         // document.getElementById('loading-spinner').style.display = 'block';
         // const onload = document.getElementById('onrowload');
         // onload.classList.add('onrowload');
@@ -415,7 +444,8 @@
             selectDonorValue.setAttribute('value', event.target.getAttribute('value'))
 
             editOpenSelect('edit-dropdown-container-donor', false);
-            validateEditForm();
+            // validateEditForm();
+            AmountDonar();
 
             // console.log(event.target.getAttribute('value'), event.target.textContent);
         }
@@ -423,7 +453,17 @@
 
     function editLoadProjBene(ID) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/Controllers/GetProjectAndBeneficents.php', true);
+
+        <?php
+        if ($_SESSION['role'] === 'project manager') {
+            $prjID = $_SESSION['ID'];
+            echo "xhr.open('GET', '/Controllers/GetProjectAndBeneficents.php?pmID=' + '$prjID', true)";
+        } else {
+            echo "xhr.open('GET', '/Controllers/GetProjectAndBeneficents.php', true)";
+        }
+
+        ?>
+        // xhr.open('GET', '/Controllers/GetProjectAndBeneficents.php', true);
         // document.getElementById('loading-spinner').style.display = 'block';
         // const onload = document.getElementById('onrowload');
         // onload.classList.add('onrowload');
@@ -611,17 +651,9 @@
 
     }
 
-    function validateEditForm(){
+    function AmountDonar(){
         const donor = document.getElementById('edit-donor-value').value;
-        const date = document.getElementById('edit-date').value.length > 0;
-        const project = document.getElementById('edit-project-value').value.length > 0;
-        const beneficent = document.getElementById('edit-beneficent-value').value.length > 0;
         const amount = document.getElementById('edit-amount').value;
-        const purpose = document.getElementById('edit-purpose').value.length > 0;
-        const button = document.getElementById('edit-submit');
-
-
-
         if(donor.length > 0 && amount.length > 0){
             const selectedDonor = editDonorResponse.data.filter((ele) =>
             (ele.ID === donor));
@@ -634,18 +666,28 @@
                 document.getElementById('edit-donor-value').removeAttribute('value');
                 document.getElementById('edit-donor').removeAttribute('value');
                 // validateForm();
+                validateEditForm();
 
             }else {
                 document.getElementById('edit-not-enough').style.display = 'none';
                 // validateForm();
+                validateEditForm();
             }
         }
+        
+    }
+    function validateEditForm(){
+        const donor = document.getElementById('edit-donor-value').value;
+        const date = document.getElementById('edit-date').value.length > 0;
+        const project = document.getElementById('edit-project-value').value.length > 0;
+        const beneficent = document.getElementById('edit-beneficent-value').value.length > 0;
+        const amount = document.getElementById('edit-amount').value;
+        const purpose = document.getElementById('edit-purpose').value.length > 0;
+        const button = document.getElementById('edit-submit');
 
-        const donor2 = document.getElementById('edit-donor-value').value;
 
 
-
-        if(donor2.length > 0 && date && project && beneficent && amount.length > 0 && purpose){
+        if(donor.length > 0 && date && project && beneficent && amount.length > 0 && purpose){
             button.disabled = false;
         } else {
             button.disabled = true;

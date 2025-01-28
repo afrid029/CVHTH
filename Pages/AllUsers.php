@@ -15,7 +15,7 @@
 
 <body style="width: 100vw; display:contents;">
 
-<?php
+    <?php
     SESSION_START();
     if (isset($_SESSION['fromAction']) && $_SESSION['fromAction'] === true) { ?>
 
@@ -34,24 +34,53 @@
         }
         ?>
         <script>
-            document.getElementById('alert').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('alert').style.display = 'flex';
+            }, 2000);
+
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
-            }, 3000);
+            }, 5000);
         </script>
     <?php
     }
     $_SESSION['fromAction'] = false;
 
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+    } else {
+
+        $data = base64_decode($_COOKIE['user']);
+
+        // Extract the IV (the first 16 bytes)
+        $iv = substr($data, 0, 16);
+
+        // Extract the encrypted email (the rest of the string)
+        $encryptedData = substr($data, 16);
+        $key = '6f5473b5b16a3fd9576b907b2b2dcb3f07b3d59eecac4f5649356be45b5fce99811';
+        // Decrypt the email using AES-256-CBC decryption
+        $decryptedData = openssl_decrypt($encryptedData, 'aes-256-cbc', $key, 0, $iv);
+
+        // $query = "SELECT * from users where email = '$decryptedEmail'";
+        $passedArray = unserialize($decryptedData);
+        // $result = mysqli_query($db, $query);
+
+        if ($passedArray['role'] === 'admin' || $passedArray['role'] === 'superadmin') {
+            $_SESSION['ID'] = $passedArray['ID'];
+            $_SESSION['role'] = $passedArray['role'];
+        } else {
+            header('Location: /');
+        }
+    }
+
     include('Components/NavBar.php') ?>
 
-    
-<script>
-    const node = document.querySelector('.nav-links').children;
-    node[1].children[0].style.color = '#E44C4C'
-    node[1].children[0].style.fontWeight = '600'
-    
-</script>
+
+    <script>
+        const node = document.querySelector('.nav-users');
+        node.style.color = '#E44C4C'
+        node.style.fontWeight = '600'
+    </script>
 
 
     <div class="main-body">
@@ -108,36 +137,45 @@
         </div>
         <div class="main-content main-content-mobile">
             <div class="main-conent-mobile-bg"></div>
-            <div style="width: 100%; ">
-                <!-- <div class="main-conent-mobile-bg"></div> -->
 
-                <div class="content-title mobile-ani">
-                    <h3>Admins</h3>
-                </div>
+            <?php
 
+            if ($_SESSION['role'] === 'superadmin') {
+            ?>
+                <div style="width: 100%; ">
+                    <!-- <div class="main-conent-mobile-bg"></div> -->
 
+                    <div class="content-title mobile-ani">
+                        <h3>Admins</h3>
+                    </div>
+                    <div class="content-table mobile-ani">
+                        <div class="table">
+                            <div class="table-header table-header-admin">
+                                <div>Name</div>
+                                <div>Email</div>
+                                <div>Contact No.</div>
+                                <div style='text-align: center'>Functions</div>
 
-                <div class="content-table mobile-ani">
-                    <div class="table">
+                            </div>
 
-
-                        <div class="table-header table-header-admin">
-                            <div>Name</div>
-                            <div>Email</div>
-                            <div>Contact No.</div>
-                            <div style='text-align: center'>Functions</div>
+                            <div id="onrowload-admin"></div>
+                            <div id="table-rows-admin"></div>
+                            <div id="table-pagi-admin"></div>
 
                         </div>
-
-                        <div id="onrowload-admin"></div>
-                        <div id="table-rows-admin"></div>
-                        <div id="table-pagi-admin"></div>
-
                     </div>
-                </div>
 
-                <div id="loading-spinner-admin" class="loading-spinner"></div>
-            </div>
+                    <div id="loading-spinner-admin" class="loading-spinner"></div>
+                </div>
+            <?php
+
+            }
+
+            ?>
+
+
+
+
 
 
             <div style="width: 100%; margin-top: 0.8rem">
@@ -225,8 +263,8 @@
         <div class="footer"></div>
 
     </footer> -->
-    
-   
+
+
     <?php include('/CVHTH/Models/AddUser.php') ?>
     <?php include('/CVHTH/Models/EditUser.php') ?>
     <?php include('/CVHTH/Models/InfoUser.php') ?>
@@ -417,13 +455,19 @@
 
         // Load the first page initially
         window.onload = function() {
-            adminsload(1);
+            <?php 
+            if ($_SESSION['role'] === 'superadmin') {
+            ?>
+                adminsload(1);
+            <?php
+            }
+                ?>
             pmsload(1);
             donorload(1);
 
         };
 
-        window.addEventListener("resize", resizeWindow);
+        // window.addEventListener("resize", resizeWindow);
 
 
         const addBtn = document.querySelector('.add-btn');
@@ -508,7 +552,7 @@
             })
 
             document.getElementById('editProjectSearchkey').value = '';
-                document.getElementById('editDonorSearchkey').value = '';
+            document.getElementById('editDonorSearchkey').value = '';
 
             document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
             document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)

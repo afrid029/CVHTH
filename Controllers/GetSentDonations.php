@@ -25,7 +25,7 @@ if ($page === 1) {
     $sql = "SELECT sum(amount) AS total_received FROM donationreceived";
     $result = mysqli_query($db, $sql);
     $row = mysqli_fetch_assoc($result);
-    $total_received = $row['total_received'];
+    $total_received = $row['total_received'];    
 
     $sql = "SELECT sum(amount) AS total_sent FROM donationsent";
     $result = mysqli_query($db, $sql);
@@ -35,12 +35,28 @@ if ($page === 1) {
     $current_bal = $total_received - $total_sent;
 }
 
-$query = "SELECT ds.ID, b.firstname AS ben_fn, b.lastname AS ben_ln, u.firstname AS u_fn, u.lastname AS u_ln, ds.amount, ds.date
-from users u, beneficiant b, donationsent ds
-where ds.Donor_ID = u.ID
-and ds.Beneficiant_ID = b.ID
+$query = "SELECT ds.ID, NVL(b.firstname, '<i>Deleted</i>') AS ben_fn, NVL(b.lastname,  '<i>Beneficiary</i>') AS ben_ln, NVL(u.firstname, '<i>Deleted</i>') AS u_fn, NVL(u.lastname,  '<i>Donor</i>') AS u_ln, ds.amount, ds.date
+from donationsent ds 
+LEFT JOIN beneficiant b ON ds.Beneficiant_ID = b.ID
+LEFT JOIN users u ON ds.Donor_ID = u.ID
 ORDER BY ds.date DESC, b.firstName ASC
  LIMIT $offset, $results_per_page";
+
+ $forPm = isset($_GET['pmID']) ? true : false;
+
+ if($forPm){
+    $pmID = $_GET['pmID'];
+    $query = "SELECT ds.ID, NVL(b.firstname, '<i>Deleted</i>') AS ben_fn, NVL(b.lastname,  '<i>Beneficiary</i>') AS ben_ln, NVL(u.firstname, '<i>Deleted</i>') AS u_fn, NVL(u.lastname,  '<i>Donor</i>') AS u_ln, ds.amount, ds.date, pm.Manager_ID
+    from donationsent ds 
+    LEFT JOIN beneficiant b ON ds.Beneficiant_ID = b.ID
+    LEFT JOIN users u ON ds.Donor_ID = u.ID
+    LEFT JOIN projectmanager pm on pm.Project_ID = ds.Project_ID
+    WHERE pm.Manager_ID = '$pmID'
+    ORDER BY ds.date DESC, b.firstName ASC
+    LIMIT $offset, $results_per_page";
+ }
+
+
 
 $result = mysqli_query($db, $query);
 

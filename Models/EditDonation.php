@@ -123,7 +123,7 @@
 
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/Controllers/GetAllUsers.php?role=' + encodeURIComponent('donor'), true);
+        xhr.open('GET', '/Controllers/GetAllUsers.php?role=' + encodeURIComponent('addonor'), true);
         // document.getElementById('loading-spinner').style.display = 'block';
         // const onload = document.getElementById('onrowload');
         // onload.classList.add('onrowload');
@@ -256,8 +256,19 @@
                 console.log(data);
 
                 document.getElementById('edit-id').value = data.ID;
-                document.getElementById("edit-donor-value").setAttribute('value', data.Donor_ID);
-                document.getElementById("edit-donor").setAttribute('value', data.name);
+
+                if(data.Donor_ID){
+                    document.getElementById("edit-donor-value").setAttribute('value', data.Donor_ID);
+                }else {
+                    document.getElementById("edit-donor-value").removeAttribute('value'); 
+                }
+
+                if(data.name){
+                    document.getElementById("edit-donor").setAttribute('value', data.name);
+                }else {
+                    document.getElementById("edit-donor").removeAttribute('value')
+                }
+               
                 document.getElementById("edit-amount").value = data.amount;
                 document.getElementById("edit-date").value = data.date;
 

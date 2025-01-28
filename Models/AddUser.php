@@ -44,7 +44,9 @@
 
                         <select name="role" id="select-role" required>
                             <option selected hidden value="none">Select a role</option>
-                            <option value="admin">Admin</option>
+                            <?php if($_SESSION['role'] === 'superadmin'){
+                                echo "<option value='admin'>Admin</option>";
+                            }  ?>
                             <option value="donor">Donor</option>
                             <option value="project manager">Project Manager</option>
                         </select>
