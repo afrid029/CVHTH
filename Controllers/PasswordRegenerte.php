@@ -86,7 +86,7 @@ function mailSend($user, $password){
         $mail->Host = 'smtp.gmail.com';  // Set the SMTP server to send through (e.g., Gmail, Mailgun, etc.)
         $mail->SMTPAuth = true;  // Enable SMTP authentication
         $mail->Username = 'mafrid029@gmail.com';  // SMTP username (email)
-        $mail->Password = 'cocf llnh qrdv pigr';  // SMTP password -- App Password from Gmail 2FA
+        $mail->Password = '';  // SMTP password -- App Password from Gmail 2FA
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable TLS encryption, `PHPMailer::ENCRYPTION_SMTPS` for SSL
         $mail->Port = 587;  // SMTP port (587 for TLS, 465 for SSL)
 
