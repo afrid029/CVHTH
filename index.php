@@ -2,6 +2,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CVHTH</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playwrite+VN:wght@100..400&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Assets/CSS/Home.css">
 </head>
@@ -112,14 +113,15 @@
                 <img src="./Assets/Images/close.png" style="width: 32px;"> Close
             </div>
 
-            <div class="login-title">
-                <h3>Welcome to <span style="color: #2F41E4;">CVHTH</span></h3>
-
-            </div>
+           
 
             <?php
 
             if (isset($_COOKIE['user'])) {
+                echo " <div class='login-title'>
+                            <h3>Welcome to <span style='color: #2F41E4;'>CVHTH</span></h3>
+
+                        </div>";
                 $data = base64_decode($_COOKIE['user']);
 
                 // Extract the IV (the first 16 bytes)
@@ -136,20 +138,24 @@
                 // $result = mysqli_query($db, $query);
 
                 if($passedArray['role'] === 'donor'){ ?>
-                    <button onclick="naviOriginal('/donors')">Go to Dashboard</button>
+                    <button class="dashbord" type="button" onclick="naviOriginal('/donors')">Dashboard</button>
                 <?php }
                 if($passedArray['role'] === 'admin' || $passedArray['role'] === 'superadmin'){ ?>
-                  <button onclick="naviOriginal('/donation')">Go to Dashboard</button>
+                  <button  class="dashbord" type="button" onclick="naviOriginal('/donation')">Dashboard</button>
                 <?php }
                 if($passedArray['role'] === 'project manager'){ ?>
-                    <button onclick="naviOriginal('/sentdonation')">Go to Dashboard</button>
+                    <button  class="dashbord" type="button" onclick="naviOriginal('/sentdonation')">Dashboard</button>
                <?php }
 
             ?>
 
 
             <?php } else { ?>
-                <h4>Login</h4>
+                <div class='login-title'>
+                    <h3>Welcome to <span style='color: #2F41E4;'>CVHTH</span></h3>
+                    <h4>Login</h4>
+                </div>
+                
                 <form class="login-form" action="/login" method="post">
                     <div class="FormRow">
                         <input type="text" id="email" name="email" required placeholder="Enter Your Email">

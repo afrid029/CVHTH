@@ -29,6 +29,7 @@
     align-items: center;
     padding: 2%;
     position: fixed;
+    z-index: 5;
     height: 100vh;
     /* position: fixed;
       height: inherit;
@@ -39,6 +40,7 @@
     height: inherit;
     margin: auto 0px;
     width: 100%;
+    animation: tableDown 1s ease-in-out forwards;
   }
   .bar-row {
     display: inline-flex;
@@ -107,7 +109,21 @@
     flex-direction: column;
     left: 25vw;
     position: relative;
+    z-index: 4;
+    animation: tableDown 1s ease-in-out forwards;
     /* flex: 1; */
+  }
+
+  @keyframes tableDown {
+    0% {
+      transform: translateY(-10%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+    
   }
   
   .content-title {
@@ -308,6 +324,55 @@
     display: none;
   }
   
+
+  
+.down-container {
+  display: flex;
+  gap: 10px;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 10px;
+}
+
+.dateRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-family: "Lato", serif;
+  font-weight: 600;
+}
+
+.dateRow input {
+  height: auto;
+  border-radius: 7px;
+  box-shadow: 0 0 5px #00000030;
+  border-color: transparent;
+  width: 100%;
+ 
+  padding: 10px 5px;
+  font-weight: 600;
+  color: #454444f0;
+}
+
+.down-btn {
+  background-color: #024b06;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-family: "Lato", serif;
+  font-weight: 600;
+  cursor: pointer;
+  height: auto;
+  transition: all 0.6s ease;
+}
+
+.down-btn:disabled {
+  background-color: #3b3c3d80;
+  cursor: not-allowed;
+}
 
   
   @media (min-width: 1600px) {

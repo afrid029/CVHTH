@@ -141,7 +141,7 @@
                         <div>Beneficiary</div>
                         <div style='text-align: center'>NIC</div>
                         <div style='text-align: star'>Project</div>
-                        <div style='text-align: center'>Functions</div>
+                        <div style='text-align: center'>Actions</div>
 
                     </div>
 

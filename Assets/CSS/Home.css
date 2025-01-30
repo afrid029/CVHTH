@@ -964,3 +964,19 @@ a{
   font-size: 12px;
   font-family: 'inter', serif;
 }
+
+.dashbord {
+  position: relative;
+  width: 50%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  background-color: #2f41e4;
+  font-family: 'Inter', serif;
+  border: transparent;
+  margin: 5px auto;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+
+}

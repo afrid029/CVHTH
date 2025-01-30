@@ -100,7 +100,9 @@
                     </div>
                 </div>
                 <hr class="line">
-                <div class="bar-row">
+                <?php 
+                    if($_SESSION['role'] === 'superadmin'){?>
+                        <div class="bar-row">
                     <div class="row-type">
                         Admins
                     </div>
@@ -110,6 +112,8 @@
                     </div>
                 </div>
                 <hr class="line">
+                    <?php }
+                ?>
                 <div class="bar-row">
                     <div class="row-type">
                         Project Managers
@@ -154,7 +158,7 @@
                                 <div>Name</div>
                                 <div>Email</div>
                                 <div>Contact No.</div>
-                                <div style='text-align: center'>Functions</div>
+                                <div style='text-align: center'>Actions</div>
 
                             </div>
 
@@ -198,7 +202,7 @@
                             <div>Email</div>
                             <div>Contact No.</div>
                             <div>Project</div>
-                            <div style='text-align: center'>Functions</div>
+                            <div style='text-align: center'>Actions</div>
 
                         </div>
 
@@ -238,7 +242,7 @@
                             <div style="text-align: center;">Donated (RS)</div>
                             <div style="visibility: hidden" ;></div>
                             <div>DOB</div>
-                            <div style='text-align: center'>Functions</div>
+                            <div style='text-align: center'>Actions</div>
 
                         </div>
 

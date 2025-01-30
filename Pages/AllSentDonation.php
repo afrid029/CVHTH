@@ -7,13 +7,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Assets/CSS/AllSentDonation.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
 
 
 </head>
 
 <body style="width: 100vw; display:contents;">
 
-<?php
+    <?php
     SESSION_START();
     if (isset($_SESSION['fromAction']) && $_SESSION['fromAction'] === true) { ?>
 
@@ -32,9 +34,9 @@
         }
         ?>
         <script>
-          setTimeout(() => {
-            document.getElementById('alert').style.display = 'flex';
-           }, 2000);
+            setTimeout(() => {
+                document.getElementById('alert').style.display = 'flex';
+            }, 2000);
 
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
@@ -71,13 +73,12 @@
     }
 
     include('Components/NavBar.php') ?>
-    
-<script>
-    const node = document.querySelector('.nav-sentdon');
-    node.style.color = '#68E44C'
-    node.style.fontWeight = '600'
-    
-</script>
+
+    <script>
+        const node = document.querySelector('.nav-sentdon');
+        node.style.color = '#68E44C'
+        node.style.fontWeight = '600'
+    </script>
 
 
     <div class="main-body">
@@ -85,7 +86,7 @@
             <div class="sidebar-content">
 
                 <div class="bar-row">
-                    <button onclick="handleAdd(true)" class="add-btn">Serve Fund</button>
+                    <button onclick="handleAdd(true)" class="add-btn">Disburse Fund</button>
                 </div>
                 <div class="bar-row">
                     <div class="row-type">
@@ -130,7 +131,7 @@
             <div class="main-conent-mobile-bg"></div>
 
             <div class="content-title mobile-ani">
-                <h3>All Served Donations</h3>
+                <h3>All Disbursed Donations</h3>
             </div>
 
 
@@ -145,13 +146,41 @@
                         <div>Donor</div>
                         <div style='text-align: center'>Amount</div>
                         <div style='text-align: center'>Date</div>
-                        <div style='text-align: center'>Functions</div>
+                        <div style='text-align: center'>Actions</div>
 
                     </div>
 
                     <div id="onrowload"></div>
                     <div id="table-rows"></div>
                     <div id="table-pagi"></div>
+
+                    <?php
+                    if ($_SESSION['role'] !== 'project manager') { ?>
+                        <div class="down-container">
+                            <div>
+                                <p style="font-family: 'DM Serif Text', serif;">Download Disbursed Donation information</p>
+                            </div>
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <div style="margin-bottom: 0px;" class="dateRow">
+
+                                    <label for="">From</label>
+                                    <input id="from-date" type="date">
+                                </div>
+                                <div style="margin-bottom: 0px;" class="dateRow">
+                                    <label for="">To</label>
+                                    <input id="to-date" type="date">
+                                </div>
+                                <button id="down-btn" onclick="downloadPDF()" class='down-btn'>&#128195; Download as PDF</button>
+
+
+                            </div>
+                            <div>
+                                <small id="date-warning" style="display: none; font-family:'Lato', serif; color: red; text-shadow: 0 0 10px #cd5656;">Select Appropriate range of dates</small>
+                            </div>
+                        </div>
+
+                    <?php }
+                    ?>
 
 
 
@@ -164,14 +193,14 @@
         </div>
     </div>
 
-    
+
 
     <!--     
     <footer>
         <div class="footer"></div>
 
     </footer> -->
-    
+
     <?php include('/CVHTH/Models/AddSentDonation.php') ?>
     <?php include('/CVHTH/Models/EditSentDonation.php') ?>
     <?php include('/CVHTH/Models/InfoSentDonation.php') ?>
@@ -221,24 +250,24 @@
                     console.log('rest ', restPagePx);
 
                     mainConetntMobileBg.style.height = restPage;
-                     mainConetntMobile.style.height = restPage;
+                    mainConetntMobile.style.height = restPage;
 
                     // requestAnimationFrame(()=>{
-                       
+
                     // })
                 } else {
                     console.log('less');
 
                     // requestAnimationFrame(()=>{
-                        
+
                     // })
                     mainConetntMobile.style.height = 'auto';
-                    
+
                     // requestAnimationFrame(() => {
                     //     console.log(mainConetntMobile.offsetHeight);
 
                     //     // Apply the new height to the background
-                        
+
                     // });
                     mainConetntMobileBg.style.height = `calc(${mainConetntMobile.offsetHeight}px + 20px)`;
                 }
@@ -316,18 +345,18 @@
 
         function loadPage(page) {
             var xhr = new XMLHttpRequest();
-            <?php 
+            <?php
 
 
-                if($_SESSION['role'] === 'project manager'){
-                    $prjID = $_SESSION['ID'];
-                    echo "xhr.open('GET', '/Controllers/GetSentDonations.php?page=' + page + '&pmID=' + '$prjID', true)";
-                }else {
-                    echo "xhr.open('GET', '/Controllers/GetSentDonations.php?page=' + page, true);";
-                }
-            
+            if ($_SESSION['role'] === 'project manager') {
+                $prjID = $_SESSION['ID'];
+                echo "xhr.open('GET', '/Controllers/GetSentDonations.php?page=' + page + '&pmID=' + '$prjID', true)";
+            } else {
+                echo "xhr.open('GET', '/Controllers/GetSentDonations.php?page=' + page, true);";
+            }
+
             ?>
-           
+
             document.getElementById('loading-spinner').style.display = 'block';
             const onload = document.getElementById('onrowload');
             onload.classList.add('onrowload');
@@ -367,18 +396,18 @@
         };
 
 
-        function handleAdd(value){
+        function handleAdd(value) {
             const model = document.getElementById('addModel');
-            if(value){
-                loadDonors(); 
+            if (value) {
+                loadDonors();
                 loadProjBene();
                 model.style.display = 'flex';
-                
+
                 setTop();
                 document.getElementById('select-image').addEventListener('change', PreviewImages);
-               
+
             } else {
-                model.style.display = 'none' ;
+                model.style.display = 'none';
                 document.querySelectorAll('.dropdown-container').forEach((ele) => {
                     ele.style.display = 'none'
                 });
@@ -390,22 +419,22 @@
                 document.getElementById('select-beneficent').removeAttribute('value')
                 document.getElementById('select-beneficent-value').removeAttribute('value')
                 document.getElementById('select-amount').value = ''
-                document.getElementById('select-purpose').value= ''
+                document.getElementById('select-purpose').value = ''
                 document.getElementById('donorSearchkey').value = ''
                 document.getElementById('projectSearchkey').value = ''
                 document.getElementById('beneficentSearchkey').value = ''
-                
+
 
                 document.getElementById('select-beneficent-cont').style.display = 'none';
 
-                document.getElementById('select-image').value='';
+                document.getElementById('select-image').value = '';
                 document.getElementById('preview-container').innerHTML = '';
 
                 document.getElementById('submit').disabled = true;
 
                 document.getElementById('select-image').removeEventListener('change', PreviewImages);
 
-                document.getElementById('donorSearchkey').removeEventListener('input',donorSearchListener);
+                document.getElementById('donorSearchkey').removeEventListener('input', donorSearchListener);
                 document.getElementById('dropdown-list-donor').removeEventListener('click', selectDonors);
 
                 document.getElementById('projectSearchkey').removeEventListener('input', projectSearchListener);
@@ -420,12 +449,12 @@
             }
         }
 
-        function Edit(ID){
+        function Edit(ID) {
             const model = document.getElementById('editModel');
             model.style.display = 'flex';
-            editLoadDonors(); 
+            editLoadDonors();
             editLoadProjBene(ID);
-           
+
             editSetTop();
             // document.getElementById('edit-image').addEventListener('change', editPreviewImages);
             // editSetTop();
@@ -435,14 +464,14 @@
 
         }
 
-        function Delete(ID){
+        function Delete(ID) {
 
-document.getElementById('del-id').value = ID;
-document.getElementById('deleteModel').style.display = 'flex'
+            document.getElementById('del-id').value = ID;
+            document.getElementById('deleteModel').style.display = 'flex'
 
-}
+        }
 
-        function closeEdit(){
+        function closeEdit() {
             document.getElementById('editModel').style.display = 'none';
             document.getElementById('edit-not-enough').style.display = "none";
 
@@ -455,36 +484,167 @@ document.getElementById('deleteModel').style.display = 'flex'
             // document.getElementById('edit-image').removeEventListener('change', editPreviewImages);
 
             document.querySelectorAll('.dropdown-container').forEach((ele) => {
-                    ele.style.display = 'none'
-                }); 
+                ele.style.display = 'none'
+            });
 
-                document.getElementById('editDonorSearchkey').value = ''
-                document.getElementById('editProjectSearchkey').value = ''
-                document.getElementById('editBeneficentSearchkey').value = ''
+            document.getElementById('editDonorSearchkey').value = ''
+            document.getElementById('editProjectSearchkey').value = ''
+            document.getElementById('editBeneficentSearchkey').value = ''
 
-                document.getElementById('editDonorSearchkey').removeEventListener('input',editDonorSearchListener);
-                document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors);
+            document.getElementById('editDonorSearchkey').removeEventListener('input', editDonorSearchListener);
+            document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors);
 
-                document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
-                document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)
+            document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
+            document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)
 
-                document.getElementById('editBeneficentSearchkey').removeEventListener('input', editBeneSearchListener);
-                document.getElementById('edit-dropdown-list-beneficent').removeEventListener('click', editSelectBeneficents);
+            document.getElementById('editBeneficentSearchkey').removeEventListener('input', editBeneSearchListener);
+            document.getElementById('edit-dropdown-list-beneficent').removeEventListener('click', editSelectBeneficents);
         }
 
-        function moreInfo(role, ID){
-            
+        function moreInfo(role, ID) {
+
             document.getElementById('viewModel').style.display = 'flex';
-          sentDonationMoreInfo(ID, role);
-           
-            
+            sentDonationMoreInfo(ID, role);
+
+
         }
 
-        function closeView(){
+        function closeView() {
             document.getElementById('viewModel').style.display = 'none';
         }
 
-        window.addEventListener("resize", (()=> {
+        <?php 
+            if($_SESSION['role'] !== 'project manager') { ?>
+                const dowonToday = new Date();
+        const downLocalDate = dowonToday.toLocaleDateString('en-CA');
+        // Set the max attribute to today's date
+        document.getElementById('from-date').setAttribute('max', downLocalDate);
+        document.getElementById('to-date').setAttribute('max', downLocalDate);
+
+            <?php }
+        ?>
+
+       
+        function downloadPDF() {
+            const fromDate = document.getElementById('from-date');
+            const toDate = document.getElementById('to-date');
+
+            // fromDate.style.boxShadow = '0 0 5px red';
+            // toDate.style.boxShadow = '0 0 5px red';
+
+            if (fromDate.value === '' && toDate.value === '') {
+                fromDate.style.boxShadow = '0 0 5px red';
+                toDate.style.boxShadow = '0 0 5px red';
+                return;
+            }
+            if (fromDate.value !== '' && toDate.value === '') {
+                fromDate.style.boxShadow = '0 0 5px green';
+                toDate.style.boxShadow = '0 0 5px red';
+                return;
+            }
+            if (fromDate.value === '' && toDate.value !== '') {
+                fromDate.style.boxShadow = '0 0 5px red';
+                toDate.style.boxShadow = '0 0 5px green';
+                return;
+            }
+
+            if (fromDate.value > toDate.value) {
+                fromDate.style.boxShadow = '0 0 5px red';
+                toDate.style.boxShadow = '0 0 5px red';
+                fromDate.value = '';
+                toDate.value = '';
+                document.getElementById('date-warning').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('date-warning').style.display = 'none';
+            fromDate.style.boxShadow = '0 0 5px green';
+            toDate.style.boxShadow = '0 0 5px green';
+
+            const btn = document.getElementById('down-btn');
+            btn.disabled = true;
+            btn.innerHTML = '&#128191; Downloading...';
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST', '/Controllers/DownloadInfo.php', true);
+
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    console.log(response.data);
+
+                    SaveDoc(response.data, fromDate.value, toDate.value);
+
+                }
+            }
+
+            console.log(fromDate.value, toDate.value);
+
+
+            const param = 'type=sentdonation&from=' + fromDate.value + '&to=' + toDate.value;
+            xhr.send(param);
+
+            // console.log('Processing....');
+
+        }
+
+        function SaveDoc(data, from, to) {
+            const {
+                jsPDF
+            } = window.jspdf;
+            const doc = new jsPDF();
+
+            // console.log(doc.getFontList());
+
+
+            // Add title
+            doc.setFontSize(18);
+            doc.text('Donation Disbursed | CVHTH', 20, 20);
+
+            doc.setFontSize(12);
+            doc.setTextColor('rgb(168, 167, 167)');
+            doc.setFont('Helvetica', 'bold');
+            doc.text(`From: ${from}    To: ${to}`, 20, 30);
+            // doc.text('Donation Received | CVHTH', 20, 20);
+
+            // Define the table columns and data
+            const columns = ["Disbursed ID", "Beneficiary Name", "Donor Name", "Purpose", "Amount", "Date"];
+            const rows = data.map(item => [item.ID, item.benname, item.donname,item.purpose, item.amount, item.date]);
+
+            // Generate the table
+            doc.autoTable({
+                head: [columns],
+                body: rows,
+                startY: 40, // Set the start position for the table
+                theme: 'striped', // Add a striped table style (optional)
+                headStyles: {
+                    fillColor: [41, 128, 185],
+                    textColor: [255, 255, 255]
+                }, // Table header styles
+                margin: {
+                    top: 10
+                }, // Margin around the table
+            });
+
+            // Output the PDF
+            doc.save(`Donation Disbursed - CVHTH_From${from}To${to}.pdf`);
+            const btn = document.getElementById('down-btn');
+            btn.style.backgroundColor = '#20B2AF';
+            btn.innerHTML = '&#128210; PDF Downloaded';
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.style.backgroundColor = '#024b06';
+                btn.innerHTML = '&#128195; Download as PDF';
+                document.getElementById('from-date').value = '';
+                document.getElementById('to-date').value = '';
+            }, 3000)
+        }
+
+        window.addEventListener("resize", (() => {
             resizeWindow();
             setTop();
             editSetTop();

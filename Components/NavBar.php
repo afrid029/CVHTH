@@ -9,7 +9,7 @@
 
     <nav class="navbar">
         <div class="logo">
-            <a href="#">CVHTH</a>
+            <a href="/">CVHTH</a>
         </div>
         <ul class="nav-links">
             <?php 

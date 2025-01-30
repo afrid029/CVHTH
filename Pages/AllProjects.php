@@ -13,7 +13,7 @@
 
 <body style="width: 100vw; display:contents;">
 
-<?php
+    <?php
     SESSION_START();
     if (isset($_SESSION['fromAction']) && $_SESSION['fromAction'] === true) { ?>
 
@@ -32,9 +32,9 @@
         }
         ?>
         <script>
-             setTimeout(() => {
-            document.getElementById('alert').style.display = 'flex';
-           }, 2000);
+            setTimeout(() => {
+                document.getElementById('alert').style.display = 'flex';
+            }, 2000);
 
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
@@ -63,7 +63,7 @@
         $passedArray = unserialize($decryptedData);
         // $result = mysqli_query($db, $query);
 
-        if ($passedArray['role'] === 'admin' || $passedArray['role'] === 'superadmin') {
+        if ($passedArray['role'] === 'admin' || $passedArray['role'] === 'superadmin' || $passedArray['role'] === 'project manager') {
             $_SESSION['ID'] = $passedArray['ID'];
             $_SESSION['role'] = $passedArray['role'];
         } else {
@@ -74,20 +74,34 @@
     include('Components/NavBar.php') ?>
 
 
-<script>
-    const node = document.querySelector('.nav-projects');
-    node.style.color = '#D5BB43'
-    node.style.fontWeight = '600'
-    
-</script>
-   
+    <script>
+        const node = document.querySelector('.nav-projects');
+        node.style.color = '#D5BB43'
+        node.style.fontWeight = '600'
+    </script>
+
 
     <div class="main-body">
         <div class="main-sidebar">
             <div class="sidebar-content">
 
                 <div class="bar-row">
-                    <button onclick="handleAdd(true)" class="add-btn">Create Project</button>
+                    <?php
+                    if ($_SESSION['role'] !== 'project manager') {
+                        echo "<button onclick='handleAdd(true)' class='add-btn'>Create Project</button>";
+
+                        echo "<script>
+                                const addBtn = document.querySelector('.add-btn');
+                                addBtn.addEventListener('click', function() {
+                                    addBtn.classList.add('clicked')
+                                    setTimeout(() => {
+                                        addBtn.classList.remove('clicked')
+                                    }, 1000)
+                                 })
+                            </script>";
+                    }
+                    ?>
+
                 </div>
                 <div class="bar-row">
                     <div class="row-type">
@@ -143,8 +157,12 @@
                         <div>Project</div>
                         <div>Description</div>
                         <div>Manager(s)</div>
-                        <div style='text-align:center' >Grantees</div>
-                        <div style='text-align: center'>Functions</div>
+                        <div style='text-align:center'>Grantees</div>
+                        <?php 
+                            if($_SESSION['role'] !== 'project manager'){
+                                echo "<div style='text-align:center'>Actions</div>";
+                            }
+                        ?>
 
                     </div>
 
@@ -173,8 +191,6 @@
     <?php include('/CVHTH/Models/InfoProject.php') ?>
     <?php include('/CVHTH/Models/DeleteProjectModel.php') ?>
     <script>
-        
-
         function resizeWindow() {
             console.log('resizing');
 
@@ -187,14 +203,14 @@
             // console.log(navHeight.offsetHeight);
             const navbarHeight = navHeight.offsetHeight;
             const sideBarHeight = mainSideBar.offsetHeight;
-            const mainConetntMobileHeight = mainConetntMobile.offsetHeight; 
+            const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
 
             const viewportWidth = window.innerWidth;
 
-            if(viewportWidth > 900 ){
+            if (viewportWidth > 900) {
                 const contentTitle = document.querySelector('.content-title');
                 console.log(window.getComputedStyle(mainConetntMobile).getPropertyValue('padding-top'));
-                
+
                 const contentTitleHeight = contentTitle.offsetHeight;
                 const contentTable = document.querySelector('.content-table');
 
@@ -219,24 +235,24 @@
                     console.log('rest ', restPagePx);
 
                     mainConetntMobileBg.style.height = restPage;
-                     mainConetntMobile.style.height = restPage;
+                    mainConetntMobile.style.height = restPage;
 
                     // requestAnimationFrame(()=>{
-                       
+
                     // })
                 } else {
                     console.log('less');
 
                     // requestAnimationFrame(()=>{
-                        
+
                     // })
                     mainConetntMobile.style.height = 'auto';
-                    
+
                     // requestAnimationFrame(() => {
                     //     console.log(mainConetntMobile.offsetHeight);
 
                     //     // Apply the new height to the background
-                        
+
                     // });
                     mainConetntMobileBg.style.height = `calc(${mainConetntMobile.offsetHeight}px + 20px)`;
                 }
@@ -300,21 +316,26 @@
         // DisplayNumber(20000, 'spent');
         // DisplayNumber(90000, 'total');
 
-        const addBtn = document.querySelector('.add-btn');
-        addBtn.addEventListener('click', function() {
-            console.log('clicked');
 
-            addBtn.classList.add('clicked')
-
-            setTimeout(() => {
-                addBtn.classList.remove('clicked')
-            }, 1000)
-        })
 
 
         function loadPage(page) {
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/Controllers/GetAllProjects.php?page=' + page, true);
+
+            console.log('<?php echo $_SESSION['ID'] ?>');
+            
+
+            <?php
+            
+            if($_SESSION['role'] === 'project manager'){
+                    $prjID = $_SESSION['ID'];
+                    echo "xhr.open('GET', '/Controllers/GetAllProjects.php?page=' + page + '&pmID=' + '$prjID', true)";
+                }else {
+                    echo "xhr.open('GET', '/Controllers/GetAllProjects.php?page=' + page, true);";
+                }
+
+            ?>
+            // xhr.open('GET', '/Controllers/GetAllProjects.php?page=' + page, true);
             document.getElementById('loading-spinner').style.display = 'block';
             const onload = document.getElementById('onrowload');
             onload.classList.add('onrowload');
@@ -370,13 +391,13 @@
                 document.querySelectorAll('.dropdown-container').forEach((ele) => {
                     ele.style.display = 'none'
                 });
-               
+
                 document.getElementById('select-manager').removeAttribute('value');
                 document.getElementById('select-manager-value').removeAttribute('value');
                 document.getElementById('select-beneficent').removeAttribute('value')
                 document.getElementById('select-beneficent-value').removeAttribute('value')
                 document.getElementById('select-pname').value = ''
-                document.getElementById('select-description').value= ''
+                document.getElementById('select-description').value = ''
                 document.getElementById('managerSearchkey').value = ''
                 document.getElementById('beneficentSearchkey').value = ''
                 document.getElementById('submit').disabled = true;
@@ -403,37 +424,37 @@
         }
 
 
-        function Edit(ID){
+        function Edit(ID) {
             const model = document.getElementById('editModel');
             model.style.display = 'flex';
             editSetTop();
             editLoadManagers();
             editLoadBeneficents(ID);
-           
+
 
         }
 
-        function Delete(ID){
+        function Delete(ID) {
 
-document.getElementById('del-id').value = ID;
-document.getElementById('deleteModel').style.display = 'flex'
+            document.getElementById('del-id').value = ID;
+            document.getElementById('deleteModel').style.display = 'flex'
 
-}
+        }
 
-        function closeEdit(){
+        function closeEdit() {
             document.getElementById('editModel').style.display = 'none';
             document.querySelectorAll('.dropdown-container').forEach((el) => {
                 el.style.display = 'none';
             })
 
-               document.getElementById('editManagerSearchkey').value = ''
-                document.getElementById('editBeneficentSearchkey').value = ''
+            document.getElementById('editManagerSearchkey').value = ''
+            document.getElementById('editBeneficentSearchkey').value = ''
 
-                document.getElementById('editManagerSearchkey').removeEventListener('input', editManagerSearchListener);
-                document.getElementById('edit-dropdown-list-manager').removeEventListener('click', editSelectManagers);
+            document.getElementById('editManagerSearchkey').removeEventListener('input', editManagerSearchListener);
+            document.getElementById('edit-dropdown-list-manager').removeEventListener('click', editSelectManagers);
 
-                document.getElementById('editBeneficentSearchkey').removeEventListener('input', editBeneficentSearchListener);
-                document.getElementById('edit-dropdown-list-beneficent').removeEventListener('click', editSelectBeneficents)
+            document.getElementById('editBeneficentSearchkey').removeEventListener('input', editBeneficentSearchListener);
+            document.getElementById('edit-dropdown-list-beneficent').removeEventListener('click', editSelectBeneficents)
 
             // document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
             // document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)
@@ -442,19 +463,19 @@ document.getElementById('deleteModel').style.display = 'flex'
             // document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors)
         }
 
-        function moreInfo(role, ID){
-            
+        function moreInfo(role, ID) {
+
             document.getElementById('viewModel').style.display = 'flex';
-          projectMoreInfo(ID, role);
-           
-            
+            projectMoreInfo(ID, role);
+
+
         }
 
-        function closeView(){
+        function closeView() {
             document.getElementById('viewModel').style.display = 'none';
         }
 
-        window.addEventListener("resize", (()=>{
+        window.addEventListener("resize", (() => {
             resizeWindow();
             editSetTop();
             setTop();

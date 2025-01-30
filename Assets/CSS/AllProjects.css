@@ -30,6 +30,7 @@
     padding: 2%;
     position: fixed;
     height: 100vh;
+    z-index: 5;
     /* position: fixed;
       height: inherit;
       right: 0; */
@@ -39,6 +40,7 @@
     height: inherit;
     margin: auto 0px;
     width: 100%;
+    animation: tableDown 1s ease-in-out forwards;
   }
   .bar-row {
     display: inline-flex;
@@ -105,7 +107,21 @@
     flex-direction: column;
     left: 25vw;
     position: relative;
+    z-index: 4;
+    animation: tableDown 1s ease-in-out forwards;
     /* flex: 1; */
+  }
+
+  @keyframes tableDown {
+    0% {
+      transform: translateY(-10%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+    
   }
   
   .content-title {

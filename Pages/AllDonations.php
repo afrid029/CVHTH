@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Assets/CSS/AllDonations.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
 
 
 </head>
@@ -129,33 +131,56 @@
 
             <div class="content-title mobile-ani">
                 <h3>All Donations</h3>
+               
             </div>
 
 
 
             <div class="content-table mobile-ani">
                 <div class="table">
-
-
                     <div class="table-header">
                         <div>Donor Name</div>
                         <div style='text-align: end'>Amount (RS)</div>
                         <div style='text-align: end'>Donated Date</div>
-                        <div style='text-align: center'>Functions</div>
-
+                        <div style='text-align: center'>Actions</div>
                     </div>
 
                     <div id="onrowload"></div>
                     <div id="table-rows"></div>
                     <div id="table-pagi"></div>
 
+                    <div class="down-container">
+                        <div>
+                            <p style="font-family: 'DM Serif Text', serif;">Download Donation information</p>
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <div style="margin-bottom: 0px;" class="dateRow">
 
-
+                                <label for="">From</label>
+                                <input id="from-date" type="date">
+                            </div>
+                            <div style="margin-bottom: 0px;" class="dateRow">
+                                <label for="">To</label>
+                                <input id="to-date" type="date">
+                            </div>
+                            <button id="down-btn" onclick="downloadPDF()" class='down-btn'>&#128195; Download as PDF</button>
+                            
+                        
+                        </div>
+                        <div>
+                            <small id="date-warning" style="display: none; font-family:'Lato', serif; color: red; text-shadow: 0 0 10px #cd5656;">Select Appropriate range of dates</small>
+                        </div>
+                    </div>
 
                 </div>
+                
+
             </div>
 
             <div id="loading-spinner" class="loading-spinner"></div>
+
+            
+           
 
         </div>
     </div>
@@ -180,6 +205,7 @@
             const mainSideBar = document.querySelector('.main-sidebar');
             const mainConetntMobile = document.querySelector('.main-content-mobile');
             const mainConetntMobileBg = document.querySelector('.main-conent-mobile-bg');
+            const table = document.querySelector('.table');
             // const contentTitle = document.querySelector('.content-title');
             // console.log(navHeight.offsetHeight);
             const navbarHeight = navHeight.offsetHeight;
@@ -236,6 +262,10 @@
                         
                     // });
                     mainConetntMobileBg.style.height = `calc(${mainConetntMobile.offsetHeight}px + 20px)`;
+
+                    // console.log(table.offsetHeight);
+                    
+                    // mainConetntMobileBg.style.height = `calc(${table.offsetHeight}px + 20px)`;
                 }
 
 
@@ -396,6 +426,127 @@
             document.getElementById('edit-dropdown-list').removeEventListener('click', editSelectDonor);
             document.getElementById('editSearchkey').removeEventListener('input', editDonorSearchListener)
 
+        }
+
+        const dowonToday = new Date();
+        const downLocalDate = dowonToday.toLocaleDateString('en-CA');
+    // Set the max attribute to today's date
+        document.getElementById('from-date').setAttribute('max', downLocalDate);
+        document.getElementById('to-date').setAttribute('max', downLocalDate);
+
+        function downloadPDF() {
+            const fromDate = document.getElementById('from-date');
+            const toDate = document.getElementById('to-date');
+
+            // fromDate.style.boxShadow = '0 0 5px red';
+            // toDate.style.boxShadow = '0 0 5px red';
+
+            if (fromDate.value === '' && toDate.value === '') {
+                fromDate.style.boxShadow = '0 0 5px red';
+                toDate.style.boxShadow = '0 0 5px red';
+                return;
+            }
+            if (fromDate.value !== '' && toDate.value === '') {
+                fromDate.style.boxShadow = '0 0 5px green';
+                toDate.style.boxShadow = '0 0 5px red';
+                return;
+            }
+            if (fromDate.value === '' && toDate.value !== '') {
+                fromDate.style.boxShadow = '0 0 5px red';
+                toDate.style.boxShadow = '0 0 5px green';
+                return;
+            }
+
+            if(fromDate.value > toDate.value){
+                fromDate.style.boxShadow = '0 0 5px red';
+                toDate.style.boxShadow = '0 0 5px red';
+                fromDate.value = '';
+                toDate.value = '';
+                document.getElementById('date-warning').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('date-warning').style.display = 'none';
+            fromDate.style.boxShadow = '0 0 5px green';
+            toDate.style.boxShadow = '0 0 5px green';
+
+            const btn = document.getElementById('down-btn');
+            btn.disabled = true;
+            btn.innerHTML = '&#128191; Downloading...';
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST', '/Controllers/DownloadInfo.php', true);
+
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    const response = JSON.parse(xhr.responseText);
+                   console.log(response.data);
+
+                   SaveDoc(response.data, fromDate.value, toDate.value);
+                   
+                }
+            }
+
+            console.log(fromDate.value, toDate.value);
+            
+
+            const param = 'type=donation&from=' + fromDate.value + '&to=' + toDate.value;
+            xhr.send(param);
+
+            // console.log('Processing....');
+            
+        }
+
+        function SaveDoc(data, from, to) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // console.log(doc.getFontList());
+            
+
+            // Add title
+            doc.setFontSize(18);
+            doc.text('Donation Received | CVHTH', 20, 20);
+
+            doc.setFontSize(12);
+            doc.setTextColor('rgb(168, 167, 167)');
+            doc.setFont('Helvetica', 'bold');
+            doc.text(`From: ${from}    To: ${to}`, 20, 30);
+            // doc.text('Donation Received | CVHTH', 20, 20);
+
+            // Define the table columns and data
+            const columns = ["Reciept ID", "Donor Name", "Amount", "Date"];
+            const rows = data.map(item => [item.ID, item.name, item.amount, item.date]);
+
+            // Generate the table
+            doc.autoTable({
+                head: [columns],
+                body: rows,
+                startY: 40,  // Set the start position for the table
+                theme: 'striped', // Add a striped table style (optional)
+                headStyles: { fillColor: [41, 128, 185], textColor: [255, 255, 255] }, // Table header styles
+                margin: { top: 10 }, // Margin around the table
+            });
+
+            // Output the PDF
+            doc.save(`Donation Received - CVHTH_From${from}To${to}.pdf`);
+
+            const btn = document.getElementById('down-btn');
+            btn.style.backgroundColor = '#4EB220';
+            btn.innerHTML = '&#128210; PDF Downloaded';
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.style.backgroundColor = '#043055';
+                btn.innerHTML = '&#128195; Download as PDF';
+                document.getElementById('from-date').value = '';
+                document.getElementById('to-date').value = '';
+            }, 3000)
+
+            
         }
 
         window.addEventListener('resize', (()=>{

@@ -88,6 +88,8 @@ if(isset($_POST['submit'])){
     $result = mysqli_query($db, $query);
 
     $result1 = true;
+    $query = "DELETE FROM projectmanager WHERE Project_ID = '$ID'";
+    $delete1 = mysqli_query($db, $query);
     // echo $result1;
     $manager = isset($_POST['manager']) ? $_POST['manager'] : '';
     if($manager !== ''){
@@ -101,8 +103,10 @@ if(isset($_POST['submit'])){
    
 
     $result2 = true;
+    $query = "DELETE FROM projectbeneficiant WHERE Project_ID = '$ID'";
+    $delete2 = mysqli_query($db, $query);
+
     $beneficent = isset($_POST['beneficent']) ? $_POST['beneficent'] : '';
-    
    if($beneficent !== '') {
     $beneficents = explode(', ', $beneficent);
     // print_r(sizeof($beneficents));
@@ -115,7 +119,7 @@ if(isset($_POST['submit'])){
     }
    }
 
-   if($result && $result1 && $result2) {
+   if($result && $result1 && $result2 && $delete1 && $delete2) {
         mysqli_commit($db);
         mysqli_close($db);
         $_SESSION['message'] = "Project updated successfully!";

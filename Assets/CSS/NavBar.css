@@ -19,6 +19,7 @@
   .logout a{
     background-color: #410101;
     border-radius: 5px;
+    cursor: pointer;
   }
 
   .logout a:hover {
@@ -56,6 +57,29 @@
     font-size: 1.4vw;
     padding: 0.5rem;
     font-family: 'ubuntu', serif;
+    animation: popup 1s ease-in-out forwards;
+    display: block;
+  }
+
+  @keyframes popup {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    70%{
+      opacity: 0.5;
+    }
+
+    80%{
+     
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
   
   .nav-links a:hover {
@@ -99,6 +123,14 @@
   
     .menu-toggle {
       display: flex;
+    }
+
+    .nav-links a {
+      font-size: 1.1rem;
+    }
+
+    .navbar .logo a{
+      font-size: 1.4rem;
     }
   }
   

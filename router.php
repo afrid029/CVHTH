@@ -1,4 +1,3 @@
-
 <?php
 // Get the current URL path
 $request = $_SERVER['REQUEST_URI'];

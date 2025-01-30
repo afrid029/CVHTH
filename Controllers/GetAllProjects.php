@@ -23,33 +23,82 @@ $total_received = '';
 //     $total_received = $row['total_received'];
 // }
 
-$query="SELECT 
-    p.ID,
-    p.name AS projectName,
-    p.description AS projectDescription,
-    NVL(GROUP_CONCAT( DISTINCT CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '<i>Not Assigned</i>') AS managers,
-    (SELECT COUNT(*) 
-     FROM projectbeneficiant pb_sub 
-     WHERE pb_sub.Project_ID = p.ID) AS beneCount
-FROM 
-    project p
-LEFT JOIN 
-    projectmanager pm ON p.ID = pm.Project_ID
-LEFT JOIN 
-    users u ON u.ID = pm.Manager_ID
-GROUP BY 
-    p.ID, p.name, p.description
-ORDER BY 
-    p.name ASC
-LIMIT $offset, $results_per_page";
+$forPM = isset($_GET['pmID']) ? true : false;
 
-$result = mysqli_query($db, $query);
-// echo $result;
+if ($forPM) {
+    $pmID = $_GET['pmID'];
+    $query = "SELECT 
+                p.ID,
+                p.name AS projectName,
+                p.description AS projectDescription,
+                NVL(GROUP_CONCAT( DISTINCT CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '<i>Not Assigned</i>') AS managers,
+                (SELECT COUNT(*) 
+                FROM projectbeneficiant pb_sub 
+                WHERE pb_sub.Project_ID = p.ID) AS beneCount
+            FROM 
+                project p
+            LEFT JOIN 
+                projectmanager pm ON p.ID = pm.Project_ID
+            LEFT JOIN 
+                users u ON u.ID = pm.Manager_ID
+            WHERE pm.Project_ID IN (SELECT Project_ID FROM projectmanager WHERE Manager_ID ='$pmID')
+            GROUP BY 
+                p.ID, p.name, p.description
+            ORDER BY 
+                p.name ASC
+            LIMIT $offset, $results_per_page";
 
-$html = '';
-if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $html .= "
+    $result = mysqli_query($db, $query);
+    // echo $result;
+
+    $html = '';
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $html .= "
+                    <div class='table-row'>
+                   
+                    
+                                <div >
+                            <img style='cursor: pointer' onclick = moreInfo('project','" . $row['ID'] . "') src='/Assets/Images/infoyellow.png' alt='info'></div>
+                                <div>" . $row['projectName'] . "</div>
+                                <div>" . $row['projectDescription'] . "</div>
+                                <div >" . $row['managers'] . "</div>
+                                <div style='text-align:center' > " . $row['beneCount'] . " </div>
+                            </div>
+                            <hr>";
+        }
+    } else {
+        // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+    }
+} else {
+
+    $query = "SELECT 
+                p.ID,
+                p.name AS projectName,
+                p.description AS projectDescription,
+                NVL(GROUP_CONCAT( DISTINCT CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '<i>Not Assigned</i>') AS managers,
+                (SELECT COUNT(*) 
+            FROM projectbeneficiant pb_sub 
+            WHERE pb_sub.Project_ID = p.ID) AS beneCount
+            FROM 
+            project p
+            LEFT JOIN 
+            projectmanager pm ON p.ID = pm.Project_ID
+            LEFT JOIN 
+            users u ON u.ID = pm.Manager_ID
+            GROUP BY 
+            p.ID, p.name, p.description
+            ORDER BY 
+            p.name ASC
+            LIMIT $offset, $results_per_page";
+
+    $result = mysqli_query($db, $query);
+    // echo $result;
+
+    $html = '';
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $html .= "
                     <div class='table-row'>
                    
                     
@@ -69,10 +118,13 @@ if (mysqli_num_rows($result) > 0) {
                                 </div>
                             </div>
                             <hr>";
+        }
+    } else {
+        // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
     }
-} else {
-    // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
 }
+
+
 
 // $html .= '</tbody></table>';
 
