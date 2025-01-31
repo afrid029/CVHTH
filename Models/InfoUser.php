@@ -12,8 +12,8 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="banner view-banner">
                 <div class="user">
-                    <h4 id="name">Arun Raja</h4>
-                    <h6 id="role">Project Manager</h6>
+                    <h4 id="name">...</h4>
+                    <h6 id="role">...</h6>
                 </div>
                 <div onclick="closeView()" class='close'>Close</div>
             </div>
@@ -24,7 +24,7 @@
                         Contact Number
                     </div>
                     <div class="info" id="pm-info-contact">
-                        0778363530
+                       ...
                     </div>
                 </div>
                 <hr class="line">
@@ -33,7 +33,7 @@
                         Email
                     </div>
                     <div class="info" id="pm-info-email">
-                        afrid@gmail.com
+                        ...
                     </div>
                 </div>
                 <hr class="line">
@@ -42,10 +42,7 @@
                         Projects
                     </div>
                     <div class="info" id="pm-info-project">
-                        <div>&#10294; Disabled</div>
-                        <div>&#10294; Orphan</div>
-                        <div>&#10294; Old Women</div>
-                        <div>&#10294; Child</div>
+                        
                     </div>
                 </div>
                 <hr class="line">
@@ -54,22 +51,7 @@
                         Donors
                     </div>
                     <div class="info" id="pm-info-donor">
-                        <div>&#10294; Kumar</div>
-                        <div>&#10294; Karnan</div>
-                        <div>&#10294; Sayoorn</div>
-                        <div>&#10294; Afrid</div>
-                        <div>&#10294; Kumar</div>
-                        <div>&#10294; Karnan</div>
-                        <div>&#10294; Sayoorn</div>
-                        <div>&#10294; Afrid</div>
-                        <div>&#10294; Kumar</div>
-                        <div>&#10294; sdsadas.d;as, a[dkas[ sa;ld,asKarnan</div>
-                        <div>&#10294; Sayoorn</div>
-                        <div>&#10294; Afrid</div>
-                        <div>&#10294; Kumar</div>
-                        <div>&#10294; Karnan</div>
-                        <div>&#10294; Sayoorn</div>
-                        <div>&#10294; Afrid</div>
+                      
                     </div>
                 </div>
                 <hr class="line">
@@ -147,19 +129,15 @@
 
                 if (role === 'project manager') {
                     xhr.open('GET', '/Controllers/GetMoreInfo.php?ID=' + ID + '&type=' + encodeURIComponent('user') + '&role=' + encodeURIComponent('project manager'), true);
-                    // document.getElementById('loading-spinner').style.display = 'block';
-                    // const onload = document.getElementById('onrowload');
-                    // onload.classList.add('onrowload');
+                 
 
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4 && xhr.status == 200) {
-                            // document.getElementById('loading-spinner').style.display = 'none';
-                            // // document.getElementById('onrowload').style.display = 'none';
-                            // onload.classList.remove('onrowload');
+                          
                             const {
                                 data
                             } = JSON.parse(xhr.responseText);
-                            // console.log(data);
+                            // //console.log(data);
 
                             document.getElementById('name').textContent = data.firstname + ' ' + data.lastname;
                             document.getElementById('role').textContent = data.role;
@@ -195,6 +173,8 @@
                             } else {
                                 donContainer.innerHTML = '<i>Not Assigned</i>'
                             }
+                            
+                             ViewSetTop();
 
 
 
@@ -205,19 +185,15 @@
                     };
                 } else if (role === 'donor') {
                     xhr.open('GET', '/Controllers/GetMoreInfo.php?ID=' + ID + '&type=' + encodeURIComponent('user') + '&role=' + encodeURIComponent('donor'), true);
-                    // document.getElementById('loading-spinner').style.display = 'block';
-                    // const onload = document.getElementById('onrowload');
-                    // onload.classList.add('onrowload');
+                 
 
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4 && xhr.status == 200) {
-                            // document.getElementById('loading-spinner').style.display = 'none';
-                            // // document.getElementById('onrowload').style.display = 'none';
-                            // onload.classList.remove('onrowload');
+                            
                             const {
                                 data
                             } = JSON.parse(xhr.responseText);
-                            // console.log(data);
+                            // //console.log(data);
 
                             document.getElementById('name').textContent = data.firstname + ' ' + data.lastname;
                             document.getElementById('role').textContent = data.role;
@@ -253,7 +229,7 @@
             }
 
             function ViewSetTop() {
-                console.log('Serting top');
+                //console.log('Serting top');
 
                 const banner = document.querySelector('.view-banner');
                 const top = document.querySelectorAll('.top');
@@ -262,11 +238,21 @@
 
                 const bannerHeight = banner.offsetHeight;
                 // console.log(bannerHeight);
+                // alert(banner.offsetWidth);
+                
+                // if(banner.offsetWidth < 900) {
+                //      top.forEach((el) => {
+                //     el.style.top = `calc(${bannerHeight}px + 35px)`;
+                // })
+ 
+                // }else {
+                //       top.forEach((el) => {
+                //     el.style.top = `calc(${bannerHeight}px + 10px)`;
+                // })
 
-                top.forEach((el) => {
-                    el.style.top = `calc(${bannerHeight}px + 10px)`;
-                })
+                // }
 
+              
 
                 // div.style.height = `calc(100vh - ${bannerHeight}px)`;
             }

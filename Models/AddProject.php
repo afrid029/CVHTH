@@ -128,9 +128,9 @@
 
 
         const bannerHeight = banner.offsetHeight;
-        // console.log(bannerHeight);
+        // //console.log(bannerHeight);
 
-        form.style.top = `calc(${bannerHeight}px + 10px)`;
+        // form.style.top = `calc(${bannerHeight}px + 10px)`;
         // div.style.height = `calc(100vh - ${bannerHeight}px)`;
     }
 
@@ -155,17 +155,13 @@
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetAllUsers.php?role=' + encodeURIComponent('project manager'), true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+        
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+            
                 managerResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
+                // //console.log(response.data);
 
                 // const listContainer = document.getElementById('dropdown-list-manager');
                 const search = document.getElementById('managerSearchkey');
@@ -209,7 +205,7 @@
             option.setAttribute('value', element.ID);
             option.textContent = element.firstname + " " + element.lastname;
 
-            // console.log(option);
+            // //console.log(option);
 
             listContainer.appendChild(option);
             listContainer.appendChild(hr)
@@ -234,7 +230,7 @@
             let content = selectManager.getAttribute("value");
 
             if (value) {
-                // console.log(value.split(", ").includes(event.target.getAttribute('value')));
+                // //console.log(value.split(", ").includes(event.target.getAttribute('value')));
 
                 available = value.split(", ").includes(event.target.getAttribute('value'));
             }
@@ -244,7 +240,7 @@
                 content = content ? content + ", " + event.target.textContent : event.target.textContent;
                 selectManager.setAttribute('value', content);
 
-                // console.log('project Value ', value);
+                // //console.log('project Value ', value);
                 value = value ? value + ", " + event.target.getAttribute('value') : event.target.getAttribute('value');
                 selectManagerValue.setAttribute('value', value)
 
@@ -267,7 +263,7 @@
                 // // document.getElementById('onrowload').style.display = 'none';
                 // onload.classList.remove('onrowload');
                 beneficentResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
+                // //console.log(response.data);
 
                 // const listContainer = document.getElementById('dropdown-list-manager');
                 const search = document.getElementById('beneficentSearchkey');
@@ -311,7 +307,7 @@
             option.setAttribute('value', element.ID);
             option.textContent = element.firstname + " " + element.lastname;
 
-            // console.log(option);
+            // //console.log(option);
 
             listContainer.appendChild(option);
             listContainer.appendChild(hr)
@@ -336,7 +332,7 @@
             let content = selectBeneficent.getAttribute("value");
 
             if (value) {
-                // console.log(value.split(", ").includes(event.target.getAttribute('value')));
+                // //console.log(value.split(", ").includes(event.target.getAttribute('value')));
 
                 available = value.split(", ").includes(event.target.getAttribute('value'));
             }
@@ -346,7 +342,7 @@
                 content = content ? content + ", " + event.target.textContent : event.target.textContent;
                 selectBeneficent.setAttribute('value', content);
 
-                // console.log('project Value ', value);
+                // //console.log('project Value ', value);
                 value = value ? value + ", " + event.target.getAttribute('value') : event.target.getAttribute('value');
                 selectBeneficentValue.setAttribute('value', value)
 

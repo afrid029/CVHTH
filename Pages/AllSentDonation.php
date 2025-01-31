@@ -40,7 +40,7 @@
 
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
-            }, 5000);
+            }, 7000);
         </script>
     <?php
     }
@@ -195,27 +195,20 @@
 
 
 
-    <!--     
-    <footer>
-        <div class="footer"></div>
 
-    </footer> -->
-
-    <?php include('/CVHTH/Models/AddSentDonation.php') ?>
-    <?php include('/CVHTH/Models/EditSentDonation.php') ?>
-    <?php include('/CVHTH/Models/InfoSentDonation.php') ?>
-    <?php include('/CVHTH/Models/DeleteSentDonation.php') ?>
+    <?php include('Models/AddSentDonation.php') ?>
+    <?php include('Models/EditSentDonation.php') ?>
+    <?php include('Models/InfoSentDonation.php') ?>
+    <?php include('Models/DeleteSentDonation.php') ?>
     <script>
         function resizeWindow() {
-            console.log('resizing');
+            //console.log('resizing');
 
             const navHeight = document.querySelector('.navbar');
             const mainBody = document.querySelector('.main-body');
             const mainSideBar = document.querySelector('.main-sidebar');
             const mainConetntMobile = document.querySelector('.main-content-mobile');
             const mainConetntMobileBg = document.querySelector('.main-conent-mobile-bg');
-            // const contentTitle = document.querySelector('.content-title');
-            // console.log(navHeight.offsetHeight);
             const navbarHeight = navHeight.offsetHeight;
             const sideBarHeight = mainSideBar.offsetHeight;
 
@@ -224,7 +217,6 @@
 
             if (viewportWidth > 900) {
                 const contentTitle = document.querySelector('.content-title');
-                console.log(window.getComputedStyle(mainConetntMobile).getPropertyValue('padding-top'));
 
                 const contentTitleHeight = contentTitle.offsetHeight;
                 const contentTable = document.querySelector('.content-table');
@@ -236,78 +228,31 @@
             }
 
             if (viewportWidth < 900) {
-                // const contentTitle = document.querySelector('content-title');
-                // const contentTable = document.querySelector('content-table');
                 const viewPortHeight = window.innerHeight
 
                 const restPage = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
                 const restPagePx = viewPortHeight - navbarHeight - sideBarHeight;
                 const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
-                console.log(restPagePx, mainConetntMobileHeight);
 
                 if (restPagePx > mainConetntMobileHeight) {
-                    console.log('great');
-                    console.log('rest ', restPagePx);
-
+                   
                     mainConetntMobileBg.style.height = restPage;
                     mainConetntMobile.style.height = restPage;
 
-                    // requestAnimationFrame(()=>{
-
-                    // })
                 } else {
-                    console.log('less');
-
-                    // requestAnimationFrame(()=>{
-
-                    // })
+                    
                     mainConetntMobile.style.height = 'auto';
 
-                    // requestAnimationFrame(() => {
-                    //     console.log(mainConetntMobile.offsetHeight);
-
-                    //     // Apply the new height to the background
-
-                    // });
                     mainConetntMobileBg.style.height = `calc(${mainConetntMobile.offsetHeight}px + 20px)`;
                 }
-
-
-                // const contentTitleHeight = contentTitle.offsetHeight;
-                // const contentTableHeight = contentTable.off
-
-                // mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-                // mainConetntMobileBg.style.height = `calc(${mainConetntMobileHeight}px + 20px)`;
-                // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
+                
+                mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
 
             }
-
-            // mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-            // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-
-
-            // Get the navbar height
-            // const sideBarHeight = mainSideBar.offsetHeight; // Get the navbar height
-            // mainConetntMobileBg.style.height = `${mainConetntMobileHeight}px`;
-            // console.log(mainConetntMobileHeight);
-
-            // setTimeout(()=> {
-
-            // },800);
-
-            // Set the height of the main-body using calc with the navbar height
-            // mainBody.style.height = `calc(100% - ${navbarHeight}px)`;
             mainBody.style.top = `${navbarHeight}px`;
-            // contentTitle.style.top = `${navbarHeight}px`;
-            // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-            // console.log(mainConetntMobile.style.height,navbarHeight, sideBarHeight);
         }
 
-        // resizeWindow();
-
-        // window.addEventListener("resize", resizeWindow);
-        // console.log(navbarHeight, sideBarHeight);
-
+      
 
         function DisplayNumber(targetNumber, ID) {
             const numberElement = document.getElementById(ID);
@@ -327,13 +272,9 @@
             const interval = setInterval(countUp, incrementTime);
         }
 
-        // DisplayNumber(70000, 'current');
-        // DisplayNumber(20000, 'spent');
-        // DisplayNumber(90000, 'total');
-
         const addBtn = document.querySelector('.add-btn');
         addBtn.addEventListener('click', function() {
-            console.log('clicked');
+            //console.log('clicked');
 
             addBtn.classList.add('clicked')
 
@@ -399,6 +340,7 @@
         function handleAdd(value) {
             const model = document.getElementById('addModel');
             if (value) {
+                 document.querySelector('.main-body').classList.add('no-scroll');
                 loadDonors();
                 loadProjBene();
                 model.style.display = 'flex';
@@ -407,6 +349,7 @@
                 document.getElementById('select-image').addEventListener('change', PreviewImages);
 
             } else {
+                 document.querySelector('.main-body').classList.remove('no-scroll');
                 model.style.display = 'none';
                 document.querySelectorAll('.dropdown-container').forEach((ele) => {
                     ele.style.display = 'none'
@@ -450,17 +393,15 @@
         }
 
         function Edit(ID) {
+             document.querySelector('.main-body').classList.add('no-scroll');
             const model = document.getElementById('editModel');
-            model.style.display = 'flex';
+           
             editLoadDonors();
             editLoadProjBene(ID);
 
             editSetTop();
-            // document.getElementById('edit-image').addEventListener('change', editPreviewImages);
-            // editSetTop();
-            // editLoadDonors(); 
-            // editLoadProjects();
-            // getSingleUser(ID);
+             model.style.display = 'flex';
+            
 
         }
 
@@ -472,16 +413,11 @@
         }
 
         function closeEdit() {
+             document.querySelector('.main-body').classList.remove('no-scroll');
             document.getElementById('editModel').style.display = 'none';
             document.getElementById('edit-not-enough').style.display = "none";
 
-            // document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
-            // document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)
-
-            // document.getElementById('editDonorSearchkey').removeEventListener('input', editDonorSearchListener);
-            // document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors)
-
-            // document.getElementById('edit-image').removeEventListener('change', editPreviewImages);
+    
 
             document.querySelectorAll('.dropdown-container').forEach((ele) => {
                 ele.style.display = 'none'
@@ -502,14 +438,15 @@
         }
 
         function moreInfo(role, ID) {
-
-            document.getElementById('viewModel').style.display = 'flex';
+             document.querySelector('.main-body').classList.add('no-scroll');
             sentDonationMoreInfo(ID, role);
+             document.getElementById('viewModel').style.display = 'flex';
 
 
         }
 
         function closeView() {
+             document.querySelector('.main-body').classList.remove('no-scroll');
             document.getElementById('viewModel').style.display = 'none';
         }
 
@@ -574,20 +511,20 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     const response = JSON.parse(xhr.responseText);
-                    console.log(response.data);
+                    //console.log(response.data);
 
                     SaveDoc(response.data, fromDate.value, toDate.value);
 
                 }
             }
 
-            console.log(fromDate.value, toDate.value);
+            //console.log(fromDate.value, toDate.value);
 
 
             const param = 'type=sentdonation&from=' + fromDate.value + '&to=' + toDate.value;
             xhr.send(param);
 
-            // console.log('Processing....');
+            // //console.log('Processing....');
 
         }
 
@@ -597,7 +534,7 @@
             } = window.jspdf;
             const doc = new jsPDF();
 
-            // console.log(doc.getFontList());
+            // //console.log(doc.getFontList());
 
 
             // Add title

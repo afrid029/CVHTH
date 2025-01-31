@@ -73,19 +73,15 @@
 
 
                 xhr.open('GET', '/Controllers/GetMoreInfo.php?ID=' + ID + '&type=' + encodeURIComponent(role), true);
-                // document.getElementById('loading-spinner').style.display = 'block';
-                // const onload = document.getElementById('onrowload');
-                // onload.classList.add('onrowload');
+               
 
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
-                        // document.getElementById('loading-spinner').style.display = 'none';
-                        // // document.getElementById('onrowload').style.display = 'none';
-                        // onload.classList.remove('onrowload');
+                        
                         const {
                             data
                         } = JSON.parse(xhr.responseText);
-                        // console.log(data);
+                        // //console.log(data);
 
                         document.getElementById('don-amount').textContent = 'Amount (Rs) : ' + data.amount;
                         document.getElementById('don-id').textContent = 'Reciept ID : ' + data.ID;
@@ -107,7 +103,7 @@
             }
 
             function ViewSetTop() {
-                console.log('Serting top');
+                //console.log('Serting top');
 
                 const banner = document.querySelector('.view-banner');
                 const top = document.querySelector('#don-info');
@@ -115,9 +111,9 @@
 
 
                 const bannerHeight = banner.offsetHeight;
-                // console.log(bannerHeight);
+                // //console.log(bannerHeight);
 
-                top.style.top = `calc(${bannerHeight}px + 10px)`;
+                // top.style.top = `calc(${bannerHeight}px + 10px)`;
 
 
 
@@ -129,11 +125,11 @@
                 imgContainer.innerHTML = ""
 
                 const imgArray = data.split(', ');
-                console.log(imgArray);
+                //console.log(imgArray);
                 
 
                 imgArray.forEach((imgSrc) => {
-                    console.log(imgSrc);
+                    //console.log(imgSrc);
                     
                  
                     const divEl = document.createElement('div');
@@ -151,11 +147,6 @@
                     imgElement.style.borderRadius = '10px';
                     imgElement.style.width = '100px'; // Optional: resize the image for preview
                     imgElement.style.objectFit = 'cover'; // Optional: resize the image for preview
-                    // imgElement.style.margin = '10px';
-
-                    // Optional: add margin between images
-
-                    console.log(imgElement);
                     
 
                     divEl.appendChild(imgElement)

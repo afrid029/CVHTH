@@ -38,7 +38,7 @@
 
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
-            }, 5000);
+            }, 7000);
         </script>
     <?php
     }
@@ -113,28 +113,7 @@
                     </div>
                 </div>
                 <hr class="line">
-                <!-- <div class="bar-row">
-                    <div class="row-type">
-                        Donated
-                    </div>
-                    <div class="row-value">
-                        <div>RS</div>
-                        <div id="spent">...</div>
-                    </div>
-                </div>
-                <hr class="line">
-                <div class="bar-row">
-                    <div class="row-type">
-                        Total Recieved Donation
-                    </div>
-                    <div class="row-value">
-                        <div>RS</div>
-                        <div>
-                            <div style="text-align: end; margin-bottom: 10px" id="total">...</div>
-                            <div style="opacity: 0.6; font-weight: 600;" id="count">From ... donations</div>
-                        </div>
-                    </div>
-                </div> -->
+                
             </div>
 
 
@@ -186,13 +165,13 @@
         <div class="footer"></div>
 
     </footer> -->
-    <?php include('/CVHTH/Models/AddProject.php') ?>
-    <?php include('/CVHTH/Models/EditProject.php') ?>
-    <?php include('/CVHTH/Models/InfoProject.php') ?>
-    <?php include('/CVHTH/Models/DeleteProjectModel.php') ?>
+    <?php include('Models/AddProject.php') ?>
+    <?php include('Models/EditProject.php') ?>
+    <?php include('Models/InfoProject.php') ?>
+    <?php include('Models/DeleteProjectModel.php') ?>
     <script>
         function resizeWindow() {
-            console.log('resizing');
+            //console.log('resizing');
 
             const navHeight = document.querySelector('.navbar');
             const mainBody = document.querySelector('.main-body');
@@ -200,7 +179,7 @@
             const mainConetntMobile = document.querySelector('.main-content-mobile');
             const mainConetntMobileBg = document.querySelector('.main-conent-mobile-bg');
             // const contentTitle = document.querySelector('.content-title');
-            // console.log(navHeight.offsetHeight);
+            // //console.log(navHeight.offsetHeight);
             const navbarHeight = navHeight.offsetHeight;
             const sideBarHeight = mainSideBar.offsetHeight;
             const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
@@ -209,7 +188,7 @@
 
             if (viewportWidth > 900) {
                 const contentTitle = document.querySelector('.content-title');
-                console.log(window.getComputedStyle(mainConetntMobile).getPropertyValue('padding-top'));
+                //console.log(window.getComputedStyle(mainConetntMobile).getPropertyValue('padding-top'));
 
                 const contentTitleHeight = contentTitle.offsetHeight;
                 const contentTable = document.querySelector('.content-table');
@@ -221,79 +200,35 @@
             }
 
             if (viewportWidth < 900) {
-                // const contentTitle = document.querySelector('content-title');
-                // const contentTable = document.querySelector('content-table');
+                
                 const viewPortHeight = window.innerHeight
 
                 const restPage = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
                 const restPagePx = viewPortHeight - navbarHeight - sideBarHeight;
                 const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
-                console.log(restPagePx, mainConetntMobileHeight);
+                //console.log(restPagePx, mainConetntMobileHeight);
 
                 if (restPagePx > mainConetntMobileHeight) {
-                    console.log('great');
-                    console.log('rest ', restPagePx);
 
                     mainConetntMobileBg.style.height = restPage;
                     mainConetntMobile.style.height = restPage;
 
-                    // requestAnimationFrame(()=>{
-
-                    // })
+                    
                 } else {
-                    console.log('less');
-
-                    // requestAnimationFrame(()=>{
-
-                    // })
+                    
                     mainConetntMobile.style.height = 'auto';
 
-                    // requestAnimationFrame(() => {
-                    //     console.log(mainConetntMobile.offsetHeight);
-
-                    //     // Apply the new height to the background
-
-                    // });
                     mainConetntMobileBg.style.height = `calc(${mainConetntMobile.offsetHeight}px + 20px)`;
                 }
 
 
-                // const contentTitleHeight = contentTitle.offsetHeight;
-                // const contentTableHeight = contentTable.off
-
-                // mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-                // mainConetntMobileBg.style.height = `calc(${mainConetntMobileHeight}px + 20px)`;
-                // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-
             }
 
-            // mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-            // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-
-
-            // Get the navbar height
-            // const sideBarHeight = mainSideBar.offsetHeight; // Get the navbar height
-            // mainConetntMobileBg.style.height = `${mainConetntMobileHeight}px`;
-            // console.log(mainConetntMobileHeight);
-
-            // setTimeout(()=> {
-
-            // },800);
-
-            // Set the height of the main-body using calc with the navbar height
-            // mainBody.style.height = `calc(100% - ${navbarHeight}px)`;
+            
             mainBody.style.top = `${navbarHeight}px`;
-            // contentTitle.style.top = `${navbarHeight}px`;
-            // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-            // console.log(mainConetntMobile.style.height,navbarHeight, sideBarHeight);
         }
 
-        // resizeWindow();
-
-        // window.addEventListener("resize", resizeWindow);
-        // console.log(navbarHeight, sideBarHeight);
-
-
+        
         function DisplayNumber(targetNumber, ID) {
             const numberElement = document.getElementById(ID);
             let currentNumber = 0;
@@ -312,17 +247,14 @@
             const interval = setInterval(countUp, incrementTime);
         }
 
-        // DisplayNumber(70000, 'current');
-        // DisplayNumber(20000, 'spent');
-        // DisplayNumber(90000, 'total');
-
+    
 
 
 
         function loadPage(page) {
             var xhr = new XMLHttpRequest();
 
-            console.log('<?php echo $_SESSION['ID'] ?>');
+            //console.log('<?php echo $_SESSION['ID'] ?>');
             
 
             <?php
@@ -374,9 +306,11 @@
 
         function handleAdd(value) {
             const model = document.getElementById('addModel');
+            
             if (value) {
                 // loadProjects();
                 // loadDonors();
+                 document.querySelector('.main-body').classList.add('no-scroll');
                 loadManagers();
                 loadBeneficents();
                 model.style.display = 'flex';
@@ -385,7 +319,8 @@
                 //     setTop();
                 // }))
             } else {
-                // console.log('falsseee');
+                // //console.log('falsseee');
+                 document.querySelector('.main-body').classList.remove('no-scroll');
 
                 model.style.display = 'none';
                 document.querySelectorAll('.dropdown-container').forEach((ele) => {
@@ -408,29 +343,19 @@
                 document.getElementById('beneficentSearchkey').removeEventListener('input', beneficentSearchListener);
                 document.getElementById('dropdown-list-beneficent').removeEventListener('click', selectBeneficents)
 
-                // document.getElementById('beneficentSearchkey').removeEventListener('input', BeneSearchListener);
-                // document.getElementById('dropdown-list-beneficent').removeEventListener('click', selectBeneficents);
-
-                // document.getElementById('donorSearchkey').removeEventListener('input', donorSearchListener);
-                // document.getElementById('dropdown-list-project').removeEventListener('click', selectProjects);
-                // document.getElementById('dropdown-list-donor').removeEventListener('click', selectDonors)
-
-                // document.getElementById('dropdown-list-donor').removeEventListener('click');
-                // document.getElementById('dropdown-list-project').removeEventListener('click')
-                // document.getElementById('donorSearchkey').removeEventListener('input');
-                // document.getElementById('projectSearchkey').removeEventListener('input');
 
             }
         }
 
 
         function Edit(ID) {
+             document.querySelector('.main-body').classList.add('no-scroll');
             const model = document.getElementById('editModel');
-            model.style.display = 'flex';
+           
             editSetTop();
             editLoadManagers();
             editLoadBeneficents(ID);
-
+             model.style.display = 'flex';
 
         }
 
@@ -442,6 +367,7 @@
         }
 
         function closeEdit() {
+             document.querySelector('.main-body').classList.remove('no-scroll');
             document.getElementById('editModel').style.display = 'none';
             document.querySelectorAll('.dropdown-container').forEach((el) => {
                 el.style.display = 'none';
@@ -456,22 +382,19 @@
             document.getElementById('editBeneficentSearchkey').removeEventListener('input', editBeneficentSearchListener);
             document.getElementById('edit-dropdown-list-beneficent').removeEventListener('click', editSelectBeneficents)
 
-            // document.getElementById('editProjectSearchkey').removeEventListener('input', editProjectSearchListener);
-            // document.getElementById('edit-dropdown-list-project').removeEventListener('click', editSelectProjects)
-
-            // document.getElementById('editDonorSearchkey').removeEventListener('input', editDonorSearchListener);
-            // document.getElementById('edit-dropdown-list-donor').removeEventListener('click', editSelectDonors)
+          
         }
 
         function moreInfo(role, ID) {
-
-            document.getElementById('viewModel').style.display = 'flex';
+             document.querySelector('.main-body').classList.add('no-scroll');
             projectMoreInfo(ID, role);
+            document.getElementById('viewModel').style.display = 'flex';
 
 
         }
 
         function closeView() {
+             document.querySelector('.main-body').classList.remove('no-scroll');
             document.getElementById('viewModel').style.display = 'none';
         }
 

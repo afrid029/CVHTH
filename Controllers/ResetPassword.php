@@ -8,7 +8,7 @@ if(isset($_POST['submit'])){
     $new = $_POST['new'];
     $re = $_POST['re'];
 
-    echo $email;
+    // echo $email;
 
     $query = "SELECT * FROM users WHERE email = '$email'";
     $result = mysqli_query($db, $query);

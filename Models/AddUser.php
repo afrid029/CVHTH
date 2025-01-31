@@ -18,6 +18,7 @@
                 <div onclick="handleAdd(false)" class='close'>Close</div>
             </div>
 
+              
             <form action="/add-user" method="post" oninput="validateForm()" onsubmit="return submitLoginform()">
                 <div class="div"> </div>
                 <div class="Form">
@@ -85,10 +86,7 @@
                                 <input onclick="ClearSelection('select-project-value','select-project')" class="search-mobile" style="background-color:rgba(182, 240, 180, 0.79); width: 10%; text-align: center; color:rgb(17, 66, 2); font-weight: 700; cursor: pointer" type="text" readonly value="Clear">
                             </div>
                             <div class="dropdown-list" id="dropdown-list-project">
-                                <!-- <div class="dropdown-option" value="1">Hi</div>
-                                <div class="dropdown-option" value="2">Hello</div>
-                                <div class="dropdown-option" value="3">There</div>
-                                <div class="dropdown-option" value="4">It is</div> -->
+                                
                             </div>
 
                         </div>
@@ -134,10 +132,11 @@
                         </button>
                     </div>
 
+                
+
                 </div>
-
-
             </form>
+           
         </div>
 
 
@@ -160,17 +159,13 @@ const today = new Date();
     function loadProjects() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetProjectsOnly.php', true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+       
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+                
                 projectResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
+                // //console.log(response.data);
 
                 // const listContainer = document.getElementById('dropdown-list-project');
                 const search = document.getElementById('projectSearchkey');
@@ -180,22 +175,7 @@ const today = new Date();
 
                 loadSearchOptionsForProject(projectResponse.data)
 
-                // const dataContainer = document.getElementById('table-rows')
-
-                // dataContainer.innerHTML = response.html;
-                // resizeWindow();
-
-                // dataContainer.classList.remove('fade-in'); // Remove the class to reset animation
-                // void dataContainer.offsetWidth; // Trigger reflow
-                // dataContainer.classList.add('fade-in'); // Apply fade-in animation
-                // document.getElementById('table-pagi').innerHTML = response.pagination;
-
-                // if (page === 1) {
-                //     document.getElementById('count').textContent = "From " + response.total + " donations";
-                //     DisplayNumber(response.total_received, 'total')
-                //     DisplayNumber(response.total_sent, 'spent')
-                //     DisplayNumber(response.current_bal, 'current')
-                // }
+            
             }
         };
 
@@ -221,19 +201,13 @@ const today = new Date();
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor', true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+      
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+                
                 donorResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
-
-                // const listContainer = document.getElementById('dropdown-list-project');
+                
                 const search = document.getElementById('donorSearchkey');
                 // search.setAttribute('onclick',`searchOption(${response.data})`)
 
@@ -241,22 +215,7 @@ const today = new Date();
 
                 loadSearchOptionsForDonor(donorResponse.data)
 
-                // const dataContainer = document.getElementById('table-rows')
-
-                // dataContainer.innerHTML = response.html;
-                // resizeWindow();
-
-                // dataContainer.classList.remove('fade-in'); // Remove the class to reset animation
-                // void dataContainer.offsetWidth; // Trigger reflow
-                // dataContainer.classList.add('fade-in'); // Apply fade-in animation
-                // document.getElementById('table-pagi').innerHTML = response.pagination;
-
-                // if (page === 1) {
-                //     document.getElementById('count').textContent = "From " + response.total + " donations";
-                //     DisplayNumber(response.total_received, 'total')
-                //     DisplayNumber(response.total_sent, 'spent')
-                //     DisplayNumber(response.current_bal, 'current')
-                // }
+                
             }
         };
 
@@ -264,7 +223,7 @@ const today = new Date();
     }
 
     function donorSearchListener(event) {
-        // console.log('donor listenmer');
+        // //console.log('donor listenmer');
 
         // const search = document.getElementById('donorSearchkey');
         const key = event.target.value;
@@ -279,10 +238,7 @@ const today = new Date();
         }
     }
 
-    // window.onload = function() {
-    //     loadDonors();
-    // }
-
+  
     function setTop() {
 
         const banner = document.querySelector('.banner');
@@ -291,10 +247,10 @@ const today = new Date();
 
 
         const bannerHeight = banner.offsetHeight;
-        // console.log(bannerHeight);
+     
 
-        form.style.top = `calc(${bannerHeight}px + 10px)`;
-        // div.style.height = `calc(100vh - ${bannerHeight}px)`;
+        // form.style.top = `calc(${bannerHeight}px + 10px)`;
+        
     }
 
     function openSelect(ID, value) {
@@ -314,7 +270,7 @@ const today = new Date();
         listContainer.innerHTML = ""
 
         data.forEach(element => {
-            // console.log(element);
+            // //console.log(element);
             const option = document.createElement('div')
             const hr = document.createElement('hr')
             hr.setAttribute('class', 'line')
@@ -329,17 +285,14 @@ const today = new Date();
 
         });
 
-        // const selctOption = document.querySelector('.dropdown-option');
-        // const selectProject = document.getElementById('select-project');
-        // const selectProjectValue = document.getElementById('select-project-value');
-
+        
         listContainer.addEventListener('click', selectProjects)
 
     }
 
     function selectProjects(event) {
 
-        // console.log(event);
+        // //console.log(event);
 
         const selectProject = document.getElementById('select-project');
         const selectProjectValue = document.getElementById('select-project-value');
@@ -347,11 +300,11 @@ const today = new Date();
             let available = false;
             let value = selectProjectValue.getAttribute('value');
             let content = selectProject.getAttribute('value');
-            // console.log(value);
+            // //console.log(value);
 
 
             if (value) {
-                // console.log(value.split(", ").includes(event.target.getAttribute('value')));
+                // //console.log(value.split(", ").includes(event.target.getAttribute('value')));
 
                 available = value.split(", ").includes(event.target.getAttribute('value'));
             }
@@ -361,19 +314,13 @@ const today = new Date();
                 content = content ? content + ", " + event.target.textContent : event.target.textContent;
                 selectProject.setAttribute('value', content);
 
-                // console.log('project Value ', value);
+                // //console.log('project Value ', value);
                 value = value ? value + ", " + event.target.getAttribute('value') : event.target.getAttribute('value');
                 selectProjectValue.setAttribute('value', value)
 
             }
 
-            // console.log('project ', content);
-
-
-
-            // openSelect(false); 
-
-            // console.log(event.target.getAttribute('value'), event.target.textContent);
+           
         }
     }
 
@@ -384,7 +331,7 @@ const today = new Date();
         listContainer.innerHTML = ""
 
         data.forEach(element => {
-            // console.log(element);
+            // //console.log(element);
             const option = document.createElement('div')
             const hr = document.createElement('hr')
             hr.setAttribute('class', 'line')
@@ -399,10 +346,7 @@ const today = new Date();
 
         });
 
-        // const selctOption = document.querySelector('.dropdown-option');
-        // const selectProject = document.getElementById('select-donor');
-        // const selectProjectValue = document.getElementById('select-donor-value');
-
+      
         listContainer.addEventListener('click', selectDonors)
 
     }
@@ -418,7 +362,7 @@ const today = new Date();
             let content = selectProject.getAttribute("value");
             let value = selectProjectValue.getAttribute("value");
 
-            console.log(value);
+            //console.log(value);
             
 
             if (value) {
@@ -434,9 +378,8 @@ const today = new Date();
                 selectProjectValue.setAttribute('value', value)
             }
 
-            // openSelect(false); 
+            
 
-            // console.log(event.target.getAttribute('value'), event.target.textContent);
         }
     }
 
@@ -477,7 +420,7 @@ const today = new Date();
 
 
 
-        console.log(role);
+        //console.log(role);
 
         if (emailPattern.test(email) && firstname.length > 0 && lastname.length > 0 && role !== 'none' && contact.length > 0) {
             button.disabled = false;
@@ -485,29 +428,6 @@ const today = new Date();
             button.disabled = true;
         }
 
-
-
-        // console.log(donor.value , date.value , amount.value.length);
-
-
-
-        // if (donor.value && date.value && amount.value.length > 0) {
-        //     // console.log('true');
-
-        //     button.disabled = false;
-        // } else {
-        //     button.disabled = true;
-        //     // console.log('false');
-
-        // }
-        // console.log(email);
-
-        // let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        // if (!emailPattern.test(email)) {
-        //     event.target.style.border = '1px solid red';
-        // } else {
-        //     event.target.style.border = '1px solid green';
-        // }
     }
 
     function submitLoginform() {

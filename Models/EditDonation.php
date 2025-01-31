@@ -37,22 +37,13 @@
                                 <input class="searchbar-mobile" style="width: 80%" type="text" id="editSearchkey" placeholder="Search Donors">
                             </div>
                             <div class="dropdown-list " id="edit-dropdown-list">
-                                <!-- <div class="dropdown-option" value="1">Hi</div>
-                                <div class="dropdown-option" value="2">Hello</div>
-                                <div class="dropdown-option" value="3">There</div>
-                                <div class="dropdown-option" value="4">It is</div> -->
+                               
                             </div>
 
                         </div>
 
                         <small class="small">Donor is required</small>
-                        <!-- <select name="" id="">
-                        <input type="text">
-                        <option value="" selected hidden>Select a value</option>
-                        <option value="">Hello</option>
-                        <option value="">Hi</option>
-                        <option value="">Hii</option>
-                       </select> -->
+                      
                     </div>
 
                     <!-- Amount -->
@@ -124,17 +115,13 @@
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetAllUsers.php?role=' + encodeURIComponent('addonor'), true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+       
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+               
                 editDonorResponse = JSON.parse(xhr.responseText);
-                // console.log(editDonorResponse.data);
+                // //console.log(editDonorResponse.data);
 
                 const listContainer = document.getElementById('edit-dropdown-list');
                 const search = document.getElementById('editSearchkey');
@@ -164,9 +151,7 @@
         }
     }
 
-    // window.onload = function() {
-    //     loadDonors();
-    // }
+   
 
     function editSetTop() {
 
@@ -176,9 +161,9 @@
 
 
         const bannerHeight = banner.offsetHeight;
-        // console.log(bannerHeight);
+        // //console.log(bannerHeight);
 
-        form.style.top = `calc(${bannerHeight}px + 10px)`;
+        // form.style.top = `calc(${bannerHeight}px + 10px)`;
         // div.style.height = `calc(100vh - ${bannerHeight}px)`;
     }
 
@@ -199,7 +184,7 @@
         listContainer.innerHTML = ""
 
         data.forEach(element => {
-            // console.log(element);
+            // //console.log(element);
             const option = document.createElement('div')
             const hr = document.createElement('hr')
             hr.setAttribute('class', 'line')
@@ -214,9 +199,7 @@
 
         });
 
-        // const selctOption = document.querySelector('.dropdown-option');
-        // const selectDonor = document.getElementById('select-donor');
-        // const selectDonorValue = document.getElementById('select-donor-value');
+       
 
         listContainer.addEventListener('click', editSelectDonor)
 
@@ -234,7 +217,7 @@
 
             editOpenSelect(false);
 
-            // console.log(event.target.getAttribute('value'), event.target.textContent);
+            // //console.log(event.target.getAttribute('value'), event.target.textContent);
         }
 
 
@@ -243,17 +226,12 @@
     function getSingleDonation(ID){
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetSingleData.php?ID='+ID+'&type=' + encodeURIComponent('donation'), true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
-
+        
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+                
                 const {data} = JSON.parse(xhr.responseText);
-                console.log(data);
+                //console.log(data);
 
                 document.getElementById('edit-id').value = data.ID;
 
@@ -287,17 +265,17 @@
         let button = document.getElementById('edit-submit');
 
 
-        console.log(donor.value, date.value, amount.value.length);
+        //console.log(donor.value, date.value, amount.value.length);
 
 
 
         if (donor.value && date.value && amount.value.length > 0) {
-            // console.log('true');
+            // //console.log('true');
 
             button.disabled = false;
         } else {
             button.disabled = true;
-            // console.log('false');
+            // //console.log('false');
 
         }
         //    event.target.style.border = '1px solid green';

@@ -24,7 +24,7 @@
                 }
 
                 if(isset($_SESSION['role']) && $_SESSION['role'] !== 'donor'){
-                    echo "<li ><a class='nav-sentdon' href='/sentdonation'>Sent Donations</a></li>";
+                    echo "<li ><a class='nav-sentdon' href='/sentdonation'>Disbursed</a></li>";
                     echo "  <li ><a class='nav-projects' href='/project'>Projects</a></li>";
                 }
 

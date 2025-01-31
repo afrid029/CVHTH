@@ -59,7 +59,7 @@ if (mysqli_num_rows($result) > 0) {
 
 
 
-$query = "SELECT ds.ID, NVL(b.firstname, '<i>Deleted</i>') AS ben_fn, NVL(b.lastname,  '<i>Beneficiary</i>') AS ben_ln, NVL(p.name, '<i>Deleted Project</i>') name, ds.purpose, ds.amount, ds.date
+$query = "SELECT ds.ID, NVL(b.firstname, '<i>Deleted</i>') AS ben_fn, NVL(b.lastname,  '<i>Beneficiary</i>') AS ben_ln, NVL(p.name, '<i>Deleted Project</i>') as name, ds.amount, ds.date
 from donationsent ds 
 LEFT JOIN beneficiant b ON ds.Beneficiant_ID = b.ID
 LEFT JOIN project p ON ds.Project_ID = p.ID
@@ -81,7 +81,6 @@ if (mysqli_num_rows($result) > 0) {
                                 <div style='text-align: start'>" . $row['ben_fn'] . " ".$row['ben_ln']."</div>
                                 <div style='text-align: end'>" . $row['amount'] ."</div>
                                 <div style='text-align: start'>" . $row['name'] ."</div>
-                                <div style='text-align: center'>" . $row['purpose'] ."</div>
                                 <div style='text-align: end'>" . $row['date'] ."</div>
                             
                             </div>    
@@ -89,7 +88,9 @@ if (mysqli_num_rows($result) > 0) {
     }
 
 } else {
-    // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+    $html .= "<div class='table-row'>
+    <div style='grid-column: span 6; text-align: center; font-size: 12px; font-weight:700;'>No Disbursed Donations Found.</div>
+    </div>";
 }
 
 

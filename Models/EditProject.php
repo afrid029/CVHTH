@@ -126,17 +126,12 @@
     function getSingleProject(ID) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetSingleData.php?ID='+ID+'&type=' + encodeURIComponent('project'), true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+        
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+                
                 const {data} = JSON.parse(xhr.responseText);
-                console.log(data);
 
                 document.getElementById('edit-id').value = data.ID;
                 document.getElementById("edit-pname").value = data.name;
@@ -146,7 +141,7 @@
                 if(data.prid){
                     document.getElementById('edit-manager-value').setAttribute('value', data.prid);
                     const adArray = data.prid.split(', ');
-                    console.log(adArray);
+                    ////console.log(adArray);
                     
                     let mgrs;
                     adArray.forEach((element) => {
@@ -155,7 +150,7 @@
                              el.ID === element
                         )
 
-                        // console.log(mgr.firstname + ' ' + mgr.lastname);
+                        // ////console.log(mgr.firstname + ' ' + mgr.lastname);
                         
 
                         if(mgr){
@@ -176,7 +171,7 @@
 
                     document.getElementById('edit-beneficent-value').setAttribute('value', data.benid);
                     const adArray = data.benid.split(', ');
-                    // console.log(adArray);
+                    // ////console.log(adArray);
                     
                     let benes;
                     adArray.forEach((element) => {
@@ -185,7 +180,7 @@
                              el.ID === element
                         )
 
-                        // console.log(mgr.firstname + ' ' + mgr.lastname);
+                        // ////console.log(mgr.firstname + ' ' + mgr.lastname);
                         
 
                         if(bene){
@@ -217,9 +212,9 @@
 
 
         const bannerHeight = banner.offsetHeight;
-        // console.log(bannerHeight);
+        // ////console.log(bannerHeight);
 
-        form.style.top = `calc(${bannerHeight}px + 10px)`;
+        // form.style.top = `calc(${bannerHeight}px + 10px)`;
         // div.style.height = `calc(100vh - ${bannerHeight}px)`;
     }
 
@@ -244,21 +239,14 @@
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetAllUsers.php?role=' + encodeURIComponent('project manager'), true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+               
                 editManagerResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
-
-                // const listContainer = document.getElementById('dropdown-list-manager');
+              
                 const search = document.getElementById('editManagerSearchkey');
-                // search.setAttribute('onclick',`searchOption(${response.data})`)
 
                 search.addEventListener('input', editManagerSearchListener)
 
@@ -298,7 +286,7 @@
             option.setAttribute('value', element.ID);
             option.textContent = element.firstname + " " + element.lastname;
 
-            // console.log(option);
+            // ////console.log(option);
 
             listContainer.appendChild(option);
             listContainer.appendChild(hr)
@@ -306,9 +294,7 @@
 
         });
 
-        // const selctOption = document.querySelector('.dropdown-option');
-        // const selectProject = document.getElementById('select-project');
-        // const selectProjectValue = document.getElementById('select-project-value');
+
 
         listContainer.addEventListener('click', editSelectManagers)
     }
@@ -323,7 +309,7 @@
             let content = selectManager.getAttribute("value");
 
             if (value) {
-                // console.log(value.split(", ").includes(event.target.getAttribute('value')));
+                // ////console.log(value.split(", ").includes(event.target.getAttribute('value')));
 
                 available = value.split(", ").includes(event.target.getAttribute('value'));
             }
@@ -333,7 +319,7 @@
                 content = content ? content + ", " + event.target.textContent : event.target.textContent;
                 selectManager.setAttribute('value', content);
 
-                // console.log('project Value ', value);
+                // ////console.log('project Value ', value);
                 value = value ? value + ", " + event.target.getAttribute('value') : event.target.getAttribute('value');
                 selectManagerValue.setAttribute('value', value)
 
@@ -346,19 +332,13 @@
     function editLoadBeneficents(ID) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetBeneficersOnly.php', true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+        
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+                
                 editBeneficentResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
-
-                // const listContainer = document.getElementById('dropdown-list-manager');
+                
                 const search = document.getElementById('editBeneficentSearchkey');
                 // search.setAttribute('onclick',`searchOption(${response.data})`)
 
@@ -401,7 +381,7 @@
             option.setAttribute('value', element.ID);
             option.textContent = element.firstname + " " + element.lastname;
 
-            // console.log(option);
+            // ////console.log(option);
 
             listContainer.appendChild(option);
             listContainer.appendChild(hr)
@@ -409,9 +389,7 @@
 
         });
 
-        // const selctOption = document.querySelector('.dropdown-option');
-        // const selectProject = document.getElementById('select-project');
-        // const selectProjectValue = document.getElementById('select-project-value');
+       
 
         listContainer.addEventListener('click', editSelectBeneficents)
     }
@@ -426,7 +404,7 @@
             let content = selectBeneficent.getAttribute("value");
 
             if (value) {
-                // console.log(value.split(", ").includes(event.target.getAttribute('value')));
+                // ////console.log(value.split(", ").includes(event.target.getAttribute('value')));
 
                 available = value.split(", ").includes(event.target.getAttribute('value'));
             }
@@ -436,7 +414,7 @@
                 content = content ? content + ", " + event.target.textContent : event.target.textContent;
                 selectBeneficent.setAttribute('value', content);
 
-                // console.log('project Value ', value);
+                // ////console.log('project Value ', value);
                 value = value ? value + ", " + event.target.getAttribute('value') : event.target.getAttribute('value');
                 selectBeneficentValue.setAttribute('value', value)
 

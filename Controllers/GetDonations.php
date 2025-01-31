@@ -66,7 +66,9 @@ if (mysqli_num_rows($result) > 0) {
                             <hr>";
     }
 } else {
-    // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+     $html .= "<div class='table-row'>
+                <div style='grid-column: span 4; text-align: center; font-size: 12px; font-weight:700;'>No Donations Found.</div>
+                </div>";
 }
 
 // $html .= '</tbody></table>';

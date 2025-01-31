@@ -14,7 +14,7 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <!-- <div onclick="handleAdd(false)" class='close'>Close</div> -->
             <div class="banner edit-banner">
-                Edit Served Donation
+                Edit Disbursed Donation
                 <div onclick="closeEdit()" class='close'>Close</div>
             </div>
 
@@ -126,68 +126,6 @@
                     </div>
 
                     
-                    <!-- Images -->
-                    <!-- <div class="FormRow">
-                    <small style="color: gray; display: flex; width: 100%; font-size: 12px; margin-bottom: 5px; font-family: Lato, serif">Attach Document(s)</small>
-                        <input type="file" accept="image/jpeg, image/png, image/gif, image/jpg" id="edit-image" name="image" placeholder="Upload Images" required multiple>
-                        <small class="small">Documents required</small>
-                        <div id="edit-preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px;"></div>
-                    </div> -->
-
-                    <!-- <script>
-                        // document.getElementById('select-image').addEventListener('change', PreviewImages);
-
-                        function editPreviewImages(event) {
-                            // console.log(val);
-
-                            
-                            const files = event.target.files;
-                            const previewContainer = document.getElementById('edit-preview-container');
-                            previewContainer.innerHTML = ''; // Clear the container before showing new images
-
-                            if (files.length > 6) {
-                                alert('You can select a maximum of 6 images.');
-                                event.target.value = ''; // Clear the input (prevents submitting the 7th file)
-                                return;
-                            }
-
-                            // Loop through the selected files
-                            for (let i = 0; i < files.length; i++) {
-                                const file = files[i];
-
-                                // Check if the selected file is an image
-                                if (file.type.startsWith('image/')) {
-                                    const reader = new FileReader();
-                                    reader.onload = function(e) {
-
-                                        const divEl = document.createElement('div');
-                                        divEl.style.width = '100px';
-                                        divEl.style.height = '100px';
-                                        divEl.style.position = 'relative';
-                                        divEl.style.display = 'flex'
-                                        divEl.style.gap = '5px'
-                                        divEl.style.backgroundColor = '#CBCBCB'
-                                        divEl.style.borderRadius = '10px'
-
-                                        const imgElement = document.createElement('img');
-                                        imgElement.src = e.target.result;
-                                        imgElement.style.width = '100px'; // Optional: resize the image for preview
-                                        imgElement.style.objectFit = 'cover'; // Optional: resize the image for preview
-                                        // imgElement.style.margin = '10px';
-                                        
-                                        // Optional: add margin between images
-
-                                        divEl.appendChild(imgElement)
-                                        previewContainer.appendChild(divEl);
-                                    };
-                                    reader.readAsDataURL(file); // Read the file as a data URL for previewing
-                                } else {
-                                    alert('Please select only image files.');
-                                }
-                            }
-                            
-                        }
-                    </script> -->
 
                     <div class="button">
                         <button
@@ -228,17 +166,13 @@
     function getSingleSentDonation(ID){
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetSingleData.php?ID='+ID+'&type=' + encodeURIComponent('sentdonation'), true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+   
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+               
                 const {data} = JSON.parse(xhr.responseText);
-                console.log(data);
+                //console.log(data);
 
                 document.getElementById('edit-id').value = data.ID;
                 // document.getElementById("edit-donor-value").setAttribute('value', data.Donor_ID);
@@ -314,9 +248,9 @@
 
 
         const bannerHeight = banner.offsetHeight;
-        // console.log(bannerHeight);
+        // //console.log(bannerHeight);
 
-        form.style.top = `calc(${bannerHeight}px + 10px)`;
+        // form.style.top = `calc(${bannerHeight}px + 10px)`;
         // div.style.height = `calc(100vh - ${bannerHeight}px)`;
     }
 
@@ -343,43 +277,20 @@
 
         ?>
 
-        // xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor', true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+                
                 editDonorResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
 
-                // const listContainer = document.getElementById('dropdown-list-donor');
+               
                 const search = document.getElementById('editDonorSearchkey');
-                // search.setAttribute('onclick',`searchOption(${response.data})`)
 
                 search.addEventListener('input', editDonorSearchListener)
 
                 editLoadSearchOptionsForDonor(editDonorResponse.data)
 
-                // const dataContainer = document.getElementById('table-rows')
-
-                // dataContainer.innerHTML = response.html;
-                // resizeWindow();
-
-                // dataContainer.classList.remove('fade-in'); // Remove the class to reset animation
-                // void dataContainer.offsetWidth; // Trigger reflow
-                // dataContainer.classList.add('fade-in'); // Apply fade-in animation
-                // document.getElementById('table-pagi').innerHTML = response.pagination;
-
-                // if (page === 1) {
-                //     document.getElementById('count').textContent = "From " + response.total + " donations";
-                //     DisplayNumber(response.total_received, 'total')
-                //     DisplayNumber(response.total_sent, 'spent')
-                //     DisplayNumber(response.current_bal, 'current')
-                // }
+               
             }
         };
 
@@ -407,7 +318,7 @@
         listContainer.innerHTML = ""
 
         data.forEach(element => {
-            // console.log(element);
+            // //console.log(element);
             const option = document.createElement('div')
             const hr = document.createElement('hr')
             hr.setAttribute('class', 'line')
@@ -447,7 +358,7 @@
             // validateEditForm();
             AmountDonar();
 
-            // console.log(event.target.getAttribute('value'), event.target.textContent);
+            // //console.log(event.target.getAttribute('value'), event.target.textContent);
         }
     }
 
@@ -463,25 +374,18 @@
         }
 
         ?>
-        // xhr.open('GET', '/Controllers/GetProjectAndBeneficents.php', true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
-
+      
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+                
                 var result = JSON.parse(xhr.responseText);
-                // console.log(result);
+                // //console.log(result);
                 editProject = result.data1;
                 editBeneficent = result.data;
 
-                // const listContainer = document.getElementById('dropdown-list-donor');
+                
                 const search = document.getElementById('editProjectSearchkey');
                 const search1 = document.getElementById('editBeneficentSearchkey')
-                // search.setAttribute('onclick',`searchOption(${response.data})`)
 
                 search.addEventListener('input', editProjectSearchListener)
                 search1.addEventListener('input', editBeneSearchListener)
@@ -514,11 +418,11 @@
         const listContainer = document.getElementById('edit-dropdown-list-project');
         listContainer.innerHTML = ""
 
-        // console.log(data);
+        // //console.log(data);
 
 
         data.forEach(element => {
-            // console.log(element);
+            // //console.log(element);
             const option = document.createElement('div')
             const hr = document.createElement('hr')
             hr.setAttribute('class', 'line')
@@ -565,12 +469,12 @@
         validateEditForm();
 
         editSelectedBene = editBeneficent.filter((el) => {
-            // console.log(el, value);
+            // //console.log(el, value);
             
             return el.project_id === value
         })
 
-        // console.log(selectedBene);
+        // //console.log(selectedBene);
         
 
         editLoadSearchOptionsForBene(editSelectedBene);
@@ -581,17 +485,16 @@
         const beneCont = document.getElementById('edit-beneficent-cont');
         beneCont.style.display = 'flex';
 
-        // document.getElementById('edit-beneficent').removeAttribute('value');
-        // document.getElementById('edit-beneficent-value').removeAttribute('value');
+      
         validateEditForm();
 
         editSelectedBene = editBeneficent.filter((el) => {
-            // console.log(el, value);
+            // //console.log(el, value);
             
             return el.project_id === value
         })
 
-        // console.log(selectedBene);
+        // //console.log(selectedBene);
         
 
         editLoadSearchOptionsForBene(editSelectedBene);
@@ -657,7 +560,7 @@
         if(donor.length > 0 && amount.length > 0){
             const selectedDonor = editDonorResponse.data.filter((ele) =>
             (ele.ID === donor));
-            console.log(selectedDonor);
+            //console.log(selectedDonor);
             
             if(parseInt(selectedDonor[0].balance) < amount){
                 

@@ -14,7 +14,7 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <!-- <div onclick="handleAdd(false)" class='close'>Close</div> -->
             <div class="banner">
-                Serve Donation
+                Disburse Fund
                 <div onclick="handleAdd(false)" class='close'>Close</div>
             </div>
 
@@ -133,10 +133,9 @@
                     </div>
 
                     <script>
-                        // document.getElementById('select-image').addEventListener('change', PreviewImages);
-
+                       
                         function PreviewImages(event) {
-                            // console.log(val);
+                            // //console.log(val);
 
 
                             const files = event.target.files;
@@ -195,14 +194,14 @@
                             id="submit"
                             name="submit"
                             disabled="true"
-                            class="submit"> Add
+                            class="submit"> Disburse Amount
                         </button>
 
                         <button
                             style="display: none;"
                             id="submiting"
                             disabled="true"
-                            class="submit"> Adding...
+                            class="submit"> Saving...
                         </button>
                     </div>
 
@@ -238,9 +237,9 @@
 
 
         const bannerHeight = banner.offsetHeight;
-        // console.log(bannerHeight);
+        // //console.log(bannerHeight);
 
-        form.style.top = `calc(${bannerHeight}px + 10px)`;
+        // form.style.top = `calc(${bannerHeight}px + 10px)`;
         // div.style.height = `calc(100vh - ${bannerHeight}px)`;
     }
 
@@ -267,18 +266,13 @@
 
         ?>
 
-        // xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor', true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+       
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+             
                 donorResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
+                // //console.log(response.data);
 
                 // const listContainer = document.getElementById('dropdown-list-donor');
                 const search = document.getElementById('donorSearchkey');
@@ -288,22 +282,7 @@
 
                 loadSearchOptionsForDonor(donorResponse.data)
 
-                // const dataContainer = document.getElementById('table-rows')
-
-                // dataContainer.innerHTML = response.html;
-                // resizeWindow();
-
-                // dataContainer.classList.remove('fade-in'); // Remove the class to reset animation
-                // void dataContainer.offsetWidth; // Trigger reflow
-                // dataContainer.classList.add('fade-in'); // Apply fade-in animation
-                // document.getElementById('table-pagi').innerHTML = response.pagination;
-
-                // if (page === 1) {
-                //     document.getElementById('count').textContent = "From " + response.total + " donations";
-                //     DisplayNumber(response.total_received, 'total')
-                //     DisplayNumber(response.total_sent, 'spent')
-                //     DisplayNumber(response.current_bal, 'current')
-                // }
+                
             }
         };
 
@@ -331,7 +310,7 @@
         listContainer.innerHTML = ""
 
         data.forEach(element => {
-            // console.log(element);
+            // //console.log(element);
             const option = document.createElement('div')
             const hr = document.createElement('hr')
             hr.setAttribute('class', 'line')
@@ -368,7 +347,7 @@
             openSelect('dropdown-container-donor', false);
             validateForm();
 
-            // console.log(event.target.getAttribute('value'), event.target.textContent);
+            // //console.log(event.target.getAttribute('value'), event.target.textContent);
         }
     }
 
@@ -385,18 +364,13 @@
 
         ?>
 
-        // xhr.open('GET', '/Controllers/GetProjectAndBeneficents.php', true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+    
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+                
                 var result = JSON.parse(xhr.responseText);
-                // console.log(result);
+                // //console.log(result);
                 project = result.data1;
                 beneficent = result.data;
 
@@ -434,11 +408,11 @@
         const listContainer = document.getElementById('dropdown-list-project');
         listContainer.innerHTML = ""
 
-        // console.log(data);
+        // //console.log(data);
 
 
         data.forEach(element => {
-            // console.log(element);
+            // //console.log(element);
             const option = document.createElement('div')
             const hr = document.createElement('hr')
             hr.setAttribute('class', 'line')
@@ -485,12 +459,12 @@
         validateForm();
 
         selectedBene = beneficent.filter((el) => {
-            // console.log(el, value);
+            // //console.log(el, value);
 
             return el.project_id === value
         })
 
-        // console.log(selectedBene);
+        // //console.log(selectedBene);
 
 
         loadSearchOptionsForBene(selectedBene);
@@ -563,7 +537,7 @@
         if (donor.length > 0 && amount.length > 0) {
             const selectedDonor = donorResponse.data.filter((ele) =>
                 (ele.ID === donor));
-            console.log(selectedDonor);
+            //console.log(selectedDonor);
 
             if (parseInt(selectedDonor[0].balance) < amount) {
 

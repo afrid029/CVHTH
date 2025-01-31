@@ -392,12 +392,17 @@ a{
   background-color: #2f41e4;
   text-align: center;
   padding: 10px;
+  height: auto;
   border-radius: 5px;
   border: transparent;
-  font-family: "Archivo Black", serif;
+  font-family: "DM Serif Text", serif;
   color: aliceblue;
   letter-spacing: 2px;
   cursor: pointer;
+}
+
+.btn-login:disabled {
+  background-color: #89898a;
 }
 
 .forgot-btn {
@@ -477,7 +482,7 @@ a{
   }
 
   .btn-login {
-    height: 6vh;
+    /* height: 6vh; */
     font-size: 1.2rem;
   }
 
@@ -640,6 +645,7 @@ a{
     position: relative;
     height: 100%;
     display: none; /**Chjange to none*/
+   
   }
 
   .thought {
@@ -652,18 +658,23 @@ a{
 
   .mobile-login-fade {
     animation: closeLogin 0.5s ease forwards;
-    transform: translateY(-100%);
+    transform: translateY(0%);
+  }
+
+  .loginbg {
+    animation: openLogin 0.6s ease forwards;
+    transform: translateY(-10%);
   }
 
   .mobile-login {
-    animation: openLogin 0.5s ease forwards;
-    transform: translateY(-100%);
+    animation: openLogin 0.6s ease forwards;
+    transform: translateY(-10%);
   }
 
   @keyframes openLogin {
     0% {
       opacity: 0;
-      transform: translateY(-100%);
+      transform: translateY(-10%);
       /* margin-top: -200%; */
       /* height: 0; */
     }
@@ -736,7 +747,10 @@ a{
   }
 
   .btn-login {
-    height: 6vh;
+    /* height: 6vh; */
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 1.5rem;
     font-weight: 600;
     margin-top: 1.5vh;
@@ -795,7 +809,7 @@ a{
   }
 
   .btn-login {
-    height: 6vh;
+    /* height: 6vh; */
     font-size: 1.5rem;
     font-weight: 600;
     margin-top: 1.5vh;
@@ -855,7 +869,7 @@ a{
   }
 
   .btn-login {
-    height: 5vh;
+    /* height: 5vh; */
     font-size: 1.2rem;
     font-weight: 500;
     
@@ -923,7 +937,7 @@ a{
   }
 
   .btn-login {
-    height: 5vh;
+    /* height: 5vh; */
     font-size: 1rem;
     font-weight: 500;
     

@@ -36,7 +36,7 @@
 
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
-            }, 5000);
+            }, 7000);
         </script>
     <?php
     }

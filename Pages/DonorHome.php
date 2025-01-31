@@ -39,7 +39,7 @@
 
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
-            }, 5000);
+            }, 7000);
         </script>
     <?php
     }
@@ -67,24 +67,27 @@
         if ($passedArray['role'] == 'donor') {
            $_SESSION['ID'] = $passedArray['ID'];
            $_SESSION['role'] = $passedArray['role'];
+           $_SESSION['name'] = $passedArray['fname']. ' ' . $passedArray['lname'];
         } else {
            header('Location: /');
         }
     }
 
     include('Components/NavBar.php') ?>
-    
-<script>
-    const node = document.querySelector('.nav-links').children;
-    node[3].children[0].style.color = '#68E44C'
-    node[3].children[0].style.fontWeight = '600'
-    
-</script>
-
 
     <div class="main-body">
         <div class="main-sidebar">
             <div class="sidebar-content">
+
+            <div style="margin-bottom: 25px;"  class="bar-row">
+                    
+                <div  class="row-type">
+                       <h1 style="color: #022202;">HI,</h1>
+                    </div>
+                    <div class="row-value">
+                        <h3 id="donor-name" style="color: #012001ab;"> .... </h3>
+                    </div>
+                </div>
 
                 <div class="bar-row">
                     <div class="row-type">
@@ -133,7 +136,6 @@
                         <div>Beneficiary</div>
                         <div style='text-align: center'>Amount</div>
                         <div style='text-align: center'>Project</div>
-                        <div style='text-align: center'>Purpose</div>
                         <div style='text-align: center'>Date</div>
 
                     </div>
@@ -153,28 +155,20 @@
         </div>
     </div>
 
-    
 
-    <!--     
-    <footer>
-        <div class="footer"></div>
-
-    </footer> -->
-
-    <?php include('/CVHTH/Models/InfoDonorView.php') ?>
+    <?php include('Models/InfoDonorView.php') ?>
     
     <script>
+        document.getElementById('donor-name').textContent = "<?php echo $_SESSION['name']; ?>";
         let donorData;
         function resizeWindow() {
-            console.log('resizing');
+            // console.log('resizing');
 
             const navHeight = document.querySelector('.navbar');
             const mainBody = document.querySelector('.main-body');
             const mainSideBar = document.querySelector('.main-sidebar');
             const mainConetntMobile = document.querySelector('.main-content-mobile');
             const mainConetntMobileBg = document.querySelector('.main-conent-mobile-bg');
-            // const contentTitle = document.querySelector('.content-title');
-            // console.log(navHeight.offsetHeight);
             const navbarHeight = navHeight.offsetHeight;
             const sideBarHeight = mainSideBar.offsetHeight;
 
@@ -183,8 +177,7 @@
 
             if (viewportWidth > 900) {
                 const contentTitle = document.querySelector('.content-title');
-                console.log(window.getComputedStyle(mainConetntMobile).getPropertyValue('padding-top'));
-
+              
                 const contentTitleHeight = contentTitle.offsetHeight;
                 const contentTable = document.querySelector('.content-table');
 
@@ -195,78 +188,31 @@
             }
 
             if (viewportWidth < 900) {
-                // const contentTitle = document.querySelector('content-title');
-                // const contentTable = document.querySelector('content-table');
                 const viewPortHeight = window.innerHeight
 
                 const restPage = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
                 const restPagePx = viewPortHeight - navbarHeight - sideBarHeight;
                 const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
-                console.log(restPagePx, mainConetntMobileHeight);
-
+               
                 if (restPagePx > mainConetntMobileHeight) {
-                    console.log('great');
-                    console.log('rest ', restPagePx);
-
+                   
                     mainConetntMobileBg.style.height = restPage;
                      mainConetntMobile.style.height = restPage;
 
-                    // requestAnimationFrame(()=>{
-                       
-                    // })
+                    
                 } else {
-                    console.log('less');
-
-                    // requestAnimationFrame(()=>{
-                        
-                    // })
+                    
                     mainConetntMobile.style.height = 'auto';
                     
-                    // requestAnimationFrame(() => {
-                    //     console.log(mainConetntMobile.offsetHeight);
-
-                    //     // Apply the new height to the background
-                        
-                    // });
                     mainConetntMobileBg.style.height = `calc(${mainConetntMobile.offsetHeight}px + 20px)`;
                 }
 
-
-                // const contentTitleHeight = contentTitle.offsetHeight;
-                // const contentTableHeight = contentTable.off
-
-                // mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-                // mainConetntMobileBg.style.height = `calc(${mainConetntMobileHeight}px + 20px)`;
-                // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-
             }
 
-            // mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-            // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-
-
-            // Get the navbar height
-            // const sideBarHeight = mainSideBar.offsetHeight; // Get the navbar height
-            // mainConetntMobileBg.style.height = `${mainConetntMobileHeight}px`;
-            // console.log(mainConetntMobileHeight);
-
-            // setTimeout(()=> {
-
-            // },800);
-
-            // Set the height of the main-body using calc with the navbar height
-            // mainBody.style.height = `calc(100% - ${navbarHeight}px)`;
             mainBody.style.top = `${navbarHeight}px`;
-            // contentTitle.style.top = `${navbarHeight}px`;
-            // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-            // console.log(mainConetntMobile.style.height,navbarHeight, sideBarHeight);
         }
 
-        // resizeWindow();
-
-        // window.addEventListener("resize", resizeWindow);
-        // console.log(navbarHeight, sideBarHeight);
-
+      
 
         function DisplayNumber(targetNumber, ID) {
             const numberElement = document.getElementById(ID);
@@ -286,20 +232,7 @@
             const interval = setInterval(countUp, incrementTime);
         }
 
-        // DisplayNumber(70000, 'current');
-        // DisplayNumber(20000, 'spent');
-        // DisplayNumber(90000, 'total');
-
-        // const addBtn = document.querySelector('.add-btn');
-        // addBtn.addEventListener('click', function() {
-        //     console.log('clicked');
-
-        //     addBtn.classList.add('clicked')
-
-        //     setTimeout(() => {
-        //         addBtn.classList.remove('clicked')
-        //     }, 1000)
-        // })
+        
 
 
         function loadPage(page) {
@@ -333,8 +266,8 @@
                     if (page === 1) {
                         document.getElementById('count').textContent = "Via " + response.total + " Allocations";
                         // DisplayNumber(response.total_received, 'total')
-                        DisplayNumber(response.total_sent, 'spent')
-                        DisplayNumber(response.total_received, 'current')
+                        DisplayNumber(response.total_sent, 'current')
+                        DisplayNumber(response.total_received, 'spent')
                     }
                 }
             };
@@ -350,14 +283,14 @@
 
         function moreInfo(role, ID){
             
-            document.getElementById('viewModel').style.display = 'flex';
+            
             // sentDonationMoreInfo(ID, role);
 
             const SelectedDon = donorData.filter((el) => (
                 el.ID === ID
             ));
 
-            console.log(SelectedDon);
+            // console.log(SelectedDon);
             
 
             document.getElementById('don-amount').textContent = 'Amount (Rs) : ' + SelectedDon[0].amount;
@@ -366,6 +299,8 @@
             document.getElementById('don-project').innerHTML = SelectedDon[0].name;
             document.getElementById('don-date').textContent = SelectedDon[0].date;
             document.getElementById('don-purpose').textContent = SelectedDon[0].purpose;
+            
+            document.getElementById('viewModel').style.display = 'flex';
 
             viewPreviewImages(SelectedDon[0].images);
             ViewSetTop();

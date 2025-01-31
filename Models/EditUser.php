@@ -85,10 +85,7 @@
                                 <input onclick="editClearSelection('edit-project-value','edit-project')" class="search-mobile" style="background-color:rgba(182, 240, 180, 0.79); width: 10%; text-align: center; color:rgb(17, 66, 2); font-weight: 700; cursor: pointer" type="text" readonly value="Clear">
                             </div>
                             <div class="dropdown-list" id="edit-dropdown-list-project">
-                                <!-- <div class="dropdown-option" value="1">Hi</div>
-                                <div class="dropdown-option" value="2">Hello</div>
-                                <div class="dropdown-option" value="3">There</div>
-                                <div class="dropdown-option" value="4">It is</div> -->
+                              
                             </div>
 
                         </div>
@@ -115,17 +112,6 @@
                         </div>
 
                         <small class="small green">Optional. You can assign donors later.</small>
-                    </div>
-
-                    <div style="margin-bottom:10px" class="button">
-                        <button 
-                            type="button"
-                            style="background-color: green"
-                            onclick="test()"
-                            name="submit"
-                            id="reset-password"
-                            class="submit"> Reset Password
-                        </button>
                     </div>
 
                     <div  class="button">
@@ -172,19 +158,15 @@ const editToday = new Date();
     function getSingleUser(ID) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetSingleData.php?ID='+ID+'&type=' + encodeURIComponent('user'), true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+       
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+              
                 const {data} = JSON.parse(xhr.responseText);
                 const {projects} = JSON.parse(xhr.responseText);
                 const {donors} = JSON.parse(xhr.responseText);
-                console.log(projects);
+                //console.log(projects);
 
                 document.getElementById('edit-id').value = data.ID;
                 document.getElementById('edit-fname').value = data.firstname;
@@ -217,16 +199,6 @@ const editToday = new Date();
                 validateEditForm();
 
 
-
-
-                // const listContainer = document.getElementById('edit-dropdown-list');
-                // const search = document.getElementById('editSearchkey');
-                // // search.setAttribute('onclick',`searchOption(${response.data})`)
-
-                // search.addEventListener('input', editDonorSearchListener)
-
-                // loadSearchOptions(editDonorResponse.data)
-
             }
         };
 
@@ -236,17 +208,11 @@ const editToday = new Date();
     function editLoadProjects() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetProjectsOnly.php', true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
                 editProjectResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
+                // //console.log(response.data);
 
                 // const listContainer = document.getElementById('dropdown-list-project');
                 const search = document.getElementById('editProjectSearchkey');
@@ -256,22 +222,7 @@ const editToday = new Date();
 
                 editLoadSearchOptionsForProject(editProjectResponse.data)
 
-                // const dataContainer = document.getElementById('table-rows')
-
-                // dataContainer.innerHTML = response.html;
-                // resizeWindow();
-
-                // dataContainer.classList.remove('fade-in'); // Remove the class to reset animation
-                // void dataContainer.offsetWidth; // Trigger reflow
-                // dataContainer.classList.add('fade-in'); // Apply fade-in animation
-                // document.getElementById('table-pagi').innerHTML = response.pagination;
-
-                // if (page === 1) {
-                //     document.getElementById('count').textContent = "From " + response.total + " donations";
-                //     DisplayNumber(response.total_received, 'total')
-                //     DisplayNumber(response.total_sent, 'spent')
-                //     DisplayNumber(response.current_bal, 'current')
-                // }
+                
             }
         };
 
@@ -297,9 +248,6 @@ const editToday = new Date();
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetAllUsers.php?role=donor', true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -307,7 +255,7 @@ const editToday = new Date();
                 // // document.getElementById('onrowload').style.display = 'none';
                 // onload.classList.remove('onrowload');
                 editDonorResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
+                // //console.log(response.data);
 
                 // const listContainer = document.getElementById('dropdown-list-project');
                 const search = document.getElementById('editDonorSearchkey');
@@ -317,22 +265,7 @@ const editToday = new Date();
 
                 editLoadSearchOptionsForDonor(editDonorResponse.data)
 
-                // const dataContainer = document.getElementById('table-rows')
-
-                // dataContainer.innerHTML = response.html;
-                // resizeWindow();
-
-                // dataContainer.classList.remove('fade-in'); // Remove the class to reset animation
-                // void dataContainer.offsetWidth; // Trigger reflow
-                // dataContainer.classList.add('fade-in'); // Apply fade-in animation
-                // document.getElementById('table-pagi').innerHTML = response.pagination;
-
-                // if (page === 1) {
-                //     document.getElementById('count').textContent = "From " + response.total + " donations";
-                //     DisplayNumber(response.total_received, 'total')
-                //     DisplayNumber(response.total_sent, 'spent')
-                //     DisplayNumber(response.current_bal, 'current')
-                // }
+                
             }
         };
 
@@ -340,7 +273,7 @@ const editToday = new Date();
     }
 
     function editDonorSearchListener(event) {
-        // console.log('donor listenmer');
+        // //console.log('donor listenmer');
 
         // const search = document.getElementById('donorSearchkey');
         const key = event.target.value;
@@ -367,9 +300,9 @@ const editToday = new Date();
 
 
         const bannerHeight = banner.offsetHeight;
-        // console.log(bannerHeight);
+        // //console.log(bannerHeight);
 
-        form.style.top = `calc(${bannerHeight}px + 10px)`;
+        // form.style.top = `calc(${bannerHeight}px + 10px)`;
         // div.style.height = `calc(100vh - ${bannerHeight}px)`;
     }
 
@@ -390,7 +323,7 @@ const editToday = new Date();
         listContainer.innerHTML = ""
 
         data.forEach(element => {
-            // console.log(element);
+            // //console.log(element);
             const option = document.createElement('div')
             const hr = document.createElement('hr')
             hr.setAttribute('class', 'line')
@@ -405,9 +338,7 @@ const editToday = new Date();
 
         });
 
-        // const selctOption = document.querySelector('.dropdown-option');
-        // const selectProject = document.getElementById('select-project');
-        // const selectProjectValue = document.getElementById('select-project-value');
+    
 
         listContainer.addEventListener('click', editSelectProjects)
 
@@ -415,7 +346,7 @@ const editToday = new Date();
 
     function editSelectProjects(event) {
 
-        // console.log(event);
+        // //console.log(event);
 
         const selectProject = document.getElementById('edit-project');
         const selectProjectValue = document.getElementById('edit-project-value');
@@ -423,11 +354,11 @@ const editToday = new Date();
             let available = false;
             let value = selectProjectValue.getAttribute('value');
             let content = selectProject.getAttribute('value');
-            // console.log(value);
+            // //console.log(value);
 
 
             if (value) {
-                // console.log(value.split(", ").includes(event.target.getAttribute('value')));
+                // //console.log(value.split(", ").includes(event.target.getAttribute('value')));
 
                 available = value.split(", ").includes(event.target.getAttribute('value'));
             }
@@ -437,19 +368,19 @@ const editToday = new Date();
                 content = content ? content + ", " + event.target.textContent : event.target.textContent;
                 selectProject.setAttribute('value', content);
 
-                // console.log('project Value ', value);
+                // //console.log('project Value ', value);
                 value = value ? value + ", " + event.target.getAttribute('value') : event.target.getAttribute('value');
                 selectProjectValue.setAttribute('value', value)
 
             }
 
-            // console.log('project ', content);
+            // //console.log('project ', content);
 
 
 
             // openSelect(false); 
 
-            // console.log(event.target.getAttribute('value'), event.target.textContent);
+            // //console.log(event.target.getAttribute('value'), event.target.textContent);
         }
     }
 
@@ -460,7 +391,7 @@ const editToday = new Date();
         listContainer.innerHTML = ""
 
         data.forEach(element => {
-            // console.log(element);
+            // //console.log(element);
             const option = document.createElement('div')
             const hr = document.createElement('hr')
             hr.setAttribute('class', 'line')
@@ -475,10 +406,7 @@ const editToday = new Date();
 
         });
 
-        // const selctOption = document.querySelector('.dropdown-option');
-        // const selectProject = document.getElementById('select-donor');
-        // const selectProjectValue = document.getElementById('select-donor-value');
-
+       
         listContainer.addEventListener('click', editSelectDonors)
 
     }
@@ -494,7 +422,7 @@ const editToday = new Date();
             let content = selectProject.getAttribute("value");
             let value = selectProjectValue.getAttribute("value");
 
-            console.log(value);
+            //console.log(value);
             
 
             if (value) {
@@ -510,9 +438,7 @@ const editToday = new Date();
                 selectProjectValue.setAttribute('value', value)
             }
 
-            // openSelect(false); 
-
-            // console.log(event.target.getAttribute('value'), event.target.textContent);
+          
         }
     }
 
@@ -553,7 +479,7 @@ const editToday = new Date();
 
 
 
-        // console.log(role);
+        // //console.log(role);
 
         if (emailPattern.test(email) && firstname.length > 0 && lastname.length > 0 && role !== 'none' && contact.length > 0) {
             button.disabled = false;
@@ -563,33 +489,11 @@ const editToday = new Date();
 
 
 
-        // console.log(donor.value , date.value , amount.value.length);
-
-
-
-        // if (donor.value && date.value && amount.value.length > 0) {
-        //     // console.log('true');
-
-        //     button.disabled = false;
-        // } else {
-        //     button.disabled = true;
-        //     // console.log('false');
-
-        // }
-        // console.log(email);
-
-        // let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        // if (!emailPattern.test(email)) {
-        //     event.target.style.border = '1px solid red';
-        // } else {
-        //     event.target.style.border = '1px solid green';
-        // }
     }
 
     function submitEditForm() {
         let button = document.getElementById('edit-submit');
         let button2 = document.getElementById('edit-submiting');
-        document.getElementById('reset-password').disabled = true
         button.style.display = 'none';
         button2.style.display = 'block';
         return true;

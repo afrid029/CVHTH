@@ -40,7 +40,7 @@
 
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
-            }, 5000);
+            }, 7000);
         </script>
     <?php
     }
@@ -139,7 +139,7 @@
             <div class="content-table mobile-ani">
                 <div class="table">
                     <div class="table-header">
-                        <div>Donor Name</div>
+                        <div>Donor</div>
                         <div style='text-align: end'>Amount (RS)</div>
                         <div style='text-align: end'>Donated Date</div>
                         <div style='text-align: center'>Actions</div>
@@ -161,7 +161,7 @@
                             </div>
                             <div style="margin-bottom: 0px;" class="dateRow">
                                 <label for="">To</label>
-                                <input id="to-date" type="date">
+                                <input id="to-date" type="date" placeholder='To Date'>
                             </div>
                             <button id="down-btn" onclick="downloadPDF()" class='down-btn'>&#128195; Download as PDF</button>
                             
@@ -191,14 +191,14 @@
 
     </footer> -->
 
-    <?php include('/CVHTH/Models/AddDonation.php') ?>
-    <?php include('/CVHTH/Models/EditDonation.php') ?>
-    <?php include('/CVHTH/Models/DeleteDonationModel.php') ?>
+    <?php include('Models/AddDonation.php') ?>
+    <?php include('Models/EditDonation.php') ?>
+    <?php include('Models/DeleteDonationModel.php') ?>
     <script>
         
 
         function resizeWindow() {
-            // console.log('resizing');
+            // //console.log('resizing');
 
             const navHeight = document.querySelector('.navbar');
             const mainBody = document.querySelector('.main-body');
@@ -206,8 +206,6 @@
             const mainConetntMobile = document.querySelector('.main-content-mobile');
             const mainConetntMobileBg = document.querySelector('.main-conent-mobile-bg');
             const table = document.querySelector('.table');
-            // const contentTitle = document.querySelector('.content-title');
-            // console.log(navHeight.offsetHeight);
             const navbarHeight = navHeight.offsetHeight;
             const sideBarHeight = mainSideBar.offsetHeight;
             const mainConetntMobileHeight = mainConetntMobile.offsetHeight; 
@@ -216,7 +214,7 @@
 
             if(viewportWidth > 900 ){
                 const contentTitle = document.querySelector('.content-title');
-                console.log(window.getComputedStyle(mainConetntMobile).getPropertyValue('padding-top'));
+                //console.log(window.getComputedStyle(mainConetntMobile).getPropertyValue('padding-top'));
                 
                 const contentTitleHeight = contentTitle.offsetHeight;
                 const contentTable = document.querySelector('.content-table');
@@ -228,82 +226,34 @@
             }
 
             if (viewportWidth < 900) {
-                // const contentTitle = document.querySelector('content-title');
-                // const contentTable = document.querySelector('content-table');
                 const viewPortHeight = window.innerHeight
 
                 const restPage = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
                 const restPagePx = viewPortHeight - navbarHeight - sideBarHeight;
                 const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
-                console.log(restPagePx, mainConetntMobileHeight);
+                //console.log(restPagePx, mainConetntMobileHeight);
 
                 if (restPagePx > mainConetntMobileHeight) {
-                    // console.log('great');
-                    // console.log('rest ', restPagePx);
-
+                 
                     mainConetntMobileBg.style.height = restPage;
                      mainConetntMobile.style.height = restPage;
 
-                    // requestAnimationFrame(()=>{
-                       
-                    // })
                 } else {
-                    // console.log('less');
-
-                    // requestAnimationFrame(()=>{
-                        
-                    // })
                     mainConetntMobile.style.height = 'auto';
                     
-                    // requestAnimationFrame(() => {
-                    //     console.log(mainConetntMobile.offsetHeight);
-
-                    //     // Apply the new height to the background
-                        
-                    // });
+                  
                     mainConetntMobileBg.style.height = `calc(${mainConetntMobile.offsetHeight}px + 20px)`;
 
-                    // console.log(table.offsetHeight);
                     
-                    // mainConetntMobileBg.style.height = `calc(${table.offsetHeight}px + 20px)`;
                 }
 
 
-                // const contentTitleHeight = contentTitle.offsetHeight;
-                // const contentTableHeight = contentTable.off
-
-                // mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-                // mainConetntMobileBg.style.height = `calc(${mainConetntMobileHeight}px + 20px)`;
-                // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
 
             }
-
-            // mainConetntMobileBg.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-            // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-
-
-            // Get the navbar height
-            // const sideBarHeight = mainSideBar.offsetHeight; // Get the navbar height
-            // mainConetntMobileBg.style.height = `${mainConetntMobileHeight}px`;
-            // console.log(mainConetntMobileHeight);
-
-            // setTimeout(()=> {
-
-            // },800);
-
-            // Set the height of the main-body using calc with the navbar height
-            // mainBody.style.height = `calc(100% - ${navbarHeight}px)`;
             mainBody.style.top = `${navbarHeight}px`;
-            // contentTitle.style.top = `${navbarHeight}px`;
-            // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-            // console.log(mainConetntMobile.style.height,navbarHeight, sideBarHeight);
         }
 
-        // resizeWindow();
-
-        // window.addEventListener("resize", resizeWindow);
-        // console.log(navbarHeight, sideBarHeight);
-
+   
 
         function DisplayNumber(targetNumber, ID) {
             const numberElement = document.getElementById(ID);
@@ -325,7 +275,7 @@
 
         const addBtn = document.querySelector('.add-btn');
         addBtn.addEventListener('click', function() {
-            console.log('clicked');
+            //console.log('clicked');
 
             addBtn.classList.add('clicked')
 
@@ -378,7 +328,9 @@
 
         function handleAdd(value){
             const model = document.getElementById('addModel');
+             const body = document.querySelector('.main-body');
             if(value){
+                 body.classList.add('no-scroll');
                 loadDonors(); 
                 model.style.display = 'flex';
                 setTop();
@@ -386,6 +338,7 @@
                 //     setTop();
                 // }))
             } else {
+                 body.classList.remove('no-scroll');
                 model.style.display = 'none' ;
                 document.querySelector('.dropdown-container').style.display = 'none';
                 document.getElementById('select-donor').setAttribute('value','')
@@ -402,11 +355,13 @@
         }
 
         function Edit(ID){
+             document.querySelector('.main-body').classList.add('no-scroll');
             const model = document.getElementById('editModel');
-            model.style.display = 'flex';
+            
             editSetTop();
             editLoadDonors(); 
             getSingleDonation(ID);
+            model.style.display = 'flex';
             
 
         }
@@ -419,6 +374,7 @@
         }
 
         function closeEdit(){
+             document.querySelector('.main-body').classList.remove('no-scroll');
             const model = document.getElementById('editModel');
             model.style.display = 'none'
             
@@ -483,20 +439,20 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     const response = JSON.parse(xhr.responseText);
-                   console.log(response.data);
+                   //console.log(response.data);
 
                    SaveDoc(response.data, fromDate.value, toDate.value);
                    
                 }
             }
 
-            console.log(fromDate.value, toDate.value);
+            //console.log(fromDate.value, toDate.value);
             
 
             const param = 'type=donation&from=' + fromDate.value + '&to=' + toDate.value;
             xhr.send(param);
 
-            // console.log('Processing....');
+            // //console.log('Processing....');
             
         }
 
@@ -504,7 +460,7 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
 
-            // console.log(doc.getFontList());
+            // //console.log(doc.getFontList());
             
 
             // Add title

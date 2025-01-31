@@ -66,6 +66,10 @@
     color: #3a3a3aaf;
   }
   
+.no-scroll {
+    position: fixed;
+  }
+  
   .line {
     margin-bottom: 2vh;
     border-color: transparent;

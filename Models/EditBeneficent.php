@@ -132,71 +132,7 @@
                     </div>
 
 
-                    <!-- Images -->
-                    <!-- <div class="FormRow">
-                    <small style="color: gray; display: flex; width: 100%; font-size: 12px; margin-bottom: 5px; font-family: Lato, serif">Attach Document(s)</small>
-                        <input type="file" accept="image/jpeg, image/png, image/gif, image/jpg" id="edit-image" name="image" placeholder="Upload Images" required multiple>
-                        <small class="small">Documents required</small>
-                        <div id="edit-preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px;"></div>
-                    </div> -->
-
-                    
-<!-- 
-
-                    <script>
-                       
-
-                        function editPreviewImages(event) {
-                            // console.log(val);
-
-                            
-                            const files = event.target.files;
-                            const previewContainer = document.getElementById('edit-preview-container');
-                            previewContainer.innerHTML = ''; // Clear the container before showing new images
-
-                            if (files.length > 6) {
-                                alert('You can select a maximum of 6 images.');
-                                event.target.value = ''; // Clear the input (prevents submitting the 7th file)
-                                return;
-                            }
-
-                            // Loop through the selected files
-                            for (let i = 0; i < files.length; i++) {
-                                const file = files[i];
-
-                                // Check if the selected file is an image
-                                if (file.type.startsWith('image/')) {
-                                    const reader = new FileReader();
-                                    reader.onload = function(e) {
-
-                                        const divEl = document.createElement('div');
-                                        divEl.style.width = '100px';
-                                        divEl.style.height = '100px';
-                                        divEl.style.position = 'relative';
-                                        divEl.style.display = 'flex'
-                                        divEl.style.gap = '5px'
-                                        divEl.style.backgroundColor = '#CBCBCB'
-                                        divEl.style.borderRadius = '10px'
-
-                                        const imgElement = document.createElement('img');
-                                        imgElement.src = e.target.result;
-                                        imgElement.style.width = '100px'; // Optional: resize the image for preview
-                                        imgElement.style.objectFit = 'cover'; // Optional: resize the image for preview
-                                        // imgElement.style.margin = '10px';
-                                        
-                                        // Optional: add margin between images
-
-                                        divEl.appendChild(imgElement)
-                                        previewContainer.appendChild(divEl);
-                                    };
-                                    reader.readAsDataURL(file); // Read the file as a data URL for previewing
-                                } else {
-                                    alert('Please select only image files.');
-                                }
-                            }
-                            
-                        }
-                    </script> -->
+                
 
 
                     <div class="button">
@@ -235,15 +171,11 @@
     function getSingleBeneficent(ID) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetSingleData.php?ID='+ID+'&type=' + encodeURIComponent('beneficent'), true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+        
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+               
                 const {data} = JSON.parse(xhr.responseText);
               
 
@@ -276,66 +208,6 @@
                     document.getElementById("edit-dependant").removeAttribute('value');
                 }
 
-                
-                
-
-
-                // if(data.prid){
-                //     document.getElementById('edit-manager-value').setAttribute('value', data.prid);
-                //     const adArray = data.prid.split(', ');
-                //     console.log(adArray);
-                    
-                //     let mgrs;
-                //     adArray.forEach((element) => {
-
-                //         const mgr = editManagerResponse.data.filter((el) => 
-                //              el.ID === element
-                //         )
-
-                //         // console.log(mgr.firstname + ' ' + mgr.lastname);
-                        
-
-                //         if(mgr){
-                //             mgrs = mgrs ? mgrs + ', ' + mgr[0].firstname + ' ' + mgr[0].lastname : mgr[0].firstname + ' ' + mgr[0].lastname
-                //         }
-                //     })
-
-                //     document.getElementById('edit-manager').setAttribute('value', mgrs);
-                   
-                    
-                    
-                // }else {
-                //     document.getElementById('edit-manager-value').removeAttribute('value');
-                //     document.getElementById('edit-manager').removeAttribute('value');
-                // }
-
-                // if(data.benid){
-
-                //     document.getElementById('edit-beneficent-value').setAttribute('value', data.benid);
-                //     const adArray = data.benid.split(', ');
-                //     // console.log(adArray);
-                    
-                //     let benes;
-                //     adArray.forEach((element) => {
-
-                //         const bene = editBeneficentResponse.data.filter((el) => 
-                //              el.ID === element
-                //         )
-
-                //         // console.log(mgr.firstname + ' ' + mgr.lastname);
-                        
-
-                //         if(bene){
-                //             benes = benes ? benes + ', ' + bene[0].firstname + ' ' + bene[0].lastname : bene[0].firstname + ' ' + bene[0].lastname
-                //         }
-                //     })
-
-                //     document.getElementById('edit-beneficent').setAttribute('value', benes);
-
-                // }else {
-                //     document.getElementById('edit-beneficent-value').removeAttribute('value');
-                //     document.getElementById('edit-beneficent').removeAttribute('value');
-                // }
 
 
                 validateEditForm();
@@ -354,9 +226,9 @@
 
 
         const bannerHeight = banner.offsetHeight;
-        // console.log(bannerHeight);
+        // //console.log(bannerHeight);
 
-        form.style.top = `calc(${bannerHeight}px + 10px)`;
+        // form.style.top = `calc(${bannerHeight}px + 10px)`;
         // div.style.height = `calc(100vh - ${bannerHeight}px)`;
     }
 
@@ -385,7 +257,7 @@
         const selectDep = document.getElementById('edit-dependant');
         const selectDepVal = document.getElementById('edit-dependant-value');
 
-        // console.log(rel.value);
+        // //console.log(rel.value);
 
         if (rel.value.length > 0 && dep.value.length > 0) {
             const displayValue = selectDepVal.value ? selectDep.value + ", " + dep.value + " (" + rel.value + ")" : dep.value + " (" + rel.value + ")";
@@ -404,19 +276,13 @@
     function editLoadProjects() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetProjectsOnly.php', true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+       
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // document.getElementById('loading-spinner').style.display = 'none';
-                // // document.getElementById('onrowload').style.display = 'none';
-                // onload.classList.remove('onrowload');
+               
                 editProjectResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
-
-                // const listContainer = document.getElementById('dropdown-list-project');
+                
                 const search = document.getElementById('editProjectSearchkey');
                 // search.setAttribute('onclick',`searchOption(${response.data})`)
 
@@ -452,7 +318,7 @@
         listContainer.innerHTML = ""
 
         data.forEach(element => {
-            // console.log(element);
+            // //console.log(element);
             const option = document.createElement('div')
             const hr = document.createElement('hr')
             hr.setAttribute('class', 'line')
@@ -467,9 +333,7 @@
 
         });
 
-        // const selctOption = document.querySelector('.dropdown-option');
-        // const selectProject = document.getElementById('select-project');
-        // const selectProjectValue = document.getElementById('select-project-value');
+        
 
         listContainer.addEventListener('click', editSelectProjects)
 
@@ -477,7 +341,7 @@
 
     function editSelectProjects(event) {
 
-        // console.log(event);
+        // //console.log(event);
 
         const selectProject = document.getElementById('edit-project');
         const selectProjectValue = document.getElementById('edit-project-value');
@@ -485,11 +349,11 @@
             let available = false;
             let value = selectProjectValue.getAttribute('value');
             let content = selectProject.getAttribute('value');
-            // console.log(value);
+            // //console.log(value);
 
 
             if (value) {
-                // console.log(value.split(", ").includes(event.target.getAttribute('value')));
+                // //console.log(value.split(", ").includes(event.target.getAttribute('value')));
 
                 available = value.split(", ").includes(event.target.getAttribute('value'));
             }
@@ -499,7 +363,7 @@
                 content = content ? content + ", " + event.target.textContent : event.target.textContent;
                 selectProject.setAttribute('value', content);
 
-                // console.log('project Value ', value);
+                // //console.log('project Value ', value);
                 value = value ? value + ", " + event.target.getAttribute('value') : event.target.getAttribute('value');
                 selectProjectValue.setAttribute('value', value)
 
@@ -518,7 +382,7 @@
         const gs = document.getElementById('edit-gs').value.length > 0;
         let button = document.getElementById('edit-submit');
 
-        // console.log(selectedImage);
+        // //console.log(selectedImage);
 
 
         if (fname && lname && nic && gender && date && address && gs) {

@@ -95,7 +95,8 @@
   justify-content: flex-start;
   margin: auto;
   position: relative;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
+  padding-top: 20px;
 }
 
 .div {
@@ -210,14 +211,14 @@ textarea:focus {
 }
 
 .banner {
-  padding-top: 5vh;
-  padding-bottom: 5vh;
+  padding-top: 8vh;
+  padding-bottom: 2vh;
   text-align: left;
   font-family: "ubuntu", serif;
   font-size: 2vw;
   font-weight: 700;
   color: #f8f4f4;
-  position: fixed;
+  position: relative;
   z-index: 10;
   background-color: rgb(103, 143, 99);
   display: flex;

@@ -17,7 +17,7 @@
             <form action="/add-sentdonation" method="post" class="del-form" onsubmit="return submitDeleteform()">
                 <input type="text" hidden name = 'ID' id='del-id'>
                <div class="delMsg">
-                <h4>Do you want to delete the sent donation ?</h4>
+                <h4>Do you want to delete this disbursed donation ?</h4>
                </div>
                <div class="option-btn ">
                 <button onclick="closeDelModel()" class="opt no" type="button">No</button>
@@ -42,8 +42,7 @@
 <script>
     function closeDelModel() {
         document.getElementById('deleteModel').style.display = 'none'
-        // console.log(document.getElementById('del-id').value);
-        
+       
     }
 
     function submitDeleteform(){

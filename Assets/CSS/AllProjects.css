@@ -50,6 +50,10 @@
     margin-bottom: 2vh;
   }
   
+.no-scroll {
+    position: fixed;
+ }
+  
   .row-type {
     font-family: "DM Serif Text", serif;
     font-size: 5vw;

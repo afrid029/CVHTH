@@ -49,7 +49,7 @@
 
         <script>
             document.getElementById('email').value = '<?php echo $_SESSION['email']; ?>';
-            console.log('<?php echo $_SESSION['email']; ?>');
+        
 
             function validateForm() {
 
@@ -59,7 +59,7 @@
                 let button = document.getElementById('submit');
                 let email = document.getElementById('email').value;
 
-                console.log(email);
+                // console.log(email);
                 
                 // console.log(current.length > 0 && newPass.length > 0 && re.length > 0);
                 

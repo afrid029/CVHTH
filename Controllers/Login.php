@@ -46,19 +46,19 @@ if(isset($_POST['submit'])){
 
             if($data['role'] == 'donor'){
                 $_SESSION['fromAction'] = true;
-                $_SESSION['message'] = 'Login successful';
+                $_SESSION['message'] = 'Login successful!';
                 $_SESSION['status'] = true;
                 mysqli_close($db);
                 header('Location: /donors');
             }else if($data['role'] === 'admin' || $data['role'] === 'superadmin'){
                 $_SESSION['fromAction'] = true;
-                $_SESSION['message'] = 'Login successful';
+                $_SESSION['message'] = 'Login successful!';
                 $_SESSION['status'] = true;
                 mysqli_close($db);
                 header('Location: /donation');
             } else if($data['role'] === 'project manager') {
                 $_SESSION['fromAction'] = true;
-                $_SESSION['message'] = 'Login successful';
+                $_SESSION['message'] = 'Login successful!';
                 $_SESSION['status'] = true;
                 mysqli_close($db);
                 header('Location: /sentdonation');
@@ -66,7 +66,7 @@ if(isset($_POST['submit'])){
 
         }else {
             $_SESSION['fromAction'] = true;
-            $_SESSION['message'] = 'Incorrect password';
+            $_SESSION['message'] = 'Incorrect password!';
             $_SESSION['status'] = false;
             mysqli_close($db);
             header('Location: /');
@@ -74,13 +74,13 @@ if(isset($_POST['submit'])){
 
     }else if($countRows > 1){
         $_SESSION['fromAction'] = true;
-        $_SESSION['message'] = 'Multiple emails found. Contact admin';
+        $_SESSION['message'] = 'Multiple emails found. Contact admin!';
         $_SESSION['status'] = false;
         mysqli_close($db);
         header('Location: /');
     }else {
         $_SESSION['fromAction'] = true;
-        $_SESSION['message'] = 'Email not found';
+        $_SESSION['message'] = 'Email not found!';
         $_SESSION['status'] = false;
         mysqli_close($db);
         header('Location: /');

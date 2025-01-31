@@ -16,12 +16,7 @@ $row = mysqli_fetch_assoc($result);
 $total_records = $row['total'];
 
 $total_received = '';
-// if ($page === 1) {
-//     $sql = "SELECT sum(amount) AS total_received FROM project";
-//     $result = mysqli_query($db, $sql);
-//     $row = mysqli_fetch_assoc($result);
-//     $total_received = $row['total_received'];
-// }
+
 
 $forPM = isset($_GET['pmID']) ? true : false;
 
@@ -68,7 +63,9 @@ if ($forPM) {
                             <hr>";
         }
     } else {
-        // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+        $html .= "<div class='table-row'>
+        <div style='grid-column: span 5; text-align: center; font-size: 12px; font-weight:700;'>No Projects Found.</div>
+        </div>";
     }
 } else {
 
@@ -120,7 +117,9 @@ if ($forPM) {
                             <hr>";
         }
     } else {
-        // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+        $html .= "<div class='table-row'>
+        <div style='grid-column: span 6; text-align: center; font-size: 12px; font-weight:700;'>No Projects Found.</div>
+        </div>";
     }
 }
 

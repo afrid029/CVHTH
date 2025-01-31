@@ -40,7 +40,7 @@
 
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
-            }, 5000);
+            }, 7000);
         </script>
     <?php
     }
@@ -88,7 +88,7 @@
             <div class="sidebar-content">
 
                 <div class="bar-row">
-                    <button class="add-btn" onclick="handleAdd(true)">Add User</button>
+                    <button class="add-btn" onclick="handleAdd(true)">Create User</button>
                 </div>
                 <div class="bar-row">
                     <div class="row-type">
@@ -239,7 +239,7 @@
 
                             <div>Name</div>
                             <div>Contact No.</div>
-                            <div style="text-align: center;">Donated (RS)</div>
+                            <div style="text-align: end;">Donated (RS)</div>
                             <div style="visibility: hidden" ;></div>
                             <div>DOB</div>
                             <div style='text-align: center'>Actions</div>
@@ -262,17 +262,11 @@
         </div>
     </div>
 
-    <!--     
-    <footer>
-        <div class="footer"></div>
 
-    </footer> -->
-
-
-    <?php include('/CVHTH/Models/AddUser.php') ?>
-    <?php include('/CVHTH/Models/EditUser.php') ?>
-    <?php include('/CVHTH/Models/InfoUser.php') ?>
-    <?php include('/CVHTH/Models/DeleteUserModel.php') ?>
+    <?php include('Models/AddUser.php') ?>
+    <?php include('Models/EditUser.php') ?>
+    <?php include('Models/InfoUser.php') ?>
+    <?php include('Models/DeleteUserModel.php') ?>
     <script>
         function resizeWindow() {
             // console.log('resizing')
@@ -292,20 +286,13 @@
 
                 const mainConetntMobile = document.querySelector('.main-content-mobile');
                 const mainConetntMobileHeight = mainConetntMobile.offsetHeight;
-                // console.log(mainConetntMobileHeight);
 
                 mainConetntMobileBg.style.height = `calc(${mainConetntMobileHeight}px + 20px)`;
-                // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-
             }
 
             mainBody.style.top = `${navbarHeight}px`;
-            // contentTitle.style.top = `${navbarHeight}px`;
-            // mainConetntMobile.style.height = `calc(100vh - ${navbarHeight}px - ${sideBarHeight}px)`;
-            // console.log(mainConetntMobile.style.height,navbarHeight, sideBarHeight);
+           
         }
-
-        // resizeWindow();
 
 
         function DisplayNumber(targetNumber, ID) {
@@ -325,11 +312,6 @@
             };
             const interval = setInterval(countUp, incrementTime);
         }
-
-        // DisplayNumber(5, 'admin');
-        // DisplayNumber(10, 'prjmgr');
-        // DisplayNumber(150, 'donor');
-        // DisplayNumber(90000, 'total');
 
 
         function adminsload(page) {
@@ -420,7 +402,7 @@
                     var response = JSON.parse(xhr.responseText);
 
                     const dataContainer = document.getElementById('table-rows-donor');
-                    // console.log(response.html);
+                    console.log(response.html);
 
 
                     dataContainer.innerHTML = response.html;
@@ -476,7 +458,7 @@
 
         const addBtn = document.querySelector('.add-btn');
         addBtn.addEventListener('click', function() {
-            console.log('clicked');
+            // console.log('clicked');
 
             addBtn.classList.add('clicked')
 
@@ -487,14 +469,17 @@
 
         function handleAdd(value) {
             const model = document.getElementById('addModel');
+             const body = document.querySelector('.main-body');
             if (value) {
+                body.classList.add('no-scroll');
                 loadProjects();
                 loadDonors();
                 model.style.display = 'flex';
                 setTop();
 
             } else {
-                console.log('falsseee');
+                // console.log('falsseee');
+                body.classList.remove('no-scroll');
 
                 model.style.display = 'none';
                 document.getElementById('dropdown-container-project').style.display = 'none';
@@ -528,28 +513,30 @@
         }
 
         function Edit(ID) {
+             document.querySelector('.main-body').classList.add('no-scroll');
             const model = document.getElementById('editModel');
             model.style.display = 'flex';
-            document.getElementById('reset-password').disabled = false;
             editSetTop();
             editLoadDonors();
             editLoadProjects();
             getSingleUser(ID);
+            model.style.display = 'flex';
 
         }
 
         function Delete(ID) {
-            console.log(ID);
+            // console.log(ID);
 
             document.getElementById('del-id').value = ID;
             document.getElementById('deleteModel').style.display = 'flex'
 
-            console.log(document.getElementById('del-id'));
+            // console.log(document.getElementById('del-id'));
 
 
         }
 
         function closeEdit() {
+             document.querySelector('.main-body').classList.remove('no-scroll');
             document.getElementById('editModel').style.display = 'none';
             document.querySelectorAll('.dropdown-container').forEach((el) => {
                 el.style.display = 'none';
@@ -566,9 +553,10 @@
         }
 
         function moreInfo(role, ID) {
+             document.querySelector('.main-body').classList.add('no-scroll');
             const userRole = role === 'donor' ? 'donor' : 'project manager';
             userMoreInfo(ID, userRole);
-            document.getElementById('viewModel').style.display = 'flex';
+            
             if (userRole === 'donor') {
                 document.getElementById('donor-info').style.display = 'flex';
                 document.getElementById('project-info').style.display = 'none';
@@ -576,11 +564,13 @@
                 document.getElementById('project-info').style.display = 'flex';
                 document.getElementById('donor-info').style.display = 'none';
             }
-            ViewSetTop();
+            // ViewSetTop();
+            document.getElementById('viewModel').style.display = 'flex';
 
         }
 
         function closeView() {
+             document.querySelector('.main-body').classList.remove('no-scroll');
             document.getElementById('viewModel').style.display = 'none';
             document.getElementById('project-info').style.display = 'none';
             document.getElementById('donor-info').style.display = 'none';
@@ -594,6 +584,15 @@
             setTop();
             ViewSetTop();
         }));
+        
+        function adjustViewportHeight() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+window.addEventListener('resize', adjustViewportHeight);
+window.addEventListener('load', adjustViewportHeight);
+
     </script>
 
 </body>

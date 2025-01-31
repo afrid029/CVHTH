@@ -42,8 +42,7 @@
 <script>
     function closeDelModel() {
         document.getElementById('deleteModel').style.display = 'none'
-        // console.log(document.getElementById('del-id').value);
-        
+       
     }
 
     function submitDeleteform(){

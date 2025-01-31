@@ -16,6 +16,10 @@
     /* height: 100%; */
   }
   
+.no-scroll {
+    position: fixed;
+  }
+  
   .main-sidebar {
     width: 25vw;
     background: -webkit-linear-gradient(

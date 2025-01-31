@@ -61,19 +61,15 @@
 
 
                 xhr.open('GET', '/Controllers/GetMoreInfo.php?ID=' + ID + '&type=' + encodeURIComponent(role), true);
-                // document.getElementById('loading-spinner').style.display = 'block';
-                // const onload = document.getElementById('onrowload');
-                // onload.classList.add('onrowload');
+              
 
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
-                        // document.getElementById('loading-spinner').style.display = 'none';
-                        // // document.getElementById('onrowload').style.display = 'none';
-                        // onload.classList.remove('onrowload');
+                      
                         const {
                             data
                         } = JSON.parse(xhr.responseText);
-                        // console.log(data);
+                        // //console.log(data);
 
                         document.getElementById('prj-name').textContent = data.name;
                         document.getElementById('prj-id').textContent = 'Project ID : ' + data.ID;
@@ -122,7 +118,7 @@
             }
 
             function ViewSetTop() {
-                console.log('Serting top');
+                //console.log('Serting top');
 
                 const banner = document.querySelector('.view-banner');
                 const top = document.querySelector('#prj-info');
@@ -130,9 +126,9 @@
 
 
                 const bannerHeight = banner.offsetHeight;
-                // console.log(bannerHeight);
+                // //console.log(bannerHeight);
 
-                top.style.top = `calc(${bannerHeight}px + 10px)`;
+                // top.style.top = `calc(${bannerHeight}px + 10px)`;
 
 
 

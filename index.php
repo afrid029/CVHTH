@@ -34,7 +34,7 @@
 
             setTimeout(() => {
                 document.getElementById('alert').style.display = 'none';
-            }, 5000);
+            }, 7000);
         </script>
     <?php
     }
@@ -47,10 +47,7 @@
             <div class="home-bgImage">
 
             </div>
-            <!-- <div class="home-bg">
-
-            </div> -->
-
+         
             <div class="home-content">
 
                 <div class="thought">
@@ -156,15 +153,16 @@
                     <h4>Login</h4>
                 </div>
                 
-                <form class="login-form" action="/login" method="post">
+                <form class="login-form" action="/login" method="post" onsubmit="return SubmitLogin()">
                     <div class="FormRow">
                         <input type="text" id="email" name="email" required placeholder="Enter Your Email">
                     </div>
                     <div class="FormRow">
                         <input type="password" id="password" name="password" required placeholder="Enter Your Password">
                     </div>
-                    <div class="FormRow">
-                        <button type="submit" name="submit" class="btn-login">Login</button>
+                    <div style="display: flex; justify-content: center;" class="FormRow">
+                        <button type="submit" id="login" name="submit" class="btn-login">Login</button>
+                        <button disabled=true id="logining" style="display: none;" type="submit" name="submit" class="btn-login">Loging In...</button>
                     </div>
                 </form>
                 <div class="forgot-btn">
@@ -251,9 +249,15 @@
         }
 
         function naviOriginal(path){
-            console.log(path);
+            //console.log(path);
             
             window.location.href = path;
+        }
+
+        function SubmitLogin() {
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('logining').style.display = 'block';
+            return true;
         }
 
 

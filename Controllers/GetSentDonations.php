@@ -86,7 +86,9 @@ if (mysqli_num_rows($result) > 0) {
     }
 
 } else {
-    // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+    $html .= "<div class='table-row'>
+    <div style='grid-column: span 6; text-align: center; font-size: 12px; font-weight:700;'>No Disbursed Donations Found.</div>
+    </div>";
 }
 
 

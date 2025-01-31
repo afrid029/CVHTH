@@ -43,7 +43,7 @@ if(isset($_POST['submit'])){
         }else {
             
         
-            $_SESSION['message'] = "Unable to create user. Try Again Later!";
+            $_SESSION['message'] = "Unable to create user. Try Again Later! ".mysqli_error($db);
             // $_SESSION['message'] = mysqli_error($db);
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
@@ -55,13 +55,16 @@ if(isset($_POST['submit'])){
 
     }else if($role === 'donor'){
 
-        $dobCheck = isset($_POST['dob']) ? true : false;
+        $dobCheck = $_POST['dob'] !== '' ? true : false;
+
+        // echo $dobCheck;
+        // echo $_POST['dob'];
 
         if($dobCheck) {
             $dob = $_POST['dob'];
-            $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password, dob) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$password', '$dob' )";
+            $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password, dob) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash', '$dob' )";
         }else {
-            $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$password' )";
+            $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash' )";
         }
 
         $result = mysqli_query($db, $query);
@@ -74,7 +77,7 @@ if(isset($_POST['submit'])){
             // header('Location: /users');
         }else {
             mysqli_close($db);
-            $_SESSION['message'] = "Unable to create user. Try Again Later!";
+            $_SESSION['message'] = "Unable to create user. Try Again Later! ".mysqli_error($db);
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
             header('Location: /users');
@@ -85,7 +88,7 @@ if(isset($_POST['submit'])){
 
         mysqli_begin_transaction($db);
 
-        $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$password' )";
+        $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash' )";
 
         $result1 = mysqli_query($db, $query);
 
@@ -181,14 +184,14 @@ if(isset($_POST['submit'])){
                 mysqli_close($db);
                 header('Location: /users');
             }else {
-                $_SESSION['message'] = "Unable to update. try again later!";
+                $_SESSION['message'] = "Unable to update. try again later! ".mysqli_error($db);
                 $_SESSION['status'] = false;
                 $_SESSION['fromAction'] = true;
                 mysqli_close($db);
                 header('Location: /users');
             }
         }else if($role === 'donor'){
-            $dob = isset($_POST['dob']) ? $_POST['dob'] : '';
+            $dob = $_POST['dob'] === '' ? '' : $_POST['dob'];
 
             if($dob === ''){
                 $query = "UPDATE users 
@@ -221,7 +224,7 @@ if(isset($_POST['submit'])){
                 mysqli_close($db);
                 header('Location: /users');
             }else {
-                $_SESSION['message'] = "Unable to update. try again later!";
+                $_SESSION['message'] = "Unable to update. try again later! ".mysqli_error($db);
                 $_SESSION['status'] = false;
                 $_SESSION['fromAction'] = true;
                 mysqli_close($db);
@@ -283,17 +286,17 @@ if(isset($_POST['submit'])){
                 header('Location: /users');
             }else {
                 mysqli_rollback($db);
-                mysqli_close($db);
-                $_SESSION['message'] = "Unable to update user. Try Again Later!";
+                $_SESSION['message'] = "Unable to update user. Try Again Later! ".mysqli_error($db);
                 $_SESSION['status'] = false;
                 $_SESSION['fromAction'] = true;
+                mysqli_close($db);
     
                 header('Location: /users');
             }
         }
     }else if($row['role'] === 'donor'){
         if($role === 'donor'){
-            $dob = isset($_POST['dob']) ? $_POST['dob'] : '';
+            $dob = $_POST['dob'] === '' ? '': $_POST['dob'] ;
 
             if($dob === ''){
                 $query = "UPDATE users 
@@ -324,7 +327,7 @@ if(isset($_POST['submit'])){
                 mysqli_close($db);
                 header('Location: /users');
             }else {
-                $_SESSION['message'] = "Unable to update. try again later!";
+                $_SESSION['message'] = "Unable to update. try again later! ".mysqli_error($db);
                 $_SESSION['status'] = false;
                 $_SESSION['fromAction'] = true;
                 mysqli_close($db);
@@ -358,7 +361,7 @@ if(isset($_POST['submit'])){
                     mysqli_close($db);
                     header('Location: /users');
                 }else {
-                    $_SESSION['message'] = "Unable to update. try again later!";
+                    $_SESSION['message'] = "Unable to update. try again later! ".mysqli_error($db);
                     $_SESSION['status'] = false;
                     $_SESSION['fromAction'] = true;
                     mysqli_rollback($db);
@@ -418,10 +421,10 @@ if(isset($_POST['submit'])){
                     header('Location: /users');
                 }else {
                     mysqli_rollback($db);
-                    mysqli_close($db);
-                    $_SESSION['message'] = "Unable to update user. Try Again Later!";
+                    $_SESSION['message'] = "Unable to update user. Try Again Later! ".mysqli_error($db);
                     $_SESSION['status'] = false;
                     $_SESSION['fromAction'] = true;
+                    mysqli_close($db);
         
                     header('Location: /users');
                 }
@@ -490,10 +493,11 @@ if(isset($_POST['submit'])){
                 header('Location: /users');
             }else {
                 mysqli_rollback($db);
-                mysqli_close($db);
-                $_SESSION['message'] = "Unable to update user. Try Again Later!";
+               
+                $_SESSION['message'] = "Unable to update user. Try Again Later! ".mysqli_error($db);
                 $_SESSION['status'] = false;
                 $_SESSION['fromAction'] = true;
+                mysqli_close($db);
     
                 header('Location: /users');
             }
@@ -530,7 +534,7 @@ if(isset($_POST['submit'])){
                     mysqli_close($db);
                     header('Location: /users');
                 }else {
-                    $_SESSION['message'] = "Unable to update. try again later!";
+                    $_SESSION['message'] = "Unable to update. try again later! ".mysqli_error($db);
                     $_SESSION['status'] = false;
                     $_SESSION['fromAction'] = true;
                     mysqli_rollback($db);
@@ -538,7 +542,7 @@ if(isset($_POST['submit'])){
                     header('Location: /users');
                 }
             }else if($role === 'donor'){
-                $dob = isset($_POST['dob']) ? $_POST['dob'] : '';
+                $dob = $_POST['dob'] === '' ? '' : $_POST['dob'];
 
                 if($dob === ''){
                     $query = "UPDATE users 
@@ -573,7 +577,7 @@ if(isset($_POST['submit'])){
                     mysqli_close($db);
                     header('Location: /users');
                 }else {
-                    $_SESSION['message'] = "Unable to update. try again later!";
+                    $_SESSION['message'] = "Unable to update. try again later!  ".mysqli_error($db);
                     $_SESSION['status'] = false;
                     $_SESSION['fromAction'] = true;
                     mysqli_rollback($db);

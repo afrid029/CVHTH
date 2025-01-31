@@ -1,0 +1,17 @@
+[31-Jan-2025 11:16:17 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 11:26:20 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 11:26:57 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 11:27:56 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 11:30:19 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 11:30:54 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 11:31:16 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 11:33:32 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 11:34:49 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 11:39:37 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 11:41:01 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 11:47:40 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 12:05:18 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 12:08:36 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 12:14:50 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 12:16:37 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120
+[31-Jan-2025 12:16:55 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/rmlrkp20/test.chulipuramvasantham.com/Controllers/GetUsers.php on line 120

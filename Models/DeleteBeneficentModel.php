@@ -17,7 +17,7 @@
             <form action="/add-beneficiary" method="post" class="del-form" onsubmit="return submitDeleteform()">
                 <input type="text" hidden name = 'ID' id='del-id'>
                <div class="delMsg">
-                <h4>Do you want to delete the Beneficiary ?</h4>
+                <h4>Do you want to delete this Beneficiary ?</h4>
                </div>
                <div class="option-btn ">
                 <button onclick="closeDelModel()" class="opt no" type="button">No</button>

@@ -72,10 +72,7 @@
                                 <input onclick="ClearSelection('select-dependant-value','select-dependant')" class="dep-btn" style="background-color:rgba(240, 239, 180, 0.79); text-align: center; color:rgb(66, 65, 2); font-weight: 700; cursor: pointer" type="text" readonly value="Clear">
                                 <input onclick="openSelect('dropdown-container-dependant',false)" class="dep-btn" style="background-color:rgba(240, 180, 180, 0.79); text-align: center; color:rgba(145, 11, 11, 0.79); font-weight: 700; cursor: pointer" type="text" readonly value="Close">
 
-                                <!-- <input class="search-mobile" style="background-color:rgba(204, 204, 204, 0.79); width: 10%; text-align: center; color: #000000c9; font-weight: 700;" type="text" readonly value="Search">
-                                <input class="searchbar-mobile" style="width: 60%" type="text" id="projectSearchkey" placeholder="Search Projects">
-                                <input onclick="openSelect('dropdown-container-project',false)" class="search-mobile" style="background-color:rgba(240, 180, 180, 0.79); width: 10%; text-align: center; color:rgba(145, 11, 11, 0.79); font-weight: 700; cursor: pointer" type="text" readonly value="Close">
-                                <input onclick="ClearSelection('select-project-value','select-project')" class="search-mobile" style="background-color:rgba(182, 240, 180, 0.79); width: 10%; text-align: center; color:rgb(17, 66, 2); font-weight: 700; cursor: pointer" type="text" readonly value="Clear"> -->
+                               
                             </div>
 
 
@@ -146,7 +143,7 @@
                        
 
                         function PreviewImages(event) {
-                            // console.log(val);
+                            // //console.log(val);
 
                             
                             const files = event.target.files;
@@ -241,9 +238,9 @@
 
 
         const bannerHeight = banner.offsetHeight;
-        // console.log(bannerHeight);
+        // //console.log(bannerHeight);
 
-        form.style.top = `calc(${bannerHeight}px + 10px)`;
+        // form.style.top = `calc(${bannerHeight}px + 10px)`;
         // div.style.height = `calc(100vh - ${bannerHeight}px)`;
     }
 
@@ -272,7 +269,7 @@
         const selectDep = document.getElementById('select-dependant');
         const selectDepVal = document.getElementById('select-dependant-value');
 
-        console.log(rel.value);
+        //console.log(rel.value);
 
         if (rel.value.length > 0 && dep.value.length > 0) {
             const displayValue = selectDepVal.value ? selectDep.value + ", " + dep.value + " (" + rel.value + ")" : dep.value + " (" + rel.value + ")";
@@ -291,9 +288,7 @@
     function loadProjects() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/Controllers/GetProjectsOnly.php', true);
-        // document.getElementById('loading-spinner').style.display = 'block';
-        // const onload = document.getElementById('onrowload');
-        // onload.classList.add('onrowload');
+        
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -301,7 +296,7 @@
                 // // document.getElementById('onrowload').style.display = 'none';
                 // onload.classList.remove('onrowload');
                 projectResponse = JSON.parse(xhr.responseText);
-                // console.log(response.data);
+                // //console.log(response.data);
 
                 // const listContainer = document.getElementById('dropdown-list-project');
                 const search = document.getElementById('projectSearchkey');
@@ -311,22 +306,7 @@
 
                 loadSearchOptionsForProject(projectResponse.data)
 
-                // const dataContainer = document.getElementById('table-rows')
-
-                // dataContainer.innerHTML = response.html;
-                // resizeWindow();
-
-                // dataContainer.classList.remove('fade-in'); // Remove the class to reset animation
-                // void dataContainer.offsetWidth; // Trigger reflow
-                // dataContainer.classList.add('fade-in'); // Apply fade-in animation
-                // document.getElementById('table-pagi').innerHTML = response.pagination;
-
-                // if (page === 1) {
-                //     document.getElementById('count').textContent = "From " + response.total + " donations";
-                //     DisplayNumber(response.total_received, 'total')
-                //     DisplayNumber(response.total_sent, 'spent')
-                //     DisplayNumber(response.current_bal, 'current')
-                // }
+               
             }
         };
 
@@ -354,7 +334,7 @@
         listContainer.innerHTML = ""
 
         data.forEach(element => {
-            // console.log(element);
+            // //console.log(element);
             const option = document.createElement('div')
             const hr = document.createElement('hr')
             hr.setAttribute('class', 'line')
@@ -369,17 +349,14 @@
 
         });
 
-        // const selctOption = document.querySelector('.dropdown-option');
-        // const selectProject = document.getElementById('select-project');
-        // const selectProjectValue = document.getElementById('select-project-value');
-
+       
         listContainer.addEventListener('click', selectProjects)
 
     }
 
     function selectProjects(event) {
 
-        // console.log(event);
+        // //console.log(event);
 
         const selectProject = document.getElementById('select-project');
         const selectProjectValue = document.getElementById('select-project-value');
@@ -387,11 +364,11 @@
             let available = false;
             let value = selectProjectValue.getAttribute('value');
             let content = selectProject.getAttribute('value');
-            // console.log(value);
+            // //console.log(value);
 
 
             if (value) {
-                // console.log(value.split(", ").includes(event.target.getAttribute('value')));
+                // //console.log(value.split(", ").includes(event.target.getAttribute('value')));
 
                 available = value.split(", ").includes(event.target.getAttribute('value'));
             }
@@ -401,19 +378,19 @@
                 content = content ? content + ", " + event.target.textContent : event.target.textContent;
                 selectProject.setAttribute('value', content);
 
-                // console.log('project Value ', value);
+                // //console.log('project Value ', value);
                 value = value ? value + ", " + event.target.getAttribute('value') : event.target.getAttribute('value');
                 selectProjectValue.setAttribute('value', value)
 
             }
 
-            // console.log('project ', content);
+            // //console.log('project ', content);
 
 
 
             // openSelect(false); 
 
-            // console.log(event.target.getAttribute('value'), event.target.textContent);
+            // //console.log(event.target.getAttribute('value'), event.target.textContent);
         }
     }
 
@@ -428,7 +405,7 @@
         const selectedImage = document.getElementById('select-image').value;
         let button = document.getElementById('submit');
 
-        console.log(selectedImage);
+        //console.log(selectedImage);
 
 
         if (fname && lname && nic && gender && date && address && gs && selectedImage.length > 0) {

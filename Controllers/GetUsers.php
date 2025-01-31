@@ -68,7 +68,9 @@ if ($role === 'admin') {
                                     <hr>";
         }
     } else {
-        // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+        $html .= "<div class='table-row'>
+        <div style='grid-column: span 4; text-align: center; font-size: 12px; font-weight:700;'>No Admins Found.</div>
+        </div>";
     }
 } else if ($role === 'project manager') {
     // echo("into PM");
@@ -106,10 +108,12 @@ if ($role === 'admin') {
                                     <hr>";
         }
     } else {
-        // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+        $html .= "<div class='table-row'>
+        <div style='grid-column: span 6; text-align: center; font-size: 12px; font-weight:700;'>No Project Managers Found.</div>
+        </div>";
     }
 } else if ($role === 'donor') {
-    $query = "SELECT sq.ID, sq.firstname, sq.lastname, sq.contactno, sq.dob, NVL(amount, 0) AS donation from (SELECT u.id, u.firstname, u.lastname, u.contactno, NVL(u.dob, '<i>Not Provided</i>') dob, SUM(dr.amount) OVER (PARTITION BY u.ID) as amount, ROW_NUMBER() Over (PARTITION BY U.ID) rownum from users u LEFT JOIN donationreceived dr ON u.ID = dr.Donor_ID WHERE u.role='$role') sq where sq.rownum = 1 ORDER BY donation desc, sq.firstname LIMIT $offset, $results_per_page";
+    $query = "SELECT sq.ID, sq.firstname, sq.lastname, sq.contactno, sq.dob, NVL(amount, 0) AS donation from (SELECT u.id, u.firstname, u.lastname, u.contactno, NVL(u.dob, '<i>Not Provided</i>') dob, SUM(dr.amount) OVER (PARTITION BY u.ID) as amount, ROW_NUMBER() Over (PARTITION BY u.ID) rownum from users u LEFT JOIN donationreceived dr ON u.ID = dr.Donor_ID WHERE u.role='$role') sq where sq.rownum = 1 ORDER BY donation desc, sq.firstname LIMIT $offset, $results_per_page";
 
     $result = mysqli_query($db, $query);
 
@@ -137,7 +141,9 @@ if ($role === 'admin') {
                                     <hr>";
         }
     } else {
-        // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
+        $html .= "<div class='table-row'>
+        <div style='grid-column: span 6; text-align: center; font-size: 12px; font-weight:700;'>No Donors Found.</div>
+        </div>";
     }
 }
 
