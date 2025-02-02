@@ -16,10 +16,10 @@ if(isset($_POST['submit'])){
     $countRows = mysqli_num_rows($result);
     if($countRows == 1) {
         $row = mysqli_fetch_assoc($result);
-        if(password_verify($current, $row['password'])) {
+        if(password_verify($current, $row['temp_password'])) {
             if($new === $re) {
                 $newPass = password_hash($new, PASSWORD_DEFAULT);
-                $query = "UPDATE users SET password = '$newPass', new = false WHERE email = '$email'";
+                $query = "UPDATE users SET password = '$newPass', temp_password = NULL, new = false WHERE email = '$email' ";
                 $result = mysqli_query($db, $query);
                 if($result) {
                     $_SESSION['fromAction'] = true;

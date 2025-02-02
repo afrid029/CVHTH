@@ -18,7 +18,7 @@
                 <div onclick="handleAdd(false)" class='close'>Close</div>
             </div>
 
-            <form action="/add-beneficiary" method="post" oninput="validateForm()" onsubmit="return submitLoginform()" enctype="multipart/form-data">
+            <form id="beneForm"  method="post" oninput="validateForm()"  enctype="multipart/form-data">
                 <div class="div"> </div>
                 <div class="Form">
 
@@ -131,9 +131,10 @@
                     <!-- Images -->
                     <div class="FormRow">
                     <small style="color: gray; display: flex; width: 100%; font-size: 12px; margin-bottom: 5px; font-family: Lato, serif">Attach Document(s)</small>
-                        <input type="file" accept="image/jpeg, image/png, image/gif, image/jpg" id="select-image" name="image[]" placeholder="Upload Images" required  multiple>
+                        <input type="file" accept="image/jpeg, image/png, image/gif, image/jpg" id="select-image" name="image[]" placeholder="Upload Images" multiple  hidden>
+                        <button class="image-btn" type="button" onclick="openImage()">select images</button>
                         <small class="small">Documents required</small>
-                        <div id="preview-container" style="display: flex;gap: 5px; flex-wrap:wrap; margin-top: 10px;"></div>
+                        <div id="preview-container" style="display: flex; justify-content: center; gap: 5px; flex-wrap:wrap; margin-top: 10px;"></div>
                     </div>
 
                     
@@ -141,25 +142,44 @@
 
                     <script>
                        
+                       let allFiles = []; 
 
+                       function openImage(){
+                        document.getElementById('select-image').click();
+                       }
                         function PreviewImages(event) {
                             // //console.log(val);
+                            const newFiles = Array.from(event.target.files);
+                          
+                            // const files = event.target.files;
+                           
 
-                            
-                            const files = event.target.files;
-                            const previewContainer = document.getElementById('preview-container');
-                            previewContainer.innerHTML = ''; // Clear the container before showing new images
-
-                            if (files.length > 6) {
+                            if (newFiles.length + allFiles.length > 6) {
                                 alert('You can select a maximum of 6 images.');
                                 event.target.value = '';
                                 validateForm(); // Clear the input (prevents submitting the 7th file)
                                 return;
                             }
 
+                            allFiles = [...allFiles, ...newFiles];
+                            // console.log(allFiles);
+                            
+                            // console.log(fileNames);
+                            
+                            
+                            event.target.value = '';
+                            displayImages();
+                            validateForm();
+
                             // Loop through the selected files
-                            for (let i = 0; i < files.length; i++) {
-                                const file = files[i];
+                            
+                        }
+
+                        function displayImages() {
+                            const previewContainer = document.getElementById('preview-container');
+                            previewContainer.innerHTML = ''; // Clear the container before showing new images
+                            for (let i = 0; i < allFiles.length; i++) {
+                                const file = allFiles[i];
 
                                 // Check if the selected file is an image
                                 if (file.type.startsWith('image/')) {
@@ -168,9 +188,10 @@
 
                                         const divEl = document.createElement('div');
                                         divEl.style.width = '100px';
-                                        divEl.style.height = '100px';
+                                        divEl.style.height = 'auto';
                                         divEl.style.position = 'relative';
                                         divEl.style.display = 'flex'
+                                        divEl.style.flexDirection = 'column'
                                         divEl.style.gap = '5px'
                                         divEl.style.backgroundColor = '#CBCBCB'
                                         divEl.style.borderRadius = '10px'
@@ -178,21 +199,48 @@
                                         const imgElement = document.createElement('img');
                                         imgElement.src = e.target.result;
                                         imgElement.style.borderRadius = '10px'
+                                        imgElement.style.height = '100px';
                                         imgElement.style.width = '100px'; // Optional: resize the image for preview
                                         imgElement.style.objectFit = 'cover'; // Optional: resize the image for preview
                                         // imgElement.style.margin = '10px';
+
+                                        const delButton = document.createElement('button');
+                                        delButton.textContent = 'Delete'
+                                        delButton.style.position = 'relative';
+                                        delButton.style.backgroundColor = '#670e0e';
+                                        delButton.style.border = 'transparent';
+                                        delButton.style.borderRadius = '10px';
+                                        delButton.style.padding = '5px';
+                                        delButton.style.color = 'white';
+                                        delButton.style.cursor = 'pointer';
+
+                                        delButton.type = 'button';
+                                        delButton.onclick = function(){
+                                            removeImage(i);
+                                        }
                                         
                                         // Optional: add margin between images
 
                                         divEl.appendChild(imgElement)
+                                        divEl.appendChild(delButton)
                                         previewContainer.appendChild(divEl);
                                     };
                                     reader.readAsDataURL(file); // Read the file as a data URL for previewing
+
+                                    
                                 } else {
                                     alert('Please select only image files.');
                                 }
                             }
+                        }
+
+                        function removeImage(index) {
+                            // Remove the file from the allFiles array
+                            allFiles.splice(index, 1);
                             
+                            // Re-render the file list
+                            displayImages();
+                            validateForm();
                         }
                     </script>
 
@@ -408,7 +456,7 @@
         //console.log(selectedImage);
 
 
-        if (fname && lname && nic && gender && date && address && gs && selectedImage.length > 0) {
+        if (fname && lname && nic && gender && date && address && gs && allFiles.length > 0) {
             button.disabled = false;
         } else {
             button.disabled = true;
@@ -417,11 +465,67 @@
 
     }
 
-    function submitLoginform() {
+
+    document.getElementById('beneForm').addEventListener('submit', function(event){
         let button = document.getElementById('submit');
         let button2 = document.getElementById('submiting');
         button.style.display = 'none';
         button2.style.display = 'block';
-        return true;
-    }
+
+        event.preventDefault();
+
+        const formData = new FormData;
+
+        allFiles.forEach(file => {
+            formData.append('image[]', file);
+        });
+
+        const fname = document.getElementById('select-fname').value;
+        const lname = document.getElementById('select-lname').value;
+        const nic = document.getElementById('select-nic').value;
+        const gender = document.getElementById('select-gender').value;
+        const date = document.getElementById('select-date').value;
+        const  dependant = document.getElementById('select-dependant-value').value;
+        const project = document.getElementById('select-project-value').value;
+        const address = document.getElementById('select-address').value;
+        const gs = document.getElementById('select-gs').value;
+        const grade = document.getElementById('select-grade').value;
+        const school = document.getElementById('select-school').value;
+
+        formData.append('fname', fname);
+        formData.append('lname', lname);
+        formData.append('nic', nic);
+        formData.append('gender', gender);
+        formData.append('date', date);
+        formData.append('dependant',dependant);
+        formData.append('project',project);
+        formData.append('address',address);
+        formData.append('gs',gs);
+        formData.append('grade',grade);
+        formData.append('school',school);
+        formData.append('submit', true);
+
+        // console.log(formData)
+        
+
+        const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/add-beneficiary', true);
+    xhr.onload = function() {
+        if (xhr.status == 200) {
+            const data = JSON.parse(xhr.responseText)
+            console.log(data);
+            
+            window.location.href = data.redirect;
+            
+        } else {
+            console.error('Error submitting form ',xhr.statusText);
+        }
+    };
+    
+    xhr.send(formData);
+
+// 
+    })
+
+  
 </script>

@@ -23,12 +23,20 @@ if(isset($_POST['submit'])){
                 'new' => $row['new'],
             ];
 
-            if($data['new'] == 1){
-                mysqli_close($db);
-                $_SESSION['email'] = $email;
-                header('Location: /reset-password');
-                return;
-            }
+            // echo  !$row['temp_password']? 'Hello' :'There';
+            // exit();
+
+            
+                if($data['new'] == 1){
+                    mysqli_close($db);
+                    $_SESSION['email'] = $email;
+                    header('Location: /reset-password');
+                    exit();
+                }
+
+            
+
+            
 
             $iv = openssl_random_pseudo_bytes(16);  // AES block size is 16 bytes
 

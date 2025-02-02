@@ -27,7 +27,7 @@
                     <input type="email" name="email" id="email" required readonly>
                 </div>
                 <div class="FormRow">
-                    <input type="password" id="current" name="current" required placeholder="Current Password" >
+                    <input type="password" id="current" name="current" required placeholder="Generated Password" >
                 </div>
                 <div class="FormRow">
                     <input type="password" id="new" name="new" required placeholder="New Password" minlength="8" >

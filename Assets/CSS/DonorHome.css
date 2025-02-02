@@ -153,10 +153,10 @@
     /* display: inline; */
     background-color: #061303;
     display: grid;
-    grid-template-columns: 10% 25% 25% 20% 20%;
+    grid-template-columns: 6% 25% 25% 24% 20%;
     column-gap: 5px;
     width: 100%;
-    padding: 2% 5%;
+    padding: 2% 2%;
     border-radius: 16px 16px 0 0;
     margin-bottom: 1vh;
     font-family: "Inter", serif;
@@ -219,9 +219,9 @@
     /* display: inline; */
   
     display: grid;
-    grid-template-columns: 10% 25% 25% 20% 20%;
+    grid-template-columns: 6% 25% 25% 24% 20%;
     column-gap: 5px;
-    padding: 1% 5%;
+    padding: 1% 2%;
     width: 100%;
     align-items: center;
     font-weight: 500;

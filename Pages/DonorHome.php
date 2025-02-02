@@ -113,6 +113,20 @@
                     </div>
                 </div>
                 <hr class="line">
+
+                <div class="bar-row">
+                    <div class="row-type">
+                        Your Current Balance
+                    </div>
+                    <div class="row-value">
+                        <div>RS</div>
+                        <div>
+                            <div style="text-align: end; margin-bottom: 10px; color: #022202" id="balance">...</div>
+                        </div>
+
+                    </div>
+                </div>
+                <hr class="line">
                 
             </div>
 
@@ -134,7 +148,7 @@
                     <div class="table-header">
                         <div>&nbsp;</div>
                         <div>Beneficiary</div>
-                        <div style='text-align: center'>Amount</div>
+                        <div style='text-align: right; padding-right: 10px'>Amount</div>
                         <div style='text-align: center'>Project</div>
                         <div style='text-align: center'>Date</div>
 
@@ -266,8 +280,9 @@
                     if (page === 1) {
                         document.getElementById('count').textContent = "Via " + response.total + " Allocations";
                         // DisplayNumber(response.total_received, 'total')
-                        DisplayNumber(response.total_sent, 'current')
-                        DisplayNumber(response.total_received, 'spent')
+                        DisplayNumber(response.total_sent, 'spent')
+                        DisplayNumber(response.total_received, 'current') 
+                        DisplayNumber((response.total_received - response.total_sent), 'balance') 
                     }
                 }
             };

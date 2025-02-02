@@ -59,8 +59,12 @@ if (isset($_POST['submit'])) {
             $_SESSION['fromAction'] = true;
             mysqli_rollback($db);
             mysqli_close($db);
-            header('Location: /sentdonation');
+            break; echo json_encode([
+                "redirect" => "/sentdonation"
+            ]);
+            exit();
             break;
+            return;
         }
     }
 
@@ -70,32 +74,23 @@ if (isset($_POST['submit'])) {
         $_SESSION['fromAction'] = true;
         mysqli_commit($db);
         mysqli_close($db);
-        header('Location: /sentdonation');
+        echo json_encode([
+            "redirect" => "/sentdonation"
+        ]);
+        exit();
     } else {
         $_SESSION['message'] = "Unable to insert. Try again later!";
         $_SESSION['status'] = false;
         $_SESSION['fromAction'] = true;
         mysqli_rollback($db);
         mysqli_close($db);
-        header('Location: /sentdonation');
+        echo json_encode([
+            "redirect" => "/sentdonation"
+        ]);
+        exit();
     }
 
-    // // Get the file extension
-    // $imageFileType = strtolower(pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION));
-
-    // // Generate a unique file name using timestamp and a random number
-    // $timestamp = time(); // Current timestamp (seconds since Unix epoch)
-    // $randomNumber = rand(1000, 9999); // Random number to add some variability
-    // $targetFile = $targetDirectory . "logo_" . $timestamp . "_" . $randomNumber . "." . $imageFileType;
-
-    // if (move_uploaded_file($_FILES["logo"]["tmp_name"], $targetFile)) {
-    //     echo "The file has been uploaded successfully as: " . basename($targetFile);
-    // } else {
-    //     $_SESSION['message'] = "Failed to upload Logo. Try again later!";
-    //     $_SESSION['status'] = false;
-    //     $_SESSION['fromAction'] = true;
-    //     header('Location: /');
-    // }
+  
 
 }else if(isset($_POST['edit-submit'])){
     include('DBConnectivity.php');

@@ -557,6 +557,7 @@
                 body: rows,
                 startY: 40, // Set the start position for the table
                 theme: 'striped', // Add a striped table style (optional)
+                pageBreak: 'auto',
                 headStyles: {
                     fillColor: [41, 128, 185],
                     textColor: [255, 255, 255]

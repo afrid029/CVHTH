@@ -33,7 +33,7 @@ if(isset($_POST['submit'])){
 
     if($role === 'admin'){
 
-        $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password) VALUES ('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash')";
+        $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password, temp_password) VALUES ('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash', '$passwordHash')";
 
         $result = mysqli_query($db, $query);
 
@@ -41,8 +41,6 @@ if(isset($_POST['submit'])){
             mysqli_close($db);
             // header('Location: /users');
         }else {
-            
-        
             $_SESSION['message'] = "Unable to create user. Try Again Later! ".mysqli_error($db);
             // $_SESSION['message'] = mysqli_error($db);
             $_SESSION['status'] = false;
@@ -50,7 +48,7 @@ if(isset($_POST['submit'])){
             // echo mysqli_error($db);
             mysqli_close($db);
             header('Location: /users');
-            return;
+            exit();
         }
 
     }else if($role === 'donor'){
@@ -62,9 +60,9 @@ if(isset($_POST['submit'])){
 
         if($dobCheck) {
             $dob = $_POST['dob'];
-            $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password, dob) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash', '$dob' )";
+            $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password, dob, temp_password) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash', '$dob', '$passwordHash' )";
         }else {
-            $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash' )";
+            $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password, temp_password) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash', '$passwordHash' )";
         }
 
         $result = mysqli_query($db, $query);
@@ -76,19 +74,20 @@ if(isset($_POST['submit'])){
             // $_SESSION['fromAction'] = true;
             // header('Location: /users');
         }else {
-            mysqli_close($db);
-            $_SESSION['message'] = "Unable to create user. Try Again Later! ".mysqli_error($db);
+            
+            $_SESSION['message'] = "Unable to create user. ".mysqli_error($db);
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
+            mysqli_close($db);
             header('Location: /users');
-            return;
+            exit();
         }
         
     }else {
 
         mysqli_begin_transaction($db);
 
-        $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash' )";
+        $query = "INSERT INTO users (ID, username, firstname, lastname, email, role, contactno, new, password, temp_password) VALUES('$ID', '$ID', '$fname', '$lname', '$email', '$role', '$contact', true, '$passwordHash', '$passwordHash' )";
 
         $result1 = mysqli_query($db, $query);
 
@@ -141,9 +140,9 @@ if(isset($_POST['submit'])){
             $_SESSION['message'] = "Unable to create user. Try Again Later!";
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
-            return;
 
-            // header('Location: /users');
+            header('Location: /users');
+            exit();
         }
     }
 
@@ -669,14 +668,15 @@ function mailSend($email, $fname, $lname, $role, $password){
         //Content
         $mail->isHTML(true);  // Set email format to HTML
         $mail->Subject = 'Welcome to CVHTH ';
-        $mail->Body    = "<h5>Hi $sentName,</h5>
-                            <h4 style='text-align: center'>Welcome to Chulipuram Vasantham Helping The Helpless - CVHTH.</h5>
+        $mail->Body    = "<h4>Hi $sentName,</h4>
+                            <h3 style='text-align: center'>Welcome to Chulipuram Vasantham Helping The Helpless - CVHTH.</h3>
                             <br>
-                            <h5>Congratulations. You have been registered as $rolename. </h5>
-                            <h5>Your password is: $password</h5>
-                            <h5><a href='http://localhost/' target='_blank'>Home | CVHTH</a></h5>
-                            <h5 style = 'color: red'>Create new password in your first login</h5>
-                            <h5>With Regards,<br>CVHTH<br>Admin.</h5>";
+                            <h4>Congratulations. You have been registered as $rolename. </h4>
+                            <h4>Your password is: $password</h4>
+                            <h4><a href='http://localhost/' target='_blank'>Home | CVHTH</a></h4>
+                            <h4 style = 'color: red'>Create new password in your first login</h4>
+                            <h4>With Regards,<br>CVHTH<br>Admin.</h4>";
+
 
         // Debugging (optional, turn off in production)
         //$mail->SMTPDebug = 2;  // Set this to 2 for verbose debugging output (0 = off, 1 = client, 2 = client and server)

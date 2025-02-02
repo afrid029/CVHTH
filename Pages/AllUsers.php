@@ -402,7 +402,7 @@
                     var response = JSON.parse(xhr.responseText);
 
                     const dataContainer = document.getElementById('table-rows-donor');
-                    console.log(response.html);
+                    // console.log(response.html);
 
 
                     dataContainer.innerHTML = response.html;

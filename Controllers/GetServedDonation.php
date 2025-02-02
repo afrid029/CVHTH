@@ -80,7 +80,7 @@ if (mysqli_num_rows($result) > 0) {
                             <img style='cursor: pointer' onclick = moreInfo('singledonor','" . $row['ID'] . "') src='/Assets/Images/infogreen.png' alt='info'></div>
                                 <div style='text-align: start'>" . $row['ben_fn'] . " ".$row['ben_ln']."</div>
                                 <div style='text-align: end'>" . $row['amount'] ."</div>
-                                <div style='text-align: start'>" . $row['name'] ."</div>
+                                <div style='text-align: center; padding-left: 5px;'>" . $row['name'] ."</div>
                                 <div style='text-align: end'>" . $row['date'] ."</div>
                             
                             </div>    

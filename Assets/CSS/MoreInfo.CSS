@@ -1,95 +1,183 @@
 .banner {
-    align-items: center;
+  align-items: center;
 }
-.user{
-    text-transform: capitalize;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.user h6{
-    color: rgba(255, 255, 255, 0.438);
+.user {
+  text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
 }
 
-.close{
-    position: absolute;
-    right: 5px;
+.user h6 {
+  color: rgba(255, 255, 255, 0.438);
 }
 
-.top{
-     /*top: 200px; */
-    position: relative;
-    display: none;
-    flex-direction: column;
+.close {
+  position: absolute;
+  right: 5px;
 }
 
-#don-info, #prj-info, #ben-info{
-    position: relative;
-    display: flex;
-    flex-direction: column;
+.top {
+  /*top: 200px; */
+  position: relative;
+  display: none;
+  flex-direction: column;
+}
+
+#don-info,
+#prj-info,
+#ben-info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .infoRow {
-    font-family: 'DM Serif Text', serif;
-    display: grid;
-    grid-template-columns: 65% 30% 5%;
-    /* justify-content: space-between;
+  font-family: "DM Serif Text", serif;
+  display: grid;
+  grid-template-columns: 65% 30% 5%;
+  /* justify-content: space-between;
     align-items: center; */
-    height: auto;
-    max-height: max-content;
-    overflow-y: visible;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-    flex: 1;
-
+  height: auto;
+  max-height: max-content;
+  overflow-y: visible;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex: 1;
 }
 
-.infoTitle{
-    text-align: left;
+.infoTitle {
+  text-align: left;
 }
 .info {
-    text-transform: capitalize;
-    font-weight: 400;
-    font-family: 'lato', serif;
-    display: inline-flex;
-    flex-direction: column;
-    text-align: left;
-    
+  text-transform: capitalize;
+  font-weight: 400;
+  font-family: "lato", serif;
+  display: inline-flex;
+  flex-direction: column;
+  text-align: left;
 }
 
 .info div {
-    word-wrap: normal; 
+  word-wrap: normal;
 }
 
 #donor-info-bal {
-    color: rgb(60, 255, 0);
-    font-weight: 700;
+  color: rgb(60, 255, 0);
+  font-weight: 700;
+}
+
+.down-container {
+  display: flex;
+  gap: 10px;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 10px;
+  margin-top: 20px;
+}
+
+.dateRow {
+  display: flex;
+  align-items: center;
+  font-family: "Lato", serif;
+  font-weight: 600;
+  gap: 10px;
+}
+
+.dateRow input {
+  height: auto;
+  border-radius: 7px;
+  box-shadow: 0 0 5px #00000030;
+  border-color: transparent;
+  width: 100%;
+
+  padding: 10px 5px;
+  font-weight: 600;
+  color: #454444f0;
+}
+
+.down-btn {
+  background-color: #043055;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-family: "Lato", serif;
+  font-weight: 600;
+  cursor: pointer;
+  height: auto;
+  transition: all 0.6s ease;
+}
+
+.down-btn:disabled {
+  background-color: #3b3c3d80;
+  cursor: not-allowed;
+}
+
+#popupImage img {
+  animation: pop 0.5s ease forwards;
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.popClose {
+  position: absolute;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 4px white;
+  top: 2vh;
+  right: 2vw;
+  cursor: pointer;
+  background-color: white;
+}
+
+@media (max-width: 768px) {
+  .down-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .popClose {
+    top: 4vh;
+    right: 4vw;
+  }
 }
 
 @media (max-width: 600px) {
-    .infoRow {
-        grid-template-columns: 50% 48% 2%;
-        /*margin-bottom:0px;*/
-    }
+  .infoRow {
+    grid-template-columns: 50% 48% 2%;
+    /*margin-bottom:0px;*/
+  }
 
-    .infoTitle {
-        font-size: 14px;
-    }
+  .infoTitle {
+    font-size: 14px;
+  }
 
-    .info {
-        font-size: 12px;
-    }
+  .info {
+    font-size: 12px;
+  }
+  
 }
 
 @media (max-width: 400px) {
-    .infoRow {
-        /*margin-bottom:0px;*/
-        /*grid-template-columns: 50% 30% 5%;*/
-        gap: 2.5%;
-       
-    }
+  .infoRow {
+    /*margin-bottom:0px;*/
+    /*grid-template-columns: 50% 30% 5%;*/
+    gap: 2.5%;
+  }
 }

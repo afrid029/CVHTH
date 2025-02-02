@@ -1,4 +1,7 @@
 <?php 
+// print_r($_FILES["image"]["tmp_name"]);
+// var_dump($_POST);
+// exit();
 
 if(isset($_POST['submit'])){
     include('DBConnectivity.php');
@@ -68,6 +71,8 @@ if(isset($_POST['submit'])){
 
     $length = count($_FILES["image"]["name"]);
 
+    // print_r($_FILES["image"]);
+
     
 
     for ($i = 0; $i < $length; $i++) {
@@ -90,8 +95,13 @@ if(isset($_POST['submit'])){
             $_SESSION['fromAction'] = true;
             mysqli_rollback($db);
             mysqli_close($db);
-            header('Location: /beneficent');
+            echo json_encode([
+                "redirect" => "/beneficent"
+            ]);
+            exit();
+            // header('Location: /beneficent');
             break;
+            return;
         }
     }
 
@@ -101,14 +111,23 @@ if(isset($_POST['submit'])){
         $_SESSION['message'] = "Beneficiary Created successfully!";
         $_SESSION['status'] = true;
         $_SESSION['fromAction'] = true;
-        header('Location: /beneficent');
+        echo json_encode([
+            "redirect" => "/beneficent"
+        ]);
+        exit();
+        // header('Location: /beneficent');
+
     }else {
         mysqli_rollback($db);
         mysqli_close($db);
         $_SESSION['message'] = "Unable to create. Try Again Later!";
         $_SESSION['status'] = false;
         $_SESSION['fromAction'] = true;
-        header('Location: /beneficent');
+        echo json_encode([
+            "redirect" => "/beneficent"
+        ]);
+        exit();
+       
     }
 
 }else if(isset($_POST['edit-submit'])){

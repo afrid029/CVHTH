@@ -13,7 +13,7 @@
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 900;
   background-size: cover;
   /* animation: ModelLoad 1s linear; */
   animation: model 0.5s ease alternate;
@@ -80,12 +80,6 @@
   transition: all 0.5s ease;
   align-items: center;
   display: inline-flex;
-}
-
-.close:hover {
-  /* background-color: transparent;
-    border-color: red;
-    color: red; */
 }
 
 .Form {
@@ -242,7 +236,7 @@ textarea:focus {
 }
 
 .submit {
-  background-color: rgb(109, 20, 6);
+  background-color: rgb(47 31 12);
   border-radius: 5px;
   width: 50%;
   border: none;
@@ -256,6 +250,16 @@ textarea:focus {
 
 .submit:disabled {
   background-color: #555555;
+}
+
+.image-btn {
+  padding: 4px;
+    width: 60%;
+    background-color: #ddaf78;
+    border: transparent;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 @media (min-width: 1600px) {
@@ -294,6 +298,12 @@ textarea:focus {
   .close {
     padding: 8px 12px;
   }
+
+  .image-btn {
+    padding:10px;
+    width: 30%;
+    font-size: 1vw;
+  }
 }
 
 @media (max-width: 1600px) {
@@ -330,6 +340,12 @@ textarea:focus {
 
   .close {
     padding: 8px 12px;
+  }
+
+  .image-btn {
+    padding:10px;
+    width: 30%;
+    font-size: 1vw;
   }
 }
 
@@ -407,6 +423,12 @@ textarea:focus {
     padding-left: 5px !important;
     padding-right:  5px !important;
   }
+
+  .image-btn {
+    padding:10px;
+    width: 40%;
+    font-size: 1.2vw;
+  }
 }
 
 @media (max-width: 786px) {
@@ -417,6 +439,12 @@ textarea:focus {
 
   .small,
   .dropdown-option {
+    font-size: 1.4vw;
+  }
+
+  .image-btn {
+    padding:10px;
+    width: 40%;
     font-size: 1.4vw;
   }
 
@@ -474,6 +502,12 @@ textarea:focus {
     padding-right: 5px !important;
     height: 35px !important;
   }
+
+  .image-btn {
+    padding:10px;
+    width: 40%;
+    font-size: 2vw;
+  }
 }
 
 @media (max-width: 400px) {
@@ -484,6 +518,12 @@ textarea:focus {
 
   .small,
   .dropdown-option {
+    font-size: 2.2vw;
+  }
+
+  .image-btn {
+    padding:10px;
+    width: 40%;
     font-size: 2.2vw;
   }
 }

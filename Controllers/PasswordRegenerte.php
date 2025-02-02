@@ -24,7 +24,7 @@ if(isset($_POST['submit'])){
         $user = mysqli_fetch_assoc($result);
         $password = generateRandomPassword();
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $query = "UPDATE users SET password = '$passwordHash', new = true WHERE email = '$email'";
+        $query = "UPDATE users SET temp_password = '$passwordHash' WHERE email = '$email'";
         $result = mysqli_query($db, $query);
 
         if($result){
@@ -92,22 +92,28 @@ function mailSend($user, $password){
 
 
         $sentName = $user['firstname'].' '.$user['lastname'];
+        $email = $user['email'];
 
         //Recipients
         $mail->setFrom('tmislam@gmail.com', 'CVHTH');  // Set the sender's email address and name
-        $mail->addAddress($user['email'], $sentName);  // Add recipient's email address and name
+        $mail->addAddress($email, $sentName);  // Add recipient's email address and name
         //$mail->addReplyTo('another_email@example.com', 'Reply-to Name');  // Optional: Set a reply-to email address
 
         //Content
         $mail->isHTML(true);  // Set email format to HTML
         $mail->Subject = 'Password Reset Email | CVHTH ';
-        $mail->Body    = "<h5>Hi $sentName,</h5>
-                            <h5> You have successfully reset your password</h5>
-                            <h5>Your new password is: $password</h5>
-                            <h5 style = 'color: red'>Create new password in your next login</h5>
-                            <h5>With Regards,<br>CVHTH<br>Admin.</h5>";
+        $mail->Body    = "<h4>Hi $sentName,</h4>
+                            <h4> You have successfully reset your password</h4>
+                            <h4>Your generated password is: $password</h4>
+                            <h4 style = 'color: red'>If you have not initiated this password reset, please avoid this email.</h4>
+                              <button style='border: transparent; background-color: #27B761; padding: 10px; border-radius: 5px'><a href='localhost/passwordreset?email=$email' style='color: #2c3630; text-decoration: none; font-weight: 600;'>Reset Password</a></button>
+                            <h4>With Regards,<br>CVHTH<br>Admin.</h4>";
 
         // Debugging (optional, turn off in production)
+    //     <form action='localhost/passwordreset' method='POST' target='_blank'>
+    //     <input type='text' name='email' value='$email' style='display:none'>
+    //     <button style='border: transparent; background-color: #27B761; font-weight: 500; padding: 10px; border-radius: 5px' name='submit' >Reset Password</button>
+    // </form>
         //$mail->SMTPDebug = 2;  // Set this to 2 for verbose debugging output (0 = off, 1 = client, 2 = client and server)
 
         // Send the email

@@ -11,6 +11,11 @@
 <body>
     <div class="modal-overlay" id="viewModel">
         <div class="modal-content" onclick="event.stopPropagation()">
+        <div id="popupImage" style="position: fixed; height: 100vh; display:none; background-color: #000000d4; justify-content: center; width: 100vw; z-index: 910">
+                
+                <img id="popupSrc" style="object-fit: contain; width: 100vw"  alt="">
+                <div onclick="closePop()" style="position: absolute; padding:10px; border-radius: 10px; box-shadow: 0 0 4px white; top: 2vh; right:2vw; cursor:pointer; background-color: white">Close</div>
+            </div>
             <div class="banner view-banner">
                 <div class="user">
                     <h4 id="don-amount"></h4>
@@ -147,6 +152,10 @@
                     imgElement.style.borderRadius = '10px';
                     imgElement.style.width = '100px'; // Optional: resize the image for preview
                     imgElement.style.objectFit = 'cover'; // Optional: resize the image for preview
+                    imgElement.style.cursor = 'pointer';
+                    imgElement.onclick = function() {
+                        popImage(imgSrc);
+                    }
                     
 
                     divEl.appendChild(imgElement)
@@ -155,6 +164,18 @@
                 })
                 // reader.readAsDataURL(file); // Read the file as a data URL for previewing
 
+            }
+
+            function popImage(src) {
+                // console.log(src);
+                document.getElementById('popupImage').style.display = 'flex'
+                document.getElementById('popupSrc').src = src;
+
+                
+            }
+
+            function closePop(){
+                document.getElementById('popupImage').style.display = 'none'
             }
         </script>
 

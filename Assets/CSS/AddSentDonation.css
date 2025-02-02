@@ -13,7 +13,7 @@
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 900;
   background-size: cover;
   /* animation: ModelLoad 1s linear; */
   animation: model 0.5s ease alternate;
@@ -252,6 +252,17 @@ textarea:focus {
   background-color: #616161;
 }
 
+
+.image-btn {
+  padding: 4px;
+    width: 60%;
+    background-color: #82ab7e;
+    border: transparent;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 @media (min-width: 1600px) {
   .banner {
     font-size: 1.5vw;
@@ -305,6 +316,12 @@ textarea:focus {
   .searchbar-mobile {
     width: 75% !important;
   }
+
+  .image-btn {
+    padding:10px;
+    width: 30%;
+    font-size: 1vw;
+  }
 }
 
 @media (max-width: 1600px) {
@@ -351,6 +368,12 @@ textarea:focus {
 
   .close {
     padding: 8px 12px;
+  }
+
+  .image-btn {
+    padding:10px;
+    width: 30%;
+    font-size: 1vw;
   }
 }
 
@@ -433,6 +456,12 @@ textarea:focus {
    .searchbar-mobile {
     width: 74% !important;
    }
+
+   .image-btn {
+    padding:10px;
+    width: 40%;
+    font-size: 1.2vw;
+  }
 }
 
 @media (max-width: 786px) {
@@ -453,6 +482,12 @@ textarea:focus {
 
   .balance {
     font-size: 1vw;
+  }
+
+  .image-btn {
+    padding:10px;
+    width: 40%;
+    font-size: 1.4vw;
   }
 
   /* .search-mobile {
@@ -502,6 +537,12 @@ textarea:focus {
   .searchbar-mobile {
     width: 70% !important;
   }
+
+  .image-btn {
+    padding:10px;
+    width: 40%;
+    font-size: 2vw;
+  }
 }
 
 @media (max-width: 400px) {
@@ -521,6 +562,12 @@ textarea:focus {
 
   .balance {
     font-size: 1.5vw;
+  }
+
+  .image-btn {
+    padding:10px;
+    width: 40%;
+    font-size: 2.2vw;
   }
 }
 

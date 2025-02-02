@@ -1,6 +1,15 @@
 <?php
 // Get the current URL path
 $request = $_SERVER['REQUEST_URI'];
+$request = explode('?', $request)[0];
+// print_r(explode('?', $request)[0]);
+
+// echo $request.implode('?');
+
+// echo $request;
+
+// exit();
+
 
 // Define routes
 switch ($request) {
@@ -57,6 +66,9 @@ switch ($request) {
         break;
     case '/logout':
         require 'Controllers/Logout.php'; // Contact page
+        break;
+    case '/passwordreset':
+        require 'Controllers/ToPasswordPage.php'; // Contact page
         break;
     default:
         http_response_code(404); // Not Found
