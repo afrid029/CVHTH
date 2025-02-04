@@ -2,7 +2,13 @@
 
 if(isset($_POST['submit'])){
 
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+        exit();
+    }
+
     SESSION_START();
+    $updatedby = $_SESSION['fname'] . '-' . $_SESSION['role'];
     include('DBConnectivity.php');
     $donor = $_POST['donor'];
     $amount = $_POST['amount'];
@@ -18,7 +24,7 @@ if(isset($_POST['submit'])){
     $randomId = rand(100, 999);
     $ID = 'don_'.$row['cnt']. $randomId;
 
-    $query = "INSERT INTO donationreceived VALUES('$ID','$donor', '$date', '$amount' )";
+    $query = "INSERT INTO donationreceived VALUES('$ID','$donor', '$date', '$amount', '$updatedby' )";
     $result = mysqli_query($db, $query);
     if($result) {
         mysqli_close($db);
@@ -39,8 +45,15 @@ if(isset($_POST['submit'])){
     
 
 }else if(isset($_POST['edit-submit'])){
-    include('DBConnectivity.php');
+
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+        exit();
+    }
+
     SESSION_START();
+    $updatedby = $_SESSION['fname'] . '-' . $_SESSION['role'];
+    include('DBConnectivity.php');
 
     $ID = $_POST['ID'];
     $donor = $_POST['donor'];
@@ -50,7 +63,8 @@ if(isset($_POST['submit'])){
     $query = "UPDATE donationreceived 
     SET donor_id = '$donor', 
     date = '$date', 
-    amount = '$amount' 
+    amount = '$amount',
+    updatedby = '$updatedby' 
     WHERE ID = '$ID'";
 
     $result = mysqli_query($db, $query);
@@ -70,8 +84,16 @@ if(isset($_POST['submit'])){
     }
 }else if (isset($_POST['del-submit'])){
 
-    include('DBConnectivity.php');
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+        exit();
+    }
+
     SESSION_START();
+    $updatedby = $_SESSION['fname'] . '-' . $_SESSION['role'];
+
+    include('DBConnectivity.php');
+    
 
     mysqli_begin_transaction($db);
 
@@ -82,12 +104,27 @@ if(isset($_POST['submit'])){
     if($result){
         $affected_row = mysqli_affected_rows($db);
         if($affected_row === 1){
-            mysqli_commit($db);
-            mysqli_close($db);
-            $_SESSION['message'] = "Donation info Deleted successfully!";
-            $_SESSION['status'] = true;
-            $_SESSION['fromAction'] = true;
-            header('Location: /donation');
+            $query = "INSERT INTO activitylog (action, actionby, impact, old) VALUE ('D', '$updatedby', 'Received.Don $ID', 'Deleted')";
+            $result =  mysqli_query($db, $query);
+
+            if($result) {
+                mysqli_commit($db);
+                mysqli_close($db);
+                $_SESSION['message'] = "Donation info Deleted successfully!";
+                $_SESSION['status'] = true;
+                $_SESSION['fromAction'] = true;
+                header('Location: /donation');
+                exit();
+            }else {
+                mysqli_rollback($db);
+                mysqli_close($db);
+                $_SESSION['message'] = "DB is suffering from multiple transactions. Try again Later";
+                $_SESSION['status'] = false;
+                $_SESSION['fromAction'] = true;
+                header('Location: /donation');
+                exit();
+            }
+            
         }else {
             mysqli_rollback($db);
             mysqli_close($db);

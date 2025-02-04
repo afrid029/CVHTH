@@ -4,8 +4,16 @@
 // exit();
 
 if(isset($_POST['submit'])){
-    include('DBConnectivity.php');
+
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+        exit();
+    }
+
     SESSION_START();
+    $updatedby = $_SESSION['fname'] . '-' . $_SESSION['role'];
+
+    include('DBConnectivity.php');
 
     $query = "SELECT COUNT(*) cnt from beneficiant";
 
@@ -28,12 +36,14 @@ if(isset($_POST['submit'])){
     mysqli_begin_transaction($db);
 
     $query = "INSERT INTO beneficiant VALUES('$ID', '$fname', '$lname', '$nic', '$gender', '$date', '$address', '$gs',". ($school === NULL ? "NULL" : "'$school'") . ", " . 
-    ($grade === NULL ? "NULL" : "'$grade'") . ")";
+    ($grade === NULL ? "NULL" : "'$grade'") . ", '$updatedby')";
 
     $result = mysqli_query($db, $query);
 
+
     $dependant = isset($_POST['dependant']) ? $_POST['dependant'] : '';
     $result1 = true;
+    $resultx = true;
 
     if($dependant !== ''){
         $dependants = explode(', ',$dependant);
@@ -42,11 +52,17 @@ if(isset($_POST['submit'])){
             $query = "INSERT INTO beneficiantdependency VALUES('$ID', '$nameRel[1]', '$nameRel[0]')";
             $res = mysqli_query($db, $query);
             $result1 = $result1 && $res;
+
+            
         }
+
+        $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('I', '$updatedby', 'Beneficiary - $fname', 'Dependants', 'Inserted as => $dependant')";
+        $resultx = mysqli_query($db, $query);
     }
    
 
     $result2 = true;
+    $resulty = true;
     $project = isset($_POST['project']) ? $_POST['project'] : '';
 
     if($project !== ''){
@@ -56,6 +72,9 @@ if(isset($_POST['submit'])){
             $res = mysqli_query($db, $query);
             $result2 = $result2 && $res;
         }
+
+        $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('I', '$updatedby', 'Beneficiary - $fname', 'Project', 'Inserted as => $project')";
+        $resulty = mysqli_query($db, $query);
     }
     
 
@@ -85,7 +104,7 @@ if(isset($_POST['submit'])){
         if (move_uploaded_file($_FILES["image"]["tmp_name"][$i], $targetFile)) {
             // echo "The file has been uploaded successfully as: " . basename($targetFile);
 
-            $query = "INSERT INTO beneficiantimages VALUES ('$ID', '$targetFile')";
+            $query = "INSERT INTO beneficiantimages VALUES ('$ID', '$targetFile', '$updatedby')";
             $res = mysqli_query($db, $query);
 
             $result3 = $result3 && $res;
@@ -105,7 +124,7 @@ if(isset($_POST['submit'])){
         }
     }
 
-    if($result && $result1 && $result2 && $result3){
+    if($result && $result1 && $result2 && $result3 && $resultx && $resulty){
         mysqli_commit($db);
         mysqli_close($db);
         $_SESSION['message'] = "Beneficiary Created successfully!";
@@ -131,8 +150,16 @@ if(isset($_POST['submit'])){
     }
 
 }else if(isset($_POST['edit-submit'])){
-    include('DBConnectivity.php');
+
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+        exit();
+    }
+
     SESSION_START();
+    $updatedby = $_SESSION['fname'] . '-' . $_SESSION['role'];
+    include('DBConnectivity.php');
+   
 
     $ID = $_POST['ID'];
     $fname = $_POST['fname'];
@@ -158,11 +185,17 @@ if(isset($_POST['submit'])){
               address = '$address', 
               gsdivision = '$gs', 
               school = ". ($school === NULL ? "NULL" : "'$school'") . ", 
-              grade = " .($grade === NULL ? "NULL" : "'$grade'"). "
+              grade = " .($grade === NULL ? "NULL" : "'$grade'"). ",
+              updatedby = '$updatedby'
               WHERE ID = '$ID'";
 
 
     $result = mysqli_query($db, $query);
+
+
+    $query = "SELECT * FROM beneficiantdependency 
+    WHERE Beneficiant_ID = '$ID'";
+    $SelectResult = mysqli_query($db, $query);
 
     
     $query = "DELETE from beneficiantdependency 
@@ -171,6 +204,7 @@ if(isset($_POST['submit'])){
 
     $dependant = isset($_POST['dependant']) ? $_POST['dependant'] : '';
     $result1 = true;
+    $resultx = true;
 
     if($dependant !== ''){
         $dependants = explode(', ',$dependant);
@@ -180,8 +214,20 @@ if(isset($_POST['submit'])){
             $res = mysqli_query($db, $query);
             $result1 = $result1 && $res;
         }
+
+        $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'Beneficiary - $fname', 'Dependants', 'Updated as => $dependant')";
+        $resultx = mysqli_query($db, $query);
+    }else {
+        if(mysqli_num_rows($SelectResult) > 0){
+            $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('D', '$updatedby', 'Beneficiary - $fname', 'Dependants', 'All Dependants Deleted')";
+            $resultx = mysqli_query($db, $query);
+        }
     }
 
+
+    $query = "SELECT * FROM projectbeneficiant 
+    WHERE Beneficiant_ID = '$ID'";
+    $SelectResult = mysqli_query($db, $query);
 
 
     $query = "DELETE from projectbeneficiant 
@@ -189,6 +235,7 @@ if(isset($_POST['submit'])){
     $delete1 = mysqli_query($db, $query);
    
     $result2 = true;
+    $resulty = true;
     $project = isset($_POST['project']) ? $_POST['project'] : '';
 
     if($project !== ''){
@@ -198,9 +245,16 @@ if(isset($_POST['submit'])){
             $res = mysqli_query($db, $query);
             $result2 = $result2 && $res;
         }
+        $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'Beneficiary - $fname', 'Projects', 'Updated as => $project')";
+        $resulty = mysqli_query($db, $query);
+    }else {
+        if(mysqli_num_rows($SelectResult) > 0){
+            $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('D', '$updatedby', 'Beneficiary - $fname', 'Projects', 'All Projects Deleted')";
+            $resulty = mysqli_query($db, $query);
+        }
     }
 
-    if($result && $result1 && $result2 && $delete1 && $delete2){
+    if($result && $result1 && $result2 && $delete1 && $delete2 && $resultx && $resulty){
         mysqli_commit($db);
         mysqli_close($db);
         $_SESSION['message'] = "Beneficiary Updated successfully!";
@@ -218,9 +272,16 @@ if(isset($_POST['submit'])){
     
 
 }else if (isset($_POST['del-submit'])){
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+        exit();
+    }
+
+    SESSION_START();
+    $updatedby = $_SESSION['fname'] . '-' . $_SESSION['role'];
 
     include('DBConnectivity.php');
-    SESSION_START();
+  
 
     mysqli_begin_transaction($db);
 
@@ -228,6 +289,13 @@ if(isset($_POST['submit'])){
 
     $query = "SELECT image from beneficiantimages WHERE Beneficiant_ID = '$ID'";
     $images = mysqli_query($db,$query);
+
+
+    $selectQuery = "SELECT firstName from beneficiant where  ID = '$ID'";
+    $selectResult = mysqli_query($db, $selectQuery);
+
+    $selectOutput = mysqli_fetch_assoc($selectResult);
+    $sfname = $selectOutput['firstName'];
 
     $query = "DELETE FROM beneficiant WHERE ID = '$ID'";
     $result = mysqli_query($db, $query);
@@ -237,20 +305,46 @@ if(isset($_POST['submit'])){
     if($result){
         $affected_row = mysqli_affected_rows($db);
         if($affected_row === 1){
-            mysqli_commit($db);
-            
-        
+
+
+            $query = "INSERT INTO activitylog (action, actionby, impact, old) VALUE ('D', '$updatedby', '$sfname-Beneficiary', 'Deleted')";
+            $result =  mysqli_query($db, $query);
+
+            $result2 = true;
+
             while($row = mysqli_fetch_assoc($images)){
                 // print_r($row['image']);
-                unlink($row['image']);
-            }
-        
-            mysqli_close($db);
+                $imgLink = $row['image'];
+            
+                $query = "INSERT INTO activitylog (action, actionby, impact, old) VALUE ('D', '$updatedby', '$sfname-BeneficiaryImage', '$imgLink')";
+                $res =  mysqli_query($db, $query);
 
-            $_SESSION['message'] = "Beneficiary Deleted successfully!";
-            $_SESSION['status'] = true;
-            $_SESSION['fromAction'] = true;
-            header('Location: /beneficent');
+                $result2 = $result2 && $res;
+            }
+
+            if($result && $result2){
+                mysqli_commit($db);
+                while($row = mysqli_fetch_assoc($images)){
+                    // print_r($row['image']);
+                    unlink($row['image']);
+                }
+                mysqli_close($db);
+                $_SESSION['message'] = "Beneficiary Deleted successfully!";
+                $_SESSION['status'] = true;
+                $_SESSION['fromAction'] = true;
+                header('Location: /beneficent');
+                exit();
+            }else {
+                mysqli_rollback($db);
+                mysqli_close($db);
+                $_SESSION['message'] = "DB is suffering from multiple transactions. Try again Later";
+                $_SESSION['status'] = false;
+                $_SESSION['fromAction'] = true;
+                header('Location: /beneficent');
+                exit();
+            }
+
+          
         }else {
             mysqli_rollback($db);
             mysqli_close($db);

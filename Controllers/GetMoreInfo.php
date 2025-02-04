@@ -256,6 +256,7 @@ if ($type === 'user') {
     } else {
     // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
     }
+    mysqli_close($db);
 
     echo json_encode([
     'data' => $data,
@@ -263,31 +264,8 @@ if ($type === 'user') {
     ]);
 
 
-    // SELECT
-    //         b.ID,
-    //         b.firstName,
-    //         b.lastName,
-    //         b.NIC,
-    //         b.sex,
-    //         b.dob,
-    //         b.address,
-    //         b.gsDivision,
-    //         NVL(b.school, '<i>Not Provided</i>') school,
-    //         NVL(b.grade, '<i>Not Provided</i>') grade,
-    //         GROUP_CONCAT(
-    //             DISTINCT CONCAT(ds.date, '#', ds.amount, '#', ds.purpose) SEPARATOR ' '
-    //         ) sent,
-    //         GROUP_CONCAT(DISTINCT bi.image SEPARATOR ', ') images
-    //     FROM
-    //         beneficiant b
-    //         LEFT JOIN donationsent ds ON b.ID = ds.Beneficiant_ID
-    //         LEFT JOIN beneficiantimages bi ON b.ID = bi.Beneficiant_ID
-    //     WHERE
-    //         b.ID = '$ID'
 }
 
 
-// Return the results and pagination links as JSON
 
 
-mysqli_close($db);

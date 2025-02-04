@@ -68,6 +68,7 @@
          if ($passedArray['role'] === 'admin' || $passedArray['role'] === 'superadmin') {
             $_SESSION['ID'] = $passedArray['ID'];
             $_SESSION['role'] = $passedArray['role'];
+            $_SESSION['fname'] = $passedArray['fname'];
          } else {
             header('Location: /');
          }

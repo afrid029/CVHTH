@@ -55,10 +55,11 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 // Return the results and pagination links as JSON
+mysqli_close($db);
 echo json_encode([
     'data' => $data,
     'data1' => $data1
 
 ]);
 
-mysqli_close($db);
+

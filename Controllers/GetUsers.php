@@ -197,6 +197,7 @@ if ($page < $total_pages) {
 $pagination .= "</div>";
 
 // Return the results and pagination links as JSON
+mysqli_close($db);
 echo json_encode([
     'html' => $html,
     'pagination' => $pagination,
@@ -204,4 +205,4 @@ echo json_encode([
 ]);
 
 
-mysqli_close($db);
+

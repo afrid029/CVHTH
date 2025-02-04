@@ -30,6 +30,8 @@ if ($type === 'donation') {
         // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
     }
 
+    mysqli_close($db);
+
     echo json_encode([
         'data' => $data,
     
@@ -92,6 +94,8 @@ if ($type === 'donation') {
 
     }
 
+    mysqli_close($db);
+
     echo json_encode([
         'data' => $data,
         'projects' => $projects,
@@ -105,6 +109,7 @@ if ($type === 'donation') {
              Where ds.ID = '$ID'";
 
     $result = mysqli_query($db, $query);
+    
 
     $data = array();
 
@@ -118,6 +123,7 @@ if ($type === 'donation') {
     } else {
         // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
     }
+    mysqli_close($db);
 
     echo json_encode([
         'data' => $data,
@@ -146,6 +152,7 @@ if ($type === 'donation') {
         // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
     }
 
+    mysqli_close($db);
     echo json_encode([
         'data' => $data,
     
@@ -179,7 +186,7 @@ if ($type === 'donation') {
 
   // $html .= "<tr><td colspan='2'>No results found.</td></tr>";
     
-
+  mysqli_close($db);
     echo json_encode([
         'data' => $data
     
@@ -189,5 +196,3 @@ if ($type === 'donation') {
 
 // Return the results and pagination links as JSON
 
-
-mysqli_close($db);

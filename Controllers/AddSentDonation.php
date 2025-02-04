@@ -1,6 +1,13 @@
 <?php
 if (isset($_POST['submit'])) {
+
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+        exit();
+    }
+
     SESSION_START();
+    $updatedby = $_SESSION['fname'] . '-' . $_SESSION['role'];
     include('DBConnectivity.php');
 
     $query = "SELECT COUNT(*) cnt from donationsent";
@@ -21,9 +28,11 @@ if (isset($_POST['submit'])) {
     mysqli_begin_transaction($db);
 
 
-    $query = "INSERT INTO donationsent VALUES ('$ID', '$donor', '$date', '$amount', '$purpose', '$project', '$beneficent')";
+    $query = "INSERT INTO donationsent VALUES ('$ID', '$donor', '$date', '$amount', '$purpose', '$project', '$beneficent','$updatedby')";
 
     $result = mysqli_query($db, $query);
+
+   
 
     $result2 = true;
 
@@ -49,10 +58,11 @@ if (isset($_POST['submit'])) {
         if (move_uploaded_file($_FILES["image"]["tmp_name"][$i], $targetFile)) {
             // echo "The file has been uploaded successfully as: " . basename($targetFile);
 
-            $query = "INSERT INTO donationevidence VALUES ('$ID', '$targetFile')";
+            $query = "INSERT INTO donationevidence VALUES ('$ID', '$targetFile','$updatedby')";
             $res = mysqli_query($db, $query);
 
             $result2 = $result2 && $res;
+
         } else {
             $_SESSION['message'] = "Failed to upload Images. Try again later!";
             $_SESSION['status'] = false;
@@ -93,8 +103,15 @@ if (isset($_POST['submit'])) {
   
 
 }else if(isset($_POST['edit-submit'])){
-    include('DBConnectivity.php');
+
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+        exit();
+    }
+
     SESSION_START();
+    $updatedby = $_SESSION['fname'] . '-' . $_SESSION['role'];
+    include('DBConnectivity.php');
 
     $ID = $_POST['ID'];
     $amount = $_POST['amount'];
@@ -110,7 +127,8 @@ if (isset($_POST['submit'])) {
               amount = '$amount', 
               purpose = '$purpose', 
               project_id = '$project', 
-              Beneficiant_ID = '$beneficent'
+              Beneficiant_ID = '$beneficent',
+              updatedby = '$updatedby'
                WHERE ID = '$ID'";
     
     $result = mysqli_query($db, $query);
@@ -131,9 +149,16 @@ if (isset($_POST['submit'])) {
 
 
 }else if (isset($_POST['del-submit'])){
+    if (!isset($_COOKIE['user'])) {
+        header('Location: /');
+        exit();
+    }
+
+    SESSION_START();
+    $updatedby = $_SESSION['fname'] . '-' . $_SESSION['role'];
 
     include('DBConnectivity.php');
-    SESSION_START();
+   
 
     mysqli_begin_transaction($db);
 
@@ -150,20 +175,44 @@ if (isset($_POST['submit'])) {
     if($result){
         $affected_row = mysqli_affected_rows($db);
         if($affected_row === 1){
-            mysqli_commit($db);
-            
-        
+
+            $query = "INSERT INTO activitylog (action, actionby, impact, old) VALUE ('D', '$updatedby', 'Distri.Don $ID', 'Deleted')";
+            $result =  mysqli_query($db, $query);
+
+            $result2 = true;
+
             while($row = mysqli_fetch_assoc($images)){
                 // print_r($row['image']);
-                unlink($row['image']);
-            }
-        
-            mysqli_close($db);
+                $imgLink = $row['image'];
+            
+                $query = "INSERT INTO activitylog (action, actionby, impact, old) VALUE ('D', '$updatedby', 'D.DonationEvidence $ID', '$imgLink')";
+                $res =  mysqli_query($db, $query);
 
-            $_SESSION['message'] = "Sent Donation Deleted successfully!";
-            $_SESSION['status'] = true;
-            $_SESSION['fromAction'] = true;
-            header('Location: /sentdonation');
+                $result2 = $result2 && $res;
+            }
+
+            if($result && $result2) {
+                mysqli_commit($db);
+                while($row = mysqli_fetch_assoc($images)){
+               
+                    unlink($row['image']);
+                }
+                mysqli_close($db);
+                $_SESSION['message'] = "Disbursed Donation Deleted successfully!";
+                $_SESSION['status'] = true;
+                $_SESSION['fromAction'] = true;
+                header('Location: /sentdonation');
+                exit();
+            }else {
+                mysqli_rollback($db);
+                mysqli_close($db);
+                $_SESSION['message'] = "DB is suffering from multiple transactions. Try again Later";
+                $_SESSION['status'] = false;
+                $_SESSION['fromAction'] = true;
+                header('Location: /sentdonation');
+                exit();
+            }
+           
         }else {
             mysqli_rollback($db);
             mysqli_close($db);

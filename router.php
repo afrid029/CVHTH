@@ -40,6 +40,9 @@ switch ($request) {
     case '/reset-password':
         require 'Pages/ResetPassword.php'; // Contact page
         break;
+    case '/activitylog':
+        require 'Pages/ActivityLog.php'; // Contact page
+        break;
     case '/add-donation':
         require 'Controllers/AddDonation.php'; // Contact page
         break;

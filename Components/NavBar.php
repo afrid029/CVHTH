@@ -28,6 +28,10 @@
                     echo "  <li ><a class='nav-projects' href='/project'>Projects</a></li>";
                 }
 
+                if(isset($_SESSION['role']) && $_SESSION['role'] === 'superadmin'){
+                    echo "  <li ><a class='nav-activity' href='/activitylog'>Activity Log</a></li>";
+                }
+
 
             ?>
             
