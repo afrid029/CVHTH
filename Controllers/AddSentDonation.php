@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['fromAction'] = true;
             mysqli_rollback($db);
             mysqli_close($db);
-            break; echo json_encode([
+            echo json_encode([
                 "redirect" => "/sentdonation"
             ]);
             exit();
@@ -139,12 +139,14 @@ if (isset($_POST['submit'])) {
         $_SESSION['status'] = true;
         $_SESSION['fromAction'] = true;
         header('Location: /sentdonation');
+        exit();
     }else {
         mysqli_close($db);
         $_SESSION['message'] = "Unable to update. Try again later!";
         $_SESSION['status'] = false;
         $_SESSION['fromAction'] = true;
         header('Location: /sentdonation');
+        exit();
     }
 
 
@@ -220,6 +222,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
             header('Location: /sentdonation');
+            exit();
         }
     }else {
         mysqli_rollback($db);
@@ -228,10 +231,12 @@ if (isset($_POST['submit'])) {
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
             header('Location: /sentdonation');
+            exit();
     }
     
 }else {
     header('Location: /');
+    exit();
 }
 
 ?>

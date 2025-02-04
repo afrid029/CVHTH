@@ -32,12 +32,14 @@ if(isset($_POST['submit'])){
         $_SESSION['status'] = true;
         $_SESSION['fromAction'] = true;
         header('Location: /donation');
+        exit();
     }else {
         mysqli_close($db);
         $_SESSION['message'] = "Unable to enter the info. Try Again Later!";
         $_SESSION['status'] = false;
         $_SESSION['fromAction'] = true;
         header('Location: /donation');
+        exit();
     }
 
 
@@ -75,12 +77,14 @@ if(isset($_POST['submit'])){
         $_SESSION['status'] = true;
         $_SESSION['fromAction'] = true;
         header('Location: /donation');
+        exit();
     }else {
         mysqli_close($db);
         $_SESSION['message'] = "Unable to update. Try again later!";
         $_SESSION['status'] = false;
         $_SESSION['fromAction'] = true;
         header('Location: /donation');
+        exit();
     }
 }else if (isset($_POST['del-submit'])){
 
@@ -132,6 +136,7 @@ if(isset($_POST['submit'])){
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
             header('Location: /donation');
+            exit();
         }
     }else {
         mysqli_rollback($db);
@@ -140,10 +145,12 @@ if(isset($_POST['submit'])){
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
             header('Location: /donation');
+            exit();
     }
     
 }else {
     header('Location: /');
+    exit();
 }
 
 

@@ -118,7 +118,6 @@ if(isset($_POST['submit'])){
                 "redirect" => "/beneficent"
             ]);
             exit();
-            // header('Location: /beneficent');
             break;
             return;
         }
@@ -197,7 +196,7 @@ if(isset($_POST['submit'])){
     WHERE Beneficiant_ID = '$ID'";
     $SelectResult = mysqli_query($db, $query);
 
-    
+
     $query = "DELETE from beneficiantdependency 
     WHERE Beneficiant_ID = '$ID'";
     $delete2 = mysqli_query($db, $query);
@@ -205,6 +204,29 @@ if(isset($_POST['submit'])){
     $dependant = isset($_POST['dependant']) ? $_POST['dependant'] : '';
     $result1 = true;
     $resultx = true;
+
+    
+    $selectedArray = array();
+    while ($row = mysqli_fetch_assoc($SelectResult)){
+        $selectedArray[] = $row['Name'].'-'.$row['Relation'];
+    }
+    $array = str_split(implode(', ', $selectedArray));
+    array_walk($array, function(&$char) {
+        $char = strtolower($char);
+    });
+    sort($array);
+
+
+    $array1 = str_split($dependant); 
+    array_walk($array1, function(&$char) {
+        $char = strtolower($char);
+    });
+    sort($array1);
+
+
+    $depchange = implode(', ', $array) !== implode(', ', $array1);
+
+  
 
     if($dependant !== ''){
         $dependants = explode(', ',$dependant);
@@ -215,8 +237,10 @@ if(isset($_POST['submit'])){
             $result1 = $result1 && $res;
         }
 
-        $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'Beneficiary - $fname', 'Dependants', 'Updated as => $dependant')";
-        $resultx = mysqli_query($db, $query);
+        if($depchange) {
+            $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'Beneficiary - $fname', 'Dependants', 'Updated as => $dependant')";
+            $resultx = mysqli_query($db, $query);
+        }
     }else {
         if(mysqli_num_rows($SelectResult) > 0){
             $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('D', '$updatedby', 'Beneficiary - $fname', 'Dependants', 'All Dependants Deleted')";
@@ -238,6 +262,14 @@ if(isset($_POST['submit'])){
     $resulty = true;
     $project = isset($_POST['project']) ? $_POST['project'] : '';
 
+    $selectedArray = array();
+    while ($row = mysqli_fetch_assoc($SelectResult)){
+        $selectedArray[] = $row['Project_ID'];
+    }
+    
+
+
+
     if($project !== ''){
         $projects = explode(', ', $project);
         foreach($projects as $proj) {
@@ -245,8 +277,12 @@ if(isset($_POST['submit'])){
             $res = mysqli_query($db, $query);
             $result2 = $result2 && $res;
         }
-        $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'Beneficiary - $fname', 'Projects', 'Updated as => $project')";
-        $resulty = mysqli_query($db, $query);
+        sort($projects);
+        sort($selectedArray);
+        if($projects != $selectedArray){
+            $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'Beneficiary - $fname', 'Projects', 'Updated as => $project')";
+            $resulty = mysqli_query($db, $query);
+        }
     }else {
         if(mysqli_num_rows($SelectResult) > 0){
             $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('D', '$updatedby', 'Beneficiary - $fname', 'Projects', 'All Projects Deleted')";
@@ -261,6 +297,7 @@ if(isset($_POST['submit'])){
         $_SESSION['status'] = true;
         $_SESSION['fromAction'] = true;
         header('Location: /beneficent');
+        exit();
     }else {
         mysqli_rollback($db);
         mysqli_close($db);
@@ -268,6 +305,7 @@ if(isset($_POST['submit'])){
         $_SESSION['status'] = false;
         $_SESSION['fromAction'] = true;
         header('Location: /beneficent');
+        exit();
     }
     
 
@@ -352,7 +390,9 @@ if(isset($_POST['submit'])){
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
             header('Location: /beneficent');
+            exit();
         }
+
     }else {
         mysqli_rollback($db);
             mysqli_close($db);
@@ -360,10 +400,12 @@ if(isset($_POST['submit'])){
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
             header('Location: /beneficent');
+            exit();
     }
     
 }else {
     header('Location: /');
+    exit();
 }
 
 ?>

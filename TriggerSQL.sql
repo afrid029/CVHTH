@@ -1,3 +1,16 @@
+-----------Log table creation----------
+
+CREATE TABLE `activitylog` (
+  `action` varchar(2) NOT NULL,
+  `actionby` varchar(100) NOT NULL,
+  `impact` varchar(100) NOT NULL,
+  `value` varchar(50) DEFAULT NULL,
+  `old` varchar(50) DEFAULT NULL,
+  `new` varchar(50) DEFAULT NULL,
+  `time` datetime NOT NULL DEFAULT current_timestamp()
+)
+
+
 ------------Alter Table----------------------
 ALTER TABLE beneficiant ADD COLUMN updatedby varchar(100);
 ALTER TABLE users ADD COLUMN updatedby varchar(100);

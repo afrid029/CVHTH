@@ -71,6 +71,7 @@ if(isset($_POST['submit'])){
         $_SESSION['status'] = true;
         $_SESSION['fromAction'] = true;
         header('Location: /project');
+        exit();
     }else {
         mysqli_rollback($db);
         mysqli_close($db);
@@ -78,6 +79,7 @@ if(isset($_POST['submit'])){
         $_SESSION['status'] = false;
         $_SESSION['fromAction'] = true;
         header('Location: /project');
+        exit();
     }
 
 }else if(isset($_POST['edit-submit'])){
@@ -110,6 +112,13 @@ if(isset($_POST['submit'])){
     $query = "SELECT * from projectmanager Where Project_ID = '$ID'";
     $selectedResult = mysqli_query($db, $query);
 
+    
+    $selectedArray = array();
+    while ($row = mysqli_fetch_assoc($selectedResult)){
+        $selectedArray[] = $row['Manager_ID'];
+    }
+
+
     $result1 = true;
     $resulty = true;
     $query = "DELETE FROM projectmanager WHERE Project_ID = '$ID'";
@@ -124,8 +133,12 @@ if(isset($_POST['submit'])){
             $result1 = $result1 && $res;
         }
 
-        $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'Project - $name', 'Manager', 'Updated as => $manager')";
-        $resulty = mysqli_query($db, $query);
+        sort($managers);
+        sort($selectedArray);
+        if($selectedArray != $managers) {
+            $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'Project - $name', 'Manager', 'Updated as => $manager')";
+            $resulty = mysqli_query($db, $query);
+        }
     }else {
         if(mysqli_num_rows($selectedResult) > 0) {
             $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('D', '$updatedby', 'Project - $name', 'Manager', 'All Managers Deleted')";
@@ -141,6 +154,14 @@ if(isset($_POST['submit'])){
     $query = "DELETE FROM projectbeneficiant WHERE Project_ID = '$ID'";
     $delete2 = mysqli_query($db, $query);
 
+    $selectedArray = array();
+    while ($row = mysqli_fetch_assoc($selectResult)){
+        $selectedArray[] = $row['Beneficiant_ID'];
+    }
+
+
+
+
     $beneficent = isset($_POST['beneficent']) ? $_POST['beneficent'] : '';
    if($beneficent !== '') {
     $beneficents = explode(', ', $beneficent);
@@ -152,8 +173,12 @@ if(isset($_POST['submit'])){
         // echo mysqli_error($db);
         $result2 = $result2 && $res;
     }
-        $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'Project - $name', 'Beneficiary', 'Updated As => $beneficent')";
-        $resultx = mysqli_query($db, $query);
+    sort($beneficents);
+    sort($selectedArray);
+        if($beneficents != $selectedArray){
+            $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'Project - $name', 'Beneficiary', 'Updated As => $beneficent')";
+            $resultx = mysqli_query($db, $query);
+        }
    }else {
     if(mysqli_num_rows($selectResult) > 0) {
         $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('D', '$updatedby', 'Project - $name', 'Beneficiary', 'All Beneficiaries Deleted')";
@@ -167,7 +192,8 @@ if(isset($_POST['submit'])){
         $_SESSION['message'] = "Project updated successfully!";
         $_SESSION['status'] = true;
         $_SESSION['fromAction'] = true;
-        header('Location: /project');   
+        header('Location: /project');  
+        exit(); 
     }else {
         mysqli_rollback($db);
         mysqli_close($db);
@@ -175,6 +201,7 @@ if(isset($_POST['submit'])){
         $_SESSION['status'] = false;
         $_SESSION['fromAction'] = true;
         header('Location: /project');
+        exit();
     }
 
 
@@ -233,6 +260,7 @@ if(isset($_POST['submit'])){
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
             header('Location: /project');
+            exit();
         }
     }else {
         mysqli_rollback($db);
@@ -241,9 +269,11 @@ if(isset($_POST['submit'])){
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
             header('Location: /project');
+            exit();
     }
     
 }else {
     header('Location: /');
+    exit();
 }
 ?>

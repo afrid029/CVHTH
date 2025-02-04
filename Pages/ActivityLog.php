@@ -2,7 +2,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CVHTH | Donations</title>
+    <title>CVHTH | Activity Log</title>
     <link rel="stylesheet" href="Assets/CSS/ActivityLog.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,7 +65,7 @@
         $passedArray = unserialize($decryptedData);
         // $result = mysqli_query($db, $query);
 
-        if ($passedArray['role'] === 'admin' || $passedArray['role'] === 'superadmin') {
+        if ($passedArray['role'] === 'superadmin') {
             $_SESSION['ID'] = $passedArray['ID'];
             $_SESSION['role'] = $passedArray['role'];
             $_SESSION['fname'] = $passedArray['fname'];

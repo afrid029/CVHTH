@@ -48,7 +48,6 @@ if (isset($_POST['submit'])) {
 
         if ($result) {
             mysqli_close($db);
-            // header('Location: /users');
         } else {
             $_SESSION['message'] = "Unable to create user. Try Again Later! " . mysqli_error($db);
             // $_SESSION['message'] = mysqli_error($db);
@@ -77,10 +76,6 @@ if (isset($_POST['submit'])) {
 
         if ($result) {
             mysqli_close($db);
-            // $_SESSION['message'] = "User created successfully!";
-            // $_SESSION['status'] = true;
-            // $_SESSION['fromAction'] = true;
-            // header('Location: /users');
         } else {
 
             $_SESSION['message'] = "Unable to create user. " . mysqli_error($db);
@@ -143,11 +138,6 @@ if (isset($_POST['submit'])) {
 
             mysqli_commit($db);
             mysqli_close($db);
-            // $_SESSION['message'] = "User created successfully!";
-            // $_SESSION['status'] = true;
-            // $_SESSION['fromAction'] = true;
-            // header('Location: /users');
-        } else {
             mysqli_rollback($db);
             // echo mysqli_error($db);
             mysqli_close($db);
@@ -201,12 +191,14 @@ if (isset($_POST['submit'])) {
                 $_SESSION['fromAction'] = true;
                 mysqli_close($db);
                 header('Location: /users');
+                exit();
             } else {
                 $_SESSION['message'] = "Unable to update. try again later! " . mysqli_error($db);
                 $_SESSION['status'] = false;
                 $_SESSION['fromAction'] = true;
                 mysqli_close($db);
                 header('Location: /users');
+                exit();
             }
         } else if ($role === 'donor') {
             $dob = $_POST['dob'] === '' ? '' : $_POST['dob'];
@@ -243,12 +235,14 @@ if (isset($_POST['submit'])) {
                 $_SESSION['fromAction'] = true;
                 mysqli_close($db);
                 header('Location: /users');
+                exit();
             } else {
                 $_SESSION['message'] = "Unable to update. try again later! " . mysqli_error($db);
                 $_SESSION['status'] = false;
                 $_SESSION['fromAction'] = true;
                 mysqli_close($db);
                 header('Location: /users');
+                exit();
             }
         } else if ($role === 'project manager') {
             mysqli_begin_transaction($db);
@@ -311,6 +305,7 @@ if (isset($_POST['submit'])) {
                 $_SESSION['status'] = true;
                 $_SESSION['fromAction'] = true;
                 header('Location: /users');
+                exit();
             } else {
                 mysqli_rollback($db);
                 $_SESSION['message'] = "Unable to update user. Try Again Later! " . mysqli_error($db);
@@ -319,6 +314,7 @@ if (isset($_POST['submit'])) {
                 mysqli_close($db);
 
                 header('Location: /users');
+                exit();
             }
         }
     } else if ($row['role'] === 'donor') {
@@ -355,12 +351,14 @@ if (isset($_POST['submit'])) {
                 $_SESSION['fromAction'] = true;
                 mysqli_close($db);
                 header('Location: /users');
+                exit();
             } else {
                 $_SESSION['message'] = "Unable to update. try again later! " . mysqli_error($db);
                 $_SESSION['status'] = false;
                 $_SESSION['fromAction'] = true;
                 mysqli_close($db);
                 header('Location: /users');
+                exit();
             }
         } else {
 
@@ -396,6 +394,7 @@ if (isset($_POST['submit'])) {
                     mysqli_commit($db);
                     mysqli_close($db);
                     header('Location: /users');
+                    exit();
                 } else {
                     $_SESSION['message'] = "Unable to update. try again later! " . mysqli_error($db);
                     $_SESSION['status'] = false;
@@ -403,6 +402,7 @@ if (isset($_POST['submit'])) {
                     mysqli_rollback($db);
                     mysqli_close($db);
                     header('Location: /users');
+                    exit();
                 }
             } else if ($role === 'project manager') {
 
@@ -463,6 +463,7 @@ if (isset($_POST['submit'])) {
                     $_SESSION['status'] = true;
                     $_SESSION['fromAction'] = true;
                     header('Location: /users');
+                    exit();
                 } else {
                     mysqli_rollback($db);
                     $_SESSION['message'] = "Unable to update user. Try Again Later! " . mysqli_error($db);
@@ -471,6 +472,7 @@ if (isset($_POST['submit'])) {
                     mysqli_close($db);
 
                     header('Location: /users');
+                    exit();
                 }
             }
         }
@@ -492,6 +494,11 @@ if (isset($_POST['submit'])) {
             $query = "SELECT * from projectmanager WHERE manager_ID = '$ID'";
             $selectedResult = mysqli_query($db, $query);
 
+            $selecteArray = array();
+            while($row = mysqli_fetch_assoc($selectedResult)){
+                $selecteArray[] = $row['Project_ID'];
+            }
+
             $query = "DELETE from projectmanager WHERE manager_ID = '$ID'";
             $delete1 = mysqli_query($db, $query);
 
@@ -508,8 +515,13 @@ if (isset($_POST['submit'])) {
                     $result2 = $result2 && $res;
                 }
 
-                $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'PM - $fname', 'Projects', 'Updated as => $project')";
-                $resultx = mysqli_query($db, $query);
+                sort($selecteArray);
+                sort($projects);
+
+                if( $selecteArray != $projects){
+                    $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'PM - $fname', 'Projects', 'Updated as => $project')";
+                    $resultx = mysqli_query($db, $query);
+                }
             } else {
                 if(mysqli_num_rows($selectedResult) > 0){
                     $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('D', '$updatedby', 'PM - $fname', 'Projects', 'All Projects Deleted')";
@@ -519,6 +531,11 @@ if (isset($_POST['submit'])) {
 
             $query = "SELECT * FROM projectmanagerdonor WHERE manager_ID = '$ID'";
             $selectedResult = mysqli_query($db, $query);
+
+            $selecteArray = array();
+            while($row = mysqli_fetch_assoc($selectedResult)){
+                $selecteArray[] = $row['Donor_ID'];
+            }
 
             $query = "DELETE from projectmanagerdonor WHERE manager_ID = '$ID'";
 
@@ -538,8 +555,13 @@ if (isset($_POST['submit'])) {
                     $result3 = $result3 && $res;
                 }
 
-                $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'PM - $fname', 'Donors', 'Updated as => $donor')";
-                $resulty = mysqli_query($db, $query);
+                sort($selecteArray);
+                sort($donors);
+
+                if($selecteArray != $donors){
+                    $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('U', '$updatedby', 'PM - $fname', 'Donors', 'Updated as => $donor')";
+                    $resulty = mysqli_query($db, $query);
+                }
             }else {
                 if(mysqli_num_rows($selectedResult) > 0){
                     $query = "INSERT INTO activitylog(action, actionby, impact, value, new) VALUES('D', '$updatedby', 'PM - $fname', 'Donors', 'All Donors Deleted')";
@@ -557,6 +579,7 @@ if (isset($_POST['submit'])) {
                 $_SESSION['status'] = true;
                 $_SESSION['fromAction'] = true;
                 header('Location: /users');
+                exit();
             } else {
                 mysqli_rollback($db);
 
@@ -566,6 +589,7 @@ if (isset($_POST['submit'])) {
                 mysqli_close($db);
 
                 header('Location: /users');
+                exit();
             }
         } else {
             mysqli_begin_transaction($db);
@@ -610,6 +634,7 @@ if (isset($_POST['submit'])) {
                     mysqli_commit($db);
                     mysqli_close($db);
                     header('Location: /users');
+                    exit();
                 } else {
                     $_SESSION['message'] = "Unable to update. try again later! " . mysqli_error($db);
                     $_SESSION['status'] = false;
@@ -617,6 +642,7 @@ if (isset($_POST['submit'])) {
                     mysqli_rollback($db);
                     mysqli_close($db);
                     header('Location: /users');
+                    exit();
                 }
             } else if ($role === 'donor') {
                 $dob = $_POST['dob'] === '' ? '' : $_POST['dob'];
@@ -655,6 +681,7 @@ if (isset($_POST['submit'])) {
                     mysqli_commit($db);
                     mysqli_close($db);
                     header('Location: /users');
+                    exit();
                 } else {
                     $_SESSION['message'] = "Unable to update. try again later!  " . mysqli_error($db);
                     $_SESSION['status'] = false;
@@ -662,6 +689,7 @@ if (isset($_POST['submit'])) {
                     mysqli_rollback($db);
                     mysqli_close($db);
                     header('Location: /users');
+                    exit();
                 }
             }
         }
@@ -721,6 +749,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
             header('Location: /users');
+            exit();
         }
     } else {
         mysqli_rollback($db);
@@ -729,9 +758,11 @@ if (isset($_POST['submit'])) {
         $_SESSION['status'] = false;
         $_SESSION['fromAction'] = true;
         header('Location: /users');
+        exit();
     }
 } else {
     header('Location: /');
+    exit();
 }
 
 function generateRandomPassword($length = 8)
@@ -797,6 +828,7 @@ function mailSend($email, $fname, $lname, $role, $password)
             $_SESSION['status'] = true;
             $_SESSION['fromAction'] = true;
             header("Location: /users");
+            exit();
         } else {
             echo 'Message could not be sent.';
             echo 'Mailer Error: ' . $mail->ErrorInfo;  // Display the error message if mail fails
@@ -805,6 +837,7 @@ function mailSend($email, $fname, $lname, $role, $password)
             $_SESSION['status'] = false;
             $_SESSION['fromAction'] = true;
             header("Location: /users");
+            exit();
         }
     } catch (Exception $e) {
         // Catch any exceptions
@@ -813,5 +846,6 @@ function mailSend($email, $fname, $lname, $role, $password)
         $_SESSION['status'] = false;
         $_SESSION['fromAction'] = true;
         header("Location: /users");
+        exit();
     }
 }
