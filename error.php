@@ -2,6 +2,7 @@
     <head>
 
     <title>CVHTH | Not Found</title>
+    <link rel="icon" type="image/png" href="Assets/Images/cv.png" />
 
     <style>
         .container {

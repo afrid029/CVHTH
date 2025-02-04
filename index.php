@@ -3,6 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CVHTH</title>
+    <link rel="icon" type="image/png" href="Assets/Images/cv.png" />
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playwrite+VN:wght@100..400&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Assets/CSS/Home.css">
 </head>
@@ -41,7 +42,7 @@
     $_SESSION['fromAction'] = false;
     ?>
 
-    <div class="home-body">
+    <div  class="home-body">
 
         <div class="home-info" id="home-Id">
             <div class="home-bgImage">
@@ -70,7 +71,7 @@
                 </div>
             </div>
 
-            <div class="about scroll-element">
+            <div style="display: none;" class="about scroll-element">
                 <div class="about-title">Who We Are...</div>
 
 
@@ -80,7 +81,7 @@
 
                 </div>
             </div>
-            <div class="about scroll-element">
+            <div style="display: none;" class="about scroll-element">
                 <div class="about-title">Mission</div>
 
 
@@ -91,7 +92,7 @@
 
                 </div>
             </div>
-            <div class="about scroll-element">
+            <div style="display: none;" class="about scroll-element">
                 <div class="about-title">Vision</div>
 
 
