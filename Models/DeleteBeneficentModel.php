@@ -9,32 +9,25 @@
 
 
 <body>
-    <div
-        class="del-modal-overlay" id="deleteModel">
-        <div class="del-modal-content" onclick="event.stopPropagation()">
-          
+<div class="del-modal-overlay" id="deleteModel">
+    <div class="del-modal-content" onclick="event.stopPropagation()">
 
-            <form action="/add-beneficiary" method="post" class="del-form" onsubmit="return submitDeleteform()">
-                <input type="text" hidden name = 'ID' id='del-id'>
-               <div class="delMsg">
+        <form action="/add-beneficiary" method="post" class="del-form" onsubmit="return submitDeleteform()">
+            <input type="text" hidden name='ID' id='del-id'>
+            <div class="delMsg">
                 <h4>Do you want to delete this Beneficiary ?</h4>
-               </div>
-               <div class="option-btn ">
+            </div>
+            <div class="option-btn ">
                 <button onclick="closeDelModel()" class="opt no" type="button">No</button>
                 <button name="del-submit" class="opt yes" id="del-submit" type="submit">Yes</button>
-                <button
-                            style="display: none;"
-                            id="del-submiting"
-                            disabled="true"
-                            class="opt yes"> Yes
-                        </button>
-               </div>
-               
+                <button style="display: none;" id="del-submiting" disabled="true" class="opt yes"> Yes
+                </button>
+            </div>
 
-            </form>
-        </div>
+        </form>
     </div>
-    </div>
+</div>
+</div>
 </body>
 
 </html>

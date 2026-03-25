@@ -1,0 +1,31 @@
+#table-pagi {
+  padding: 20px;
+  z-index: 1;
+}
+.pagination {
+  display: flex;
+  gap: 15px;
+  font-family: "roboto", sans-serif;
+  font-size: 1vw;
+  align-items: center;
+}
+.pagination .selected {
+  color: rgb(233, 234, 238);
+  background-color: oklch(39.6% 0.141 25.723);
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination span {
+  font-weight: 600;
+  color: oklch(39.6% 0.141 25.723);
+  cursor: pointer;
+}
+
+.textPagi {
+  color: oklch(39.6% 0.141 25.723) !important;
+}
